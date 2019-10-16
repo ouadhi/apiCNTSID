@@ -21,6 +21,8 @@ public class CparcVisite implements Serializable   {
 	private String num_bl ; 
 	private String num_cts ;  
 	private Date  date_transfert ;
+	private boolean  flag  ;   
+	
 	public CparcVisite(String numero_vi, String num_bl, String num_cts, Date date_transfert) {
 		this.numero_vi = numero_vi;
 		this.num_bl = num_bl;
@@ -59,6 +61,12 @@ public class CparcVisite implements Serializable   {
 	public void setDate_transfert(Date date_transfert) {
 		this.date_transfert = date_transfert;
 	}  
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 	
 	
 	

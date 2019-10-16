@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="containers_dpw")
@@ -16,8 +18,9 @@ public class ContainersDpw implements  Serializable{
 	
 	@Id
 	@GeneratedValue
-	private  Long id  ; 
-	private  Date an_manif ; 
+	private Long id  ; 
+	@Temporal(TemporalType.DATE)
+	private Date an_manif ; 
 	private int num_manif ; 
 	private int code_bur  ;  
 	private int num_ligne ;  
@@ -28,7 +31,7 @@ public class ContainersDpw implements  Serializable{
 	private String num_reference ; 
 	private String etat_lign ; 
 	private int num_magasin ;
-	
+	private boolean flag ; 
 	
 	public ContainersDpw(Long id, Date an_manif, int num_manif, int code_bur, int num_ligne, int num_group,
 			String num_cts, int tar_cts, int colis, String num_reference, String etat_lign, int num_magasin) {
@@ -168,7 +171,19 @@ public class ContainersDpw implements  Serializable{
 
 	public void setNum_magasin(int num_magasin) {
 		this.num_magasin = num_magasin;
+	}
+
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	} 
+	
+	
 	
 	
 	
