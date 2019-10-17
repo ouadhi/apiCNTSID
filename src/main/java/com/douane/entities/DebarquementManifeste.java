@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="debarquement_manifeste")
@@ -20,7 +22,7 @@ public class DebarquementManifeste implements   Serializable {
 	private String numero_vi ; 
 	private String num_bl ; 
 	private String  num_cts ;  
-	private char containertype ;  
+	private String containertype ;  
 	private String position ; 
 	private Date date_debarquement ; 
 	private Date date_arrivee ; 
@@ -32,7 +34,11 @@ public class DebarquementManifeste implements   Serializable {
 	private int num_group ;  
 	private char etat_lign ; 
 	private int  num_magasin  ;
-	public DebarquementManifeste(String numero_vi, String num_bl, String num_cts, char containertype, String position,
+	private boolean flag ;  
+	@Temporal(TemporalType.DATE)
+	private Date date_mark  ; 
+	
+	public DebarquementManifeste(String numero_vi, String num_bl, String num_cts, String containertype, String position,
 			Date date_debarquement, Date date_arrivee, Date date_accostage, int code_bur, Date an_manif, int num_manif,
 			int num_ligne, int num_group, char etat_lign, int num_magasin) {
 		this.numero_vi = numero_vi;
@@ -51,8 +57,10 @@ public class DebarquementManifeste implements   Serializable {
 		this.etat_lign = etat_lign;
 		this.num_magasin = num_magasin;
 	}
+	
 	public DebarquementManifeste() {
 	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -77,10 +85,10 @@ public class DebarquementManifeste implements   Serializable {
 	public void setNum_cts(String num_cts) {
 		this.num_cts = num_cts;
 	}
-	public char getContainertype() {
+	public String getContainertype() {
 		return containertype;
 	}
-	public void setContainertype(char containertype) {
+	public void setContainertype(String containertype) {
 		this.containertype = containertype;
 	}
 	public String getPosition() {
@@ -148,7 +156,24 @@ public class DebarquementManifeste implements   Serializable {
 	}
 	public void setNum_magasin(int num_magasin) {
 		this.num_magasin = num_magasin;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public Date getDate_mark() {
+		return date_mark;
+	}
+
+	public void setDate_mark(Date date_mark) {
+		this.date_mark = date_mark;
 	} 
+	 
 	
 	
 	

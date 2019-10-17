@@ -1,0 +1,310 @@
+create table deficit
+  (
+    numero_vi varchar(20) not null ,
+    date_accostage datetime year to minute,
+    code_bur smallint,
+    an_manif datetime year to year,
+    num_manif integer,
+    nb_tcs smallint
+  );
+
+
+  create table voyage_gros
+    (
+      numero_vi varchar(20) not null ,
+      date_accostage datetime year to minute,
+      code_bur smallint,
+      an_manif datetime year to year,
+      num_manif integer,
+      tc_debarque smallint,
+      tc_manifeste smallint
+    );
+
+
+    create table doc_fisc
+      (
+        code_bur smallint,
+        an_decl datetime year to year,  
+        num_decl integer,
+        doccod smallint,
+        date_etab date
+      );
+
+
+
+        create table bae_dpw
+          (
+            numero_vi char(20),
+            num_bl char(20),
+            num_cts varchar(20),
+            code_bur smallint,
+            an_manif datetime year to year,
+            num_manif integer,
+            num_ligne smallint,
+            num_group smallint,
+            num_decl integer,
+            type_declaration char(1),
+            date_bae date
+          );
+
+          create table debarquement_manifeste
+            (
+              numero_vi varchar(20) not null ,
+              num_bl char(20),
+              num_cts char(20),
+              containertype char(2) not null ,
+              position varchar(16) not null ,
+              date_debarquement datetime year to minute,
+              date_arrivee datetime year to minute,
+              date_accostage datetime year to minute,
+              code_bur smallint,
+              an_manif datetime year to year,
+              num_manif integer,
+              num_ligne smallint,
+              num_group smallint,
+              etat_lign char(1),
+              num_magasin smallint
+            );
+            create table cparcvisite
+              (
+                numero_vi varchar(20) not null ,
+                num_bl varchar(20) not null ,
+                num_cts varchar(20) not null ,
+                date_transfert date not null ,
+                id integer
+              );
+              create table  declaration_dpw
+                (
+                  numero_vi char(20),
+                  num_bl char(20),
+                  num_cts varchar(20),
+                  code_bur smallint,
+                  an_manif datetime year to year,
+                  num_manif integer,
+                  num_ligne smallint,
+                  num_group smallint,
+                  an_decl datetime year to year,
+                  num_decl integer,
+                  type_visite char(1),
+                  date_declaration date,
+                  fap char(1),
+                  nom_agent varchar(20),
+                  date_av_ar date,
+                  date_ajout datetime year to minute,
+                  user char(12)
+                );
+
+                create table  dstr
+                  (
+                    an_agrt datetime year to year,
+                    num_agrt integer,
+                    an_dst datetime year to year,
+                    num_dst integer,
+                    bur_dst smallint,
+                    date_dst date,
+                    code_bur smallint,
+                    an_manif datetime year to year,
+                    num_manif integer,
+                    num_ligne smallint,
+                    num_group smallint,
+                    design_march char(100),
+                    nbr_colisd integer,
+                    poidsb_d decimal(16,2),
+                    date_transf date,
+                    num_apure integer,
+                    date_apure datetime year to minute,
+                    lieu char(40),
+                    nom_oper char(30),
+                    adr_oper char(40),
+                    pays_frs char(3),
+                    nom_frs char(30),
+                    adr_frs char(40),
+                    document char(50),
+                    type_dst char(9)
+                  );
+
+                  create table transfer
+                    (
+                      an_trans datetime year to year,
+                      num_trans integer,
+                      date_trans date,
+                      code_bur smallint,
+                      an_manif datetime year to year,
+                      num_manif integer,
+                      num_ligne smallint,
+                      num_group smallint,
+                      num_depot char(15),
+                      chassis char(17),
+                      design_march char(100),
+                      nbr_colist integer,
+                      nbr_colisd integer,
+                      poidsb_d decimal(16,2),
+                      date_depot date,
+                      lieu_trans char(40),
+                      nom_oper char(30),
+                      adr_oper char(40),
+                      provenance char(50),
+                      lieu_stock char(50),
+                      num_apur integer,
+                      date_apur date
+                    );
+                    create table  declaration_port
+                      (
+                        code_bur smallint,
+                        an_decl datetime year to year,
+                        num_decl integer,
+                        date_cotation datetime year to minute,
+                        mat_agt integer,
+                        code_reg smallint,
+                        an_agrt datetime year to year,
+                        num_agrt integer,
+                        num_rep integer,
+                        an_oper datetime year to year,
+                        code_oper integer,
+                        code_eng char(3),
+                        dec_code_bur smallint,
+                        dec_an_decl datetime year to year,
+                        dec_num_decl integer,
+                        num_cred smallint,
+                        date_heur datetime year to minute,
+                        dat_date_heur datetime year to minute,
+                        code_bur_manif smallint,
+                        type_manif char(1),
+                        an_manif datetime year to year,
+                        num_manif integer,
+                        num_ligne smallint,
+                        num_group smallint,
+                        pay_prov char(3),
+                        bur_code_bur smallint,
+                        bur2_code_bur smallint,
+                        mode_paiement char(1),
+                        mode_finance char(1),
+                        nom_frs char(50),
+                        adr_frs char(80),
+                        pays_frs char(3),
+                        bnq_dom char(3),
+                        agence_dom char(3),
+                        num_dom char(30),
+                        poids_decl decimal(16,4),
+                        colis_decl integer,
+                        mon_dcl decimal(16,2),
+                        circuit char(1),
+                        etat_rcv char(1),
+                        date_bae datetime year to minute,
+                        rel_av char(1),
+                        monnaie_ptfn char(3),
+                        mt_ptfn decimal(16,4),
+                        lc_ptfn decimal(10,5),
+                        mt_ptfn2 decimal(16,2),
+
+                        monnaie_ass char(3),
+                        mt_ass decimal(16,4),
+                        lc_ass decimal(10,5),
+                        mt_ass2 decimal(16,2),
+                        monnaie_fret char(3),
+                        mt_fret decimal(16,4),
+                        lc_fret decimal(10,5),
+                        mt_fret2 decimal(16,2),
+                        monnaie_frais char(3),
+                        mt_frais decimal(16,4),
+                        lc_frais decimal(10,5),
+                        mt_frais2 decimal(16,2),
+
+                        nat_contrat char(3),
+                        type_operat char(1),
+                        etat_dcl char(1),
+
+                        mod_tint char(1),
+                        type_dcl char(1),
+                        type_ded char(1),
+                        ident_tint char(20),
+                        nbr_art smallint,
+
+                        plus_value decimal(16,4),
+                        coeff_ajust decimal(8,5),
+                        mt_coef decimal(15,2),
+                        cpt_tint smallint,
+                        rec_dcl char(3),
+
+                        dossier_dcl char(1),
+                        date_verif datetime year to minute,
+                        res_verif char(1),
+                        rec_verif char(250),
+                        res_visit char(1),
+                        rec_visit char(300),
+                        bur_depart smallint,
+                        bur_arrive smallint,
+                        at_et integer,
+                        tx_susp decimal(5,2),
+                        mt_caution decimal(16,2),
+                        duree_at smallint,
+                        lieu_at char(30),
+                        valider integer,
+                        val_douane decimal(25,20),
+                        kg_douane decimal(26,20),
+                        poidsn_dcl decimal(16,4),
+                        adr_rangee char(20),
+                        lavaleur decimal(20,2),
+                        articles smallint,
+                        date_inspect datetime year to minute,
+                        date_primo datetime year to minute,
+                        passage smallint,
+                        revue smallint
+                      );
+
+
+                        create table ligne_manif
+                          (
+                            an_manif datetime year to year,
+                            num_manif integer,
+                            code_bur smallint,
+                            num_ligne smallint,
+                            num_group smallint,
+                            date_manif datetime year to minute,
+                            dat_date datetime year to minute,
+                            an_oper datetime year to year,
+                            code_oper integer,
+                            date_rectif datetime year to minute,
+                            date_sit datetime year to minute,
+                            num_reference char(20),
+                            design_march char(100),
+                            lieu_chgt char(30),
+                            nbr_colism integer,
+                            nbr_colise integer,
+                            nbr_coliss integer,
+                            nbr_colisd integer,
+                            poidsb_m decimal(16,4),
+                            poidsn_m decimal(16,4),
+                            etat_lign char(1),
+                            nbr_colisr integer,
+                            poidsn_r decimal(16,4),
+                            poidsb_r decimal(16,4),
+                            num_quitt integer,
+                            num_extrait integer,
+                            date_transf datetime year to minute,
+                            num_situation integer,
+                            motif char(20),
+                            num_magasin smallint,
+                            nature char(1),
+                            type_manif char(1)
+                          );
+
+                          create table  containers_dpw
+                            (
+                              an_manif datetime year to year,
+                              num_manif integer,
+                              code_bur smallint,
+                              num_ligne smallint,
+                              num_group smallint,
+                              num_cts char(20),
+                              tare_cts integer,
+                              nbr_colis integer,
+                              num_reference char(20),
+                              etat_lign char(1),
+                              num_magasin smallint
+                            );
+
+
+
+
+                            
