@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="dstr")
@@ -40,6 +42,10 @@ public class Dstr implements Serializable{
 	private String adr_frs ;  
 	private String document  ; 
 	private String type_dst  ;
+	private boolean flag  ; 
+	@Temporal(TemporalType.DATE)
+	private Date date_mark ; 
+	
 	
 	public Dstr(int num_agrt, Date an_dst, int num_dst, int bur_dst, Date date_dst, int code_bur, Date an_manif,
 			int num_manif, int num_ligne, int num_group, String design_march, int nb_colisd, double poidsb_d,
@@ -272,7 +278,24 @@ public class Dstr implements Serializable{
 
 	public void setType_dst(String type_dst) {
 		this.type_dst = type_dst;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public Date getDate_mark() {
+		return date_mark;
+	}
+
+	public void setDate_mark(Date date_mark) {
+		this.date_mark = date_mark;
 	} 
+	
 	
 	
 	
