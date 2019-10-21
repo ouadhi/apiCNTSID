@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="ligne_manif")
@@ -44,6 +46,9 @@ public class LigneManif implements  Serializable {
 	private int num_magasin ;  
 	private String nature  ; 
 	private String type_manif ;
+	private boolean  flag ; 
+	@Temporal(TemporalType.DATE)
+	private Date date_mark ; 
 	public LigneManif(Long id, Date an_manif, int num_manif, int code_bur, int num_ligne, int num_group,
 			Date date_manif, Date dat_date, Date an_oper, int code_oper, Date date_rectif, Date date_sit,
 			String num_reference, String design_march, String lieu_chgt, int nbr_colism, int nbr_colise, int nbr_coliss,
@@ -254,7 +259,20 @@ public class LigneManif implements  Serializable {
 	}
 	public void setType_manif(String type_manif) {
 		this.type_manif = type_manif;
+	}
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+	public Date getDate_mark() {
+		return date_mark;
+	}
+	public void setDate_mark(Date date_mark) {
+		this.date_mark = date_mark;
 	} 
+	
 	
 	
 	
