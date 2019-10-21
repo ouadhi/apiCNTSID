@@ -112,6 +112,8 @@ public class DeclarationPort implements Serializable {
 	private Date date_primo ; 
 	private int passage ; 
 	private int revue  ;
+	private boolean  flag   ;
+	private Date date_mark  ; 
 	
 	public DeclarationPort(Long id, int code_bur, Date an_decl, int num_decl, Date date_cotation, int mat_agt,
 			int code_reg, Date an_agrt, int num_agrt, int num_rep, Date an_oper, int code_oper, String code_eng,
@@ -987,6 +989,22 @@ public class DeclarationPort implements Serializable {
 
 	public void setRevue(int revue) {
 		this.revue = revue;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public Date getDate_mark() {
+		return date_mark;
+	}
+
+	public void setDate_mark(Date date_mark) {
+		this.date_mark = date_mark;
 	}  
 	
 	 

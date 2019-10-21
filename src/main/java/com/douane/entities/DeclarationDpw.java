@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="declaration_dpw")
@@ -30,8 +32,10 @@ public class DeclarationDpw implements  Serializable {
 	private char fap  ; 
 	private String nom_agent ; 
 	private Date  date_av_ar ; 
-	private Date date_ajout ; 
 	private String user ; 
+	private boolean flag ; 
+	@Temporal(TemporalType.DATE)
+	private Date date_ajout ; 
 	
 	public DeclarationDpw(String numero_vi, String num_bl, String num_cts, int code_bur, Date an_manif, int num_ligne,
 			int num_group, Date an_decl, int num_decl, char type_visite, Date date_declaration, char fap,
@@ -158,6 +162,14 @@ public class DeclarationDpw implements  Serializable {
 	}
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	} 
 	
 	
