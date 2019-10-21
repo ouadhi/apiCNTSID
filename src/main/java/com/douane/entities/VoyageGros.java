@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="voyage_gros")
@@ -22,6 +24,9 @@ public class VoyageGros implements Serializable {
 	private Date an_manif ; 
 	private int tc_debarque ; 
 	private int tc_manifeste ;
+	private boolean flag ;  
+	@Temporal(TemporalType.DATE)
+	private Date date_mark ; 
 	
 	public VoyageGros(String numero_vi, Date date_accostage, int code_bur, Date an_manif, int tc_debarque,
 			int tc_manifeste) {
@@ -79,7 +84,29 @@ public class VoyageGros implements Serializable {
 	}
 	public void setTc_manifeste(int tc_manifeste) {
 		this.tc_manifeste = tc_manifeste;
+	}
+
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+
+	public Date getDate_mark() {
+		return date_mark;
+	}
+
+
+	public void setDate_mark(Date date_mark) {
+		this.date_mark = date_mark;
 	}  
+	
+	
 	
 	
 
