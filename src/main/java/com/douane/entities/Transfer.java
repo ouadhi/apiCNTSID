@@ -39,6 +39,9 @@ public class Transfer implements Serializable{
 	private String provenance ; 
 	private String lieu_stock ; 
 	private Date date_apur ;
+	private boolean  flag  ; 
+	@Temporal(TemporalType.DATE)
+	private Date date_mark  ; 
 	
 	public Transfer(Date an_trans, int num_trans, Date date_trans, int code_bur, Date an_manif, int num_manif,
 			int num_ligne, int num_group, String num_depot, String chassis, String desing_march, int nbr_colist,
@@ -235,7 +238,27 @@ public class Transfer implements Serializable{
 
 	public void setDate_apur(Date date_apur) {
 		this.date_apur = date_apur;
-	}  
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	public Date getDate_mark() {
+		return date_mark;
+	}
+
+	public void setDate_mark(Date date_mark) {
+		this.date_mark = date_mark;
+	}
+
+	
+	
+	
 	
 	
 	
