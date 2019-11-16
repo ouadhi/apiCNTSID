@@ -66,7 +66,7 @@ public class TransferController {
 		   Optional<Transfer> optional =   repository.findById(id) ; 
 		   Transfer  Transfer = optional.get() ; 
 		   Transfer.setFlag(true);
-		   Transfer.setDate_mark(new Date());
+		   Transfer.setDateMarkage(new Date());
 		   
 		   repository.save(Transfer)  ; 
 			System.out.println("Data has been marked successfully :" + Transfer.getId());

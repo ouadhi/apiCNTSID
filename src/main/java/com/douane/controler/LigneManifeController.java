@@ -67,7 +67,7 @@ public class LigneManifeController {
 		   Optional<LigneManif> optional =   repository.findById(id) ; 
 		   LigneManif  LigneManif = optional.get() ; 
 		   LigneManif.setFlag(true);
-		   LigneManif.setDate_mark(new Date());
+		   LigneManif.setDateMarkage(new Date());
 		   
 		   repository.save(LigneManif)  ; 
 			System.out.println("Data has been marked successfully :" + LigneManif.getId());

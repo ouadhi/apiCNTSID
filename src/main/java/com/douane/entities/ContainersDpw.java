@@ -1,62 +1,70 @@
 package com.douane.entities;
-
 import java.io.Serializable;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="containers_dpw")
-public class ContainersDpw implements  Serializable{
-
+@NamedQuery(name="ContainersDpw.findAll", query="SELECT c FROM ContainersDpw c")
+public class ContainersDpw implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue
-	private Long id  ; 
-	@Temporal(TemporalType.DATE)
-	private Date an_manif ; 
-	private int num_manif ; 
-	private int code_bur  ;  
-	private int num_ligne ;  
-	private int num_group ; 
-	private String num_cts; 
-	private int tar_cts  ; 
-	private int colis  ;  
-	private String num_reference ; 
-	private String etat_lign ; 
-	private int num_magasin ;
-	private boolean flag ; 
-	
-	public ContainersDpw(Long id, Date an_manif, int num_manif, int code_bur, int num_ligne, int num_group,
-			String num_cts, int tar_cts, int colis, String num_reference, String etat_lign, int num_magasin) {
-		this.id = id;
-		this.an_manif = an_manif;
-		this.num_manif = num_manif;
-		this.code_bur = code_bur;
-		this.num_ligne = num_ligne;
-		this.num_group = num_group;
-		this.num_cts = num_cts;
-		this.tar_cts = tar_cts;
-		this.colis = colis;
-		this.num_reference = num_reference;
-		this.etat_lign = etat_lign;
-		this.num_magasin = num_magasin;
-	}
+	private  Long  id ; 
 
+	@Column(name="an_manif")
+	private Timestamp anManif;
+
+	@Column(name="code_bur")
+	private short codeBur;
+
+	@Column(name="etat_lign")
+	private String etatLign;
+
+	@Column(name="nbr_colis")
+	private int nbrColis;
+
+	@Column(name="num_cts")
+	private String numCts;
+
+	@Column(name="num_group")
+	private short numGroup;
+
+	@Column(name="num_ligne")
+	private short numLigne;
+
+	@Column(name="num_magasin")
+	private short numMagasin;
+
+	@Column(name="num_manif")
+	private int numManif;
+
+	@Column(name="num_reference")
+	private String numReference;
+
+	@Column(name="tare_cts")
+	private int tareCts;
+	
+	@Column(name="flag")
+	private boolean  flag ;
+	
+	@Column(name = "date_markage")
+	private Date dateMarkage; 
+	
+	
 
 	public ContainersDpw() {
 	}
-
+	
+	
 
 	public Long getId() {
 		return id;
 	}
+
 
 
 	public void setId(Long id) {
@@ -64,114 +72,95 @@ public class ContainersDpw implements  Serializable{
 	}
 
 
-	public Date getAn_manif() {
-		return an_manif;
+
+	public Timestamp getAnManif() {
+		return this.anManif;
 	}
 
-
-	public void setAn_manif(Date an_manif) {
-		this.an_manif = an_manif;
+	public void setAnManif(Timestamp anManif) {
+		this.anManif = anManif;
 	}
 
-
-	public int getNum_manif() {
-		return num_manif;
+	public short getCodeBur() {
+		return this.codeBur;
 	}
 
-
-	public void setNum_manif(int num_manif) {
-		this.num_manif = num_manif;
+	public void setCodeBur(short codeBur) {
+		this.codeBur = codeBur;
 	}
 
-
-	public int getCode_bur() {
-		return code_bur;
+	public String getEtatLign() {
+		return this.etatLign;
 	}
 
-
-	public void setCode_bur(int code_bur) {
-		this.code_bur = code_bur;
+	public void setEtatLign(String etatLign) {
+		this.etatLign = etatLign;
 	}
 
-
-	public int getNum_ligne() {
-		return num_ligne;
+	public int getNbrColis() {
+		return this.nbrColis;
 	}
 
-
-	public void setNum_ligne(int num_ligne) {
-		this.num_ligne = num_ligne;
+	public void setNbrColis(int nbrColis) {
+		this.nbrColis = nbrColis;
 	}
 
-
-	public int getNum_group() {
-		return num_group;
+	public String getNumCts() {
+		return this.numCts;
 	}
 
-
-	public void setNum_group(int num_group) {
-		this.num_group = num_group;
+	public void setNumCts(String numCts) {
+		this.numCts = numCts;
 	}
 
-
-	public String getNum_cts() {
-		return num_cts;
+	public short getNumGroup() {
+		return this.numGroup;
 	}
 
-
-	public void setNum_cts(String num_cts) {
-		this.num_cts = num_cts;
+	public void setNumGroup(short numGroup) {
+		this.numGroup = numGroup;
 	}
 
-
-	public int getTar_cts() {
-		return tar_cts;
+	public short getNumLigne() {
+		return this.numLigne;
 	}
 
-
-	public void setTar_cts(int tar_cts) {
-		this.tar_cts = tar_cts;
+	public void setNumLigne(short numLigne) {
+		this.numLigne = numLigne;
 	}
 
-
-	public int getColis() {
-		return colis;
+	public short getNumMagasin() {
+		return this.numMagasin;
 	}
 
-
-	public void setColis(int colis) {
-		this.colis = colis;
+	public void setNumMagasin(short numMagasin) {
+		this.numMagasin = numMagasin;
 	}
 
-
-	public String getNum_reference() {
-		return num_reference;
+	public int getNumManif() {
+		return this.numManif;
 	}
 
-
-	public void setNum_reference(String num_reference) {
-		this.num_reference = num_reference;
+	public void setNumManif(int numManif) {
+		this.numManif = numManif;
 	}
 
-
-	public String getEtat_lign() {
-		return etat_lign;
+	public String getNumReference() {
+		return this.numReference;
 	}
 
-
-	public void setEtat_lign(String etat_lign) {
-		this.etat_lign = etat_lign;
+	public void setNumReference(String numReference) {
+		this.numReference = numReference;
 	}
 
-
-	public int getNum_magasin() {
-		return num_magasin;
+	public int getTareCts() {
+		return this.tareCts;
 	}
 
-
-	public void setNum_magasin(int num_magasin) {
-		this.num_magasin = num_magasin;
+	public void setTareCts(int tareCts) {
+		this.tareCts = tareCts;
 	}
+
 
 
 	public boolean isFlag() {
@@ -179,10 +168,22 @@ public class ContainersDpw implements  Serializable{
 	}
 
 
+
 	public void setFlag(boolean flag) {
 		this.flag = flag;
-	} 
-	
+	}
+
+
+
+	public Date getDateMarkage() {
+		return dateMarkage;
+	}
+
+
+
+	public void setDateMarkage(Date dateMarkage) {
+		this.dateMarkage = dateMarkage;
+	}
 	
 	
 	

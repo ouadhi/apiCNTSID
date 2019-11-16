@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.mockito.exceptions.verification.NeverWantedButInvoked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,7 +68,7 @@ public class DstrController {
 		   Optional<Dstr> optional =   repository.findById(id) ; 
 		   Dstr  Dstr = optional.get() ; 
 		   Dstr.setFlag(true);
-		   Dstr.setDate_mark(new Date());
+		   Dstr.setDateMarkage(new Date());
 		   
 		   repository.save(Dstr)  ; 
 			System.out.println("Data has been marked successfully :" + Dstr.getId());

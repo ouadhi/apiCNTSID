@@ -90,7 +90,7 @@ public class DebarquementManifestController {
 		   Optional<DebarquementManifeste> optional =   repositroy.findById(id) ; 
 		   DebarquementManifeste  debarquementManifeste = optional.get() ; 
 		   debarquementManifeste.setFlag(true);
-		   debarquementManifeste.setDate_mark(new Date());
+		   debarquementManifeste.setDateMarkage(new Date())  ; 
 		   repositroy.save(debarquementManifeste)  ; 
 			System.out.println("Data has been marked successfully :" + debarquementManifeste.getId());
 		} else {

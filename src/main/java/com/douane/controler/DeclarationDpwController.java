@@ -66,7 +66,7 @@ public class DeclarationDpwController {
 		   Optional<DeclarationDpw> optional =   repository.findById(id) ; 
 		   DeclarationDpw  declarationDpw = optional.get() ; 
 		   declarationDpw.setFlag(true);
-		   declarationDpw.setDate_ajout(new Date());
+		   declarationDpw.setDateMarkage(new Date());
 		   
 		   repository.save(declarationDpw)  ; 
 			System.out.println("Data has been marked successfully :" + declarationDpw.getId());

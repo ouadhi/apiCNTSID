@@ -1,5 +1,6 @@
 package com.douane.controler;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +66,7 @@ public class BaeDpwController {
 		   Optional<BaeDpw> optional =   baeDpwRepository.findById(id) ; 
 		   BaeDpw  baeDpw = optional.get() ; 
 		   baeDpw.setFlag(true);
+		   baeDpw.setDateMarkage(new Date());
 		   baeDpwRepository.save(baeDpw)  ; 
 			System.out.println("Data has been marked successfully :" + baeDpw.getId());
 		} else {

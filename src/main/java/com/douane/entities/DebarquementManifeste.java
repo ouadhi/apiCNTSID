@@ -1,161 +1,205 @@
 package com.douane.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the debarquement_manifeste database table.
+ * 
+ */
 @Entity
 @Table(name="debarquement_manifeste")
-public class DebarquementManifeste implements   Serializable {
-
+@NamedQuery(name="DebarquementManifeste.findAll", query="SELECT d FROM DebarquementManifeste d")
+public class DebarquementManifeste implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
-	private Long  id  ;  
-	private String numero_vi ; 
-	private String num_bl ; 
-	private String  num_cts ;  
-	private String containertype ;  
-	private String position ; 
-	private Date date_debarquement ; 
-	private Date date_arrivee ; 
-	private Date date_accostage ; 
-	private int code_bur ; 
-	private Date an_manif ; 
-	private int num_manif  ;  
-	private int num_ligne ; 
-	private int num_group ;  
-	private char etat_lign ; 
-	private int  num_magasin  ;
-	private boolean flag ;  
+	@GeneratedValue  
+	private  Long id  ;  
+
+	@Column(name="an_manif")
+	private Timestamp anManif;
+
+	@Column(name="code_bur")
+	private short codeBur;
+
+	private String containertype;
+
+	@Column(name="date_accostage")
+	private Timestamp dateAccostage;
+
+	@Column(name="date_arrivee")
+	private Timestamp dateArrivee;
+
+	@Column(name="date_debarquement")
+	private Timestamp dateDebarquement;
+
+	@Column(name="etat_lign")
+	private String etatLign;
+
+	@Column(name="num_bl")
+	private String numBl;
+
+	@Column(name="num_cts")
+	private String numCts;
+
+	@Column(name="num_group")
+	private short numGroup;
+
+	@Column(name="num_ligne")
+	private short numLigne;
+
+	@Column(name="num_magasin")
+	private short numMagasin;
+
+	@Column(name="num_manif")
+	private int numManif;
+
+	@Column(name="numero_vi")
+	private String numeroVi;
+    
+	@Column(name="position")
+	private String position;
+	
+	@Column(name="flag")
+	private boolean  flag  ; 
+	
+	@Column(name = "date_markage")
 	@Temporal(TemporalType.DATE)
-	private Date date_mark  ; 
-	
-	public DebarquementManifeste(String numero_vi, String num_bl, String num_cts, String containertype, String position,
-			Date date_debarquement, Date date_arrivee, Date date_accostage, int code_bur, Date an_manif, int num_manif,
-			int num_ligne, int num_group, char etat_lign, int num_magasin) {
-		this.numero_vi = numero_vi;
-		this.num_bl = num_bl;
-		this.num_cts = num_cts;
-		this.containertype = containertype;
-		this.position = position;
-		this.date_debarquement = date_debarquement;
-		this.date_arrivee = date_arrivee;
-		this.date_accostage = date_accostage;
-		this.code_bur = code_bur;
-		this.an_manif = an_manif;
-		this.num_manif = num_manif;
-		this.num_ligne = num_ligne;
-		this.num_group = num_group;
-		this.etat_lign = etat_lign;
-		this.num_magasin = num_magasin;
-	}
-	
+	private Date dateMarkage ;  
+
 	public DebarquementManifeste() {
 	}
-	
-	public Long getId() {
-		return id;
+
+	public Timestamp getAnManif() {
+		return this.anManif;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setAnManif(Timestamp anManif) {
+		this.anManif = anManif;
 	}
-	public String getNumero_vi() {
-		return numero_vi;
+
+	public short getCodeBur() {
+		return this.codeBur;
 	}
-	public void setNumero_vi(String numero_vi) {
-		this.numero_vi = numero_vi;
+
+	public void setCodeBur(short codeBur) {
+		this.codeBur = codeBur;
 	}
-	public String getNum_bl() {
-		return num_bl;
-	}
-	public void setNum_bl(String num_bl) {
-		this.num_bl = num_bl;
-	}
-	public String getNum_cts() {
-		return num_cts;
-	}
-	public void setNum_cts(String num_cts) {
-		this.num_cts = num_cts;
-	}
+
 	public String getContainertype() {
-		return containertype;
+		return this.containertype;
 	}
+
 	public void setContainertype(String containertype) {
 		this.containertype = containertype;
 	}
-	public String getPosition() {
-		return position;
+
+	public Timestamp getDateAccostage() {
+		return this.dateAccostage;
 	}
+
+	public void setDateAccostage(Timestamp dateAccostage) {
+		this.dateAccostage = dateAccostage;
+	}
+
+	public Timestamp getDateArrivee() {
+		return this.dateArrivee;
+	}
+
+	public void setDateArrivee(Timestamp dateArrivee) {
+		this.dateArrivee = dateArrivee;
+	}
+
+	public Timestamp getDateDebarquement() {
+		return this.dateDebarquement;
+	}
+
+	public void setDateDebarquement(Timestamp dateDebarquement) {
+		this.dateDebarquement = dateDebarquement;
+	}
+
+	public String getEtatLign() {
+		return this.etatLign;
+	}
+
+	public void setEtatLign(String etatLign) {
+		this.etatLign = etatLign;
+	}
+
+	public String getNumBl() {
+		return this.numBl;
+	}
+
+	public void setNumBl(String numBl) {
+		this.numBl = numBl;
+	}
+
+	public String getNumCts() {
+		return this.numCts;
+	}
+
+	public void setNumCts(String numCts) {
+		this.numCts = numCts;
+	}
+
+	public short getNumGroup() {
+		return this.numGroup;
+	}
+
+	public void setNumGroup(short numGroup) {
+		this.numGroup = numGroup;
+	}
+
+	public short getNumLigne() {
+		return this.numLigne;
+	}
+
+	public void setNumLigne(short numLigne) {
+		this.numLigne = numLigne;
+	}
+
+	public short getNumMagasin() {
+		return this.numMagasin;
+	}
+
+	public void setNumMagasin(short numMagasin) {
+		this.numMagasin = numMagasin;
+	}
+
+	public int getNumManif() {
+		return this.numManif;
+	}
+
+	public void setNumManif(int numManif) {
+		this.numManif = numManif;
+	}
+
+	public String getNumeroVi() {
+		return this.numeroVi;
+	}
+
+	public void setNumeroVi(String numeroVi) {
+		this.numeroVi = numeroVi;
+	}
+
+	public String getPosition() {
+		return this.position;
+	}
+
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public Date getDate_debarquement() {
-		return date_debarquement;
+
+	public Long getId() {
+		return id;
 	}
-	public void setDate_debarquement(Date date_debarquement) {
-		this.date_debarquement = date_debarquement;
-	}
-	public Date getDate_arrivee() {
-		return date_arrivee;
-	}
-	public void setDate_arrivee(Date date_arrivee) {
-		this.date_arrivee = date_arrivee;
-	}
-	public Date getDate_accostage() {
-		return date_accostage;
-	}
-	public void setDate_accostage(Date date_accostage) {
-		this.date_accostage = date_accostage;
-	}
-	public int getCode_bur() {
-		return code_bur;
-	}
-	public void setCode_bur(int code_bur) {
-		this.code_bur = code_bur;
-	}
-	public Date getAn_manif() {
-		return an_manif;
-	}
-	public void setAn_manif(Date an_manif) {
-		this.an_manif = an_manif;
-	}
-	public int getNum_manif() {
-		return num_manif;
-	}
-	public void setNum_manif(int num_manif) {
-		this.num_manif = num_manif;
-	}
-	public int getNum_ligne() {
-		return num_ligne;
-	}
-	public void setNum_ligne(int num_ligne) {
-		this.num_ligne = num_ligne;
-	}
-	public int getNum_group() {
-		return num_group;
-	}
-	public void setNum_group(int num_group) {
-		this.num_group = num_group;
-	}
-	public char getEtat_lign() {
-		return etat_lign;
-	}
-	public void setEtat_lign(char etat_lign) {
-		this.etat_lign = etat_lign;
-	}
-	public int getNum_magasin() {
-		return num_magasin;
-	}
-	public void setNum_magasin(int num_magasin) {
-		this.num_magasin = num_magasin;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public boolean isFlag() {
@@ -166,16 +210,16 @@ public class DebarquementManifeste implements   Serializable {
 		this.flag = flag;
 	}
 
-	public Date getDate_mark() {
-		return date_mark;
+	public Date getDateMarkage() {
+		return dateMarkage;
 	}
 
-	public void setDate_mark(Date date_mark) {
-		this.date_mark = date_mark;
-	} 
-	 
+	public void setDateMarkage(Date dateMarkage) {
+		this.dateMarkage = dateMarkage;
+	}
 	
 	
 	
-	
+
+
 }

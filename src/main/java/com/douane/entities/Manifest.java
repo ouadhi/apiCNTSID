@@ -2,21 +2,21 @@ package com.douane.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 
-
+/**
+ * The persistent class for the manifest database table.
+ * 
+ */
 @Entity
-@Table(name="bae_dpw")
-@NamedQuery(name="BaeDpw.findAll", query="SELECT b FROM BaeDpw b")
-public class BaeDpw implements Serializable {
+@NamedQuery(name="Manifest.findAll", query="SELECT m FROM Manifest m")
+public class Manifest implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Id
-	@GeneratedValue
-	private  Long  id ; 
+	private int id;
 
 	@Column(name="an_manif")
 	private Timestamp anManif;
@@ -24,18 +24,17 @@ public class BaeDpw implements Serializable {
 	@Column(name="code_bur")
 	private short codeBur;
 
+	@Column(name="date_marquage")
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_bae")
-	private Date dateBae;
+	private Date dateMarquage;
+
+	private boolean flag;
 
 	@Column(name="num_bl")
 	private String numBl;
 
 	@Column(name="num_cts")
 	private String numCts;
-
-	@Column(name="num_decl")
-	private int numDecl;
 
 	@Column(name="num_group")
 	private short numGroup;
@@ -49,24 +48,17 @@ public class BaeDpw implements Serializable {
 	@Column(name="numero_vi")
 	private String numeroVi;
 
-	@Column(name="type_declaration")
-	private String typeDeclaration;
-	
-	@Column(name="flag")
-	private boolean  flag  ;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name="date_markage")
-	private Date dateMarkage;
+	@Column(name="tare_cts")
+	private short tareCts;
 
-	public BaeDpw() {
-	}
-	
-	public Long getId() {
-		return id;
+	public Manifest() {
 	}
 
-	public void setId(Long id) {
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -86,12 +78,20 @@ public class BaeDpw implements Serializable {
 		this.codeBur = codeBur;
 	}
 
-	public Date getDateBae() {
-		return this.dateBae;
+	public Date getDateMarquage() {
+		return this.dateMarquage;
 	}
 
-	public void setDateBae(Date dateBae) {
-		this.dateBae = dateBae;
+	public void setDateMarquage(Date dateMarquage) {
+		this.dateMarquage = dateMarquage;
+	}
+
+	public boolean getFlag() {
+		return this.flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
 	}
 
 	public String getNumBl() {
@@ -108,14 +108,6 @@ public class BaeDpw implements Serializable {
 
 	public void setNumCts(String numCts) {
 		this.numCts = numCts;
-	}
-
-	public int getNumDecl() {
-		return this.numDecl;
-	}
-
-	public void setNumDecl(int numDecl) {
-		this.numDecl = numDecl;
 	}
 
 	public short getNumGroup() {
@@ -150,33 +142,12 @@ public class BaeDpw implements Serializable {
 		this.numeroVi = numeroVi;
 	}
 
-	public String getTypeDeclaration() {
-		return this.typeDeclaration;
+	public short getTareCts() {
+		return this.tareCts;
 	}
 
-	public void setTypeDeclaration(String typeDeclaration) {
-		this.typeDeclaration = typeDeclaration;
+	public void setTareCts(short tareCts) {
+		this.tareCts = tareCts;
 	}
-
-	public boolean isFlag() {
-		return flag;
-	}
-
-	public void setFlag(boolean flag) {
-		this.flag = flag;
-	}
-
-	public Date getDateMarkage() {
-		return dateMarkage;
-	}
-
-	public void setDateMarkage(Date dateMarkage) {
-		this.dateMarkage = dateMarkage;
-	}
-	
-	
-	
-	
-	
 
 }

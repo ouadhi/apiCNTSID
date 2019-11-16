@@ -1,5 +1,6 @@
 package com.douane.controler;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,13 +56,16 @@ public class DeclarationPortController {
 	}
 	
 	
-	@PostMapping(path = "/market", produces = "application/json")
-	public void marketData(@RequestBody DeclarationPort data) {
-		if (repository.existsById(data.getId())) {
-			repository.save(data);
-			System.out.println("Data has been updated successfully :" + data);
+	@PostMapping(path = "/market/{id}", produces = "application/json")
+	public void marketData(@PathVariable(name = "id")  Long  id ) {
+		if (repository.existsById(id)) {
+			DeclarationPort declarationPort  =  repository.findById(id).get() ;
+			declarationPort.setFlag(true);
+			declarationPort.setDateMarkage(new Date());
+			repository.save(declarationPort);
+			System.out.println("Data has been updated successfully :" + id);
 		} else {
-			System.out.println("Record not exists with the Id: " + data.getId());
+			System.out.println("Record not exists with the Id: " + id);
 		}
 	}
 	

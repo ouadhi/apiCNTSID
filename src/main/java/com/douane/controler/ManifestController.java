@@ -12,50 +12,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.Gone;
 
-import com.douane.entities.VoyageGro;
-import com.douane.repository.VoyageGrosRepository;
-import com.douane.entities.VoyageGro;
-import com.douane.entities.VoyageGro;
+import com.douane.entities.Manifest;
+import com.douane.repository.ManifestRepository;
 
 
 @RestController
-@RequestMapping("/api/voyage-gros")
-public class VoyageGrosController {
-	
+@RequestMapping("/api/manifest")
+public class ManifestController {
 	@Autowired  
-	private VoyageGrosRepository repository  ;  
+	private ManifestRepository  repository  ;  
 	
 	@GetMapping(path = "/getdata")
-	public List<VoyageGro> findNotMarkedt ()  {
-		return repository.getDataNotMarked();  
+	public List<Manifest> findNotMarkedt ()  {
+		return repository.getDataNoMarked() ;
 	}
 	
 	@GetMapping(path = "/getalldata")
-	public List<VoyageGro> findAll ()  {
+	public List<Manifest> findAll ()  {
 		return repository.findAll() ; 
 	}
 	@GetMapping(path = "/getdata/{id}")
-	public Optional<VoyageGro> getDataById(@PathVariable(name = "id") long  id) {
+	public Optional<Manifest> getDataById(@PathVariable(name = "id") int  id) {
 		return repository.findById(id)  ; 
 	}
 
 	@DeleteMapping(path = "/deletebyid/{id}")
-	public void removebyId(@PathVariable(name = "id") long id) {
+	public void removebyId(@PathVariable(name = "id") int id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
 
 	@PostMapping(path = "/save", produces = "application/json")
-	public void createData(@RequestBody VoyageGro data) {
-		data.setFlag(false);
+	public void createData(@RequestBody Manifest data) {
+		data.setFlag(true);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
 
 	@PostMapping(path = "/update", produces = "application/json")
-	public void updateData(@RequestBody VoyageGro data) {
+	public void updateData(@RequestBody Manifest data) {
 		if (repository.existsById(data.getId())) {
 			repository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
@@ -65,15 +61,15 @@ public class VoyageGrosController {
 	}
 	
 	@PostMapping(path = "/market/{id}", produces = "application/json")
-	public void marketData(@PathVariable(name="id") Long id ) {
+	public void marketData(@PathVariable(name="id") int id ) {
 		if (repository.existsById(id))  {
-		   Optional<VoyageGro> optional =   repository.findById(id) ; 
-		   VoyageGro  VoyageGro = optional.get() ; 
-		   VoyageGro.setFlag(true);
-		   VoyageGro.setDateMarkage(new Date());
+		   Optional<Manifest> optional =   repository.findById(id) ; 
+		   Manifest  Manifest = optional.get() ; 
+		   Manifest.setFlag(true);
+		   Manifest.setDateMarquage(new Date());
 		   
-		   repository.save(VoyageGro)  ; 
-			System.out.println("Data has been marked successfully :" + VoyageGro.getId());
+		   repository.save(Manifest)  ; 
+			System.out.println("Data has been marked successfully :" + Manifest.getId());
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}

@@ -1,282 +1,407 @@
 package com.douane.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the ligne_manif database table.
+ * 
+ */
 @Entity
 @Table(name="ligne_manif")
-public class LigneManif implements  Serializable {
+@NamedQuery(name="LigneManif.findAll", query="SELECT l FROM LigneManif l")
+public class LigneManif implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue 
-	private Long  id  ; 
-	private Date an_manif; 
-	private int num_manif ; 
-	private int code_bur ; 
-	private int  num_ligne  ; 
-	private int num_group ;  
-	private Date date_manif ;  
-	private Date dat_date; 
-	private Date an_oper ; 
-	private int code_oper ;  
-	private Date date_rectif ;
-	private Date date_sit ; 
-	private String num_reference ; 
-	private String design_march ; 
-	private String lieu_chgt ;  
-	private int nbr_colism ; 
-	private int nbr_colise ;  
-	private int nbr_coliss ;  
-	private int nbr_colisd ; 
-	private float poidsb_m ; 
-	private float poidsb_r ; 
-	private int num_quitt ; 
-	private int  num_extrait ; 
-	private Date Date_transf ;  
-	private int num_situation ; 
-	private String motif  ;  
-	private int num_magasin ;  
-	private String nature  ; 
-	private String type_manif ;
-	private boolean  flag ; 
+	@GeneratedValue
+	private Long id ; 
+
+	@Column(name="an_manif")
+	private Timestamp anManif;
+
+	@Column(name="an_oper")
+	private Timestamp anOper;
+
+	@Column(name="code_bur")
+	private short codeBur;
+
+	@Column(name="code_oper")
+	private int codeOper;
+
+	@Column(name="dat_date")
+	private Timestamp datDate;
+
+	@Column(name="date_manif")
+	private Timestamp dateManif;
+
+	@Column(name="date_rectif")
+	private Timestamp dateRectif;
+
+	@Column(name="date_sit")
+	private Timestamp dateSit;
+
+	@Column(name="date_transf")
+	private Timestamp dateTransf;
+
+	@Column(name="design_march")
+	private String designMarch;
+
+	@Column(name="etat_lign")
+	private String etatLign;
+
+	@Column(name="lieu_chgt")
+	private String lieuChgt;
+
+	private String motif;
+
+	private String nature;
+
+	@Column(name="nbr_colisd")
+	private int nbrColisd;
+
+	@Column(name="nbr_colise")
+	private int nbrColise;
+
+	@Column(name="nbr_colism")
+	private int nbrColism;
+
+	@Column(name="nbr_colisr")
+	private int nbrColisr;
+
+	@Column(name="nbr_coliss")
+	private int nbrColiss;
+
+	@Column(name="num_extrait")
+	private int numExtrait;
+
+	@Column(name="num_group")
+	private short numGroup;
+
+	@Column(name="num_ligne")
+	private short numLigne;
+
+	@Column(name="num_magasin")
+	private short numMagasin;
+
+	@Column(name="num_manif")
+	private int numManif;
+
+	@Column(name="num_quitt")
+	private int numQuitt;
+
+	@Column(name="num_reference")
+	private String numReference;
+
+	@Column(name="num_situation")
+	private int numSituation;
+
+	@Column(name="poidsb_m")
+	private BigDecimal poidsbM;
+
+	@Column(name="poidsb_r")
+	private BigDecimal poidsbR;
+
+	@Column(name="poidsn_m")
+	private BigDecimal poidsnM;
+
+	@Column(name="poidsn_r")
+	private BigDecimal poidsnR;
+
+	@Column(name="type_manif")
+	private String typeManif;
+	
+	private boolean flag ;  
+	@Column(name = "date_markage")
 	@Temporal(TemporalType.DATE)
-	private Date date_mark ; 
-	public LigneManif(Long id, Date an_manif, int num_manif, int code_bur, int num_ligne, int num_group,
-			Date date_manif, Date dat_date, Date an_oper, int code_oper, Date date_rectif, Date date_sit,
-			String num_reference, String design_march, String lieu_chgt, int nbr_colism, int nbr_colise, int nbr_coliss,
-			int nbr_colisd, float poidsb_m, float poidsb_r, int num_quitt, int num_extrait, Date date_transf,
-			int num_situation, String motif, int num_magasin, String nature, String type_manif) {
-		this.id = id;
-		this.an_manif = an_manif;
-		this.num_manif = num_manif;
-		this.code_bur = code_bur;
-		this.num_ligne = num_ligne;
-		this.num_group = num_group;
-		this.date_manif = date_manif;
-		this.dat_date = dat_date;
-		this.an_oper = an_oper;
-		this.code_oper = code_oper;
-		this.date_rectif = date_rectif;
-		this.date_sit = date_sit;
-		this.num_reference = num_reference;
-		this.design_march = design_march;
-		this.lieu_chgt = lieu_chgt;
-		this.nbr_colism = nbr_colism;
-		this.nbr_colise = nbr_colise;
-		this.nbr_coliss = nbr_coliss;
-		this.nbr_colisd = nbr_colisd;
-		this.poidsb_m = poidsb_m;
-		this.poidsb_r = poidsb_r;
-		this.num_quitt = num_quitt;
-		this.num_extrait = num_extrait;
-		Date_transf = date_transf;
-		this.num_situation = num_situation;
-		this.motif = motif;
-		this.num_magasin = num_magasin;
-		this.nature = nature;
-		this.type_manif = type_manif;
-	}
+	private Date dateMarkage ; 
+
 	public LigneManif() {
 	}
-	public Long getId() {
-		return id;
+
+	public Timestamp getAnManif() {
+		return this.anManif;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setAnManif(Timestamp anManif) {
+		this.anManif = anManif;
 	}
-	public Date getAn_manif() {
-		return an_manif;
+
+	public Timestamp getAnOper() {
+		return this.anOper;
 	}
-	public void setAn_manif(Date an_manif) {
-		this.an_manif = an_manif;
+
+	public void setAnOper(Timestamp anOper) {
+		this.anOper = anOper;
 	}
-	public int getNum_manif() {
-		return num_manif;
+
+	public short getCodeBur() {
+		return this.codeBur;
 	}
-	public void setNum_manif(int num_manif) {
-		this.num_manif = num_manif;
+
+	public void setCodeBur(short codeBur) {
+		this.codeBur = codeBur;
 	}
-	public int getCode_bur() {
-		return code_bur;
+
+	public int getCodeOper() {
+		return this.codeOper;
 	}
-	public void setCode_bur(int code_bur) {
-		this.code_bur = code_bur;
+
+	public void setCodeOper(int codeOper) {
+		this.codeOper = codeOper;
 	}
-	public int getNum_ligne() {
-		return num_ligne;
+
+	public Timestamp getDatDate() {
+		return this.datDate;
 	}
-	public void setNum_ligne(int num_ligne) {
-		this.num_ligne = num_ligne;
+
+	public void setDatDate(Timestamp datDate) {
+		this.datDate = datDate;
 	}
-	public int getNum_group() {
-		return num_group;
+
+	public Timestamp getDateManif() {
+		return this.dateManif;
 	}
-	public void setNum_group(int num_group) {
-		this.num_group = num_group;
+
+	public void setDateManif(Timestamp dateManif) {
+		this.dateManif = dateManif;
 	}
-	public Date getDate_manif() {
-		return date_manif;
+
+	public Timestamp getDateRectif() {
+		return this.dateRectif;
 	}
-	public void setDate_manif(Date date_manif) {
-		this.date_manif = date_manif;
+
+	public void setDateRectif(Timestamp dateRectif) {
+		this.dateRectif = dateRectif;
 	}
-	public Date getDat_date() {
-		return dat_date;
+
+	public Timestamp getDateSit() {
+		return this.dateSit;
 	}
-	public void setDat_date(Date dat_date) {
-		this.dat_date = dat_date;
+
+	public void setDateSit(Timestamp dateSit) {
+		this.dateSit = dateSit;
 	}
-	public Date getAn_oper() {
-		return an_oper;
+
+	public Timestamp getDateTransf() {
+		return this.dateTransf;
 	}
-	public void setAn_oper(Date an_oper) {
-		this.an_oper = an_oper;
+
+	public void setDateTransf(Timestamp dateTransf) {
+		this.dateTransf = dateTransf;
 	}
-	public int getCode_oper() {
-		return code_oper;
+
+	public String getDesignMarch() {
+		return this.designMarch;
 	}
-	public void setCode_oper(int code_oper) {
-		this.code_oper = code_oper;
+
+	public void setDesignMarch(String designMarch) {
+		this.designMarch = designMarch;
 	}
-	public Date getDate_rectif() {
-		return date_rectif;
+
+	public String getEtatLign() {
+		return this.etatLign;
 	}
-	public void setDate_rectif(Date date_rectif) {
-		this.date_rectif = date_rectif;
+
+	public void setEtatLign(String etatLign) {
+		this.etatLign = etatLign;
 	}
-	public Date getDate_sit() {
-		return date_sit;
+
+	public String getLieuChgt() {
+		return this.lieuChgt;
 	}
-	public void setDate_sit(Date date_sit) {
-		this.date_sit = date_sit;
+
+	public void setLieuChgt(String lieuChgt) {
+		this.lieuChgt = lieuChgt;
 	}
-	public String getNum_reference() {
-		return num_reference;
-	}
-	public void setNum_reference(String num_reference) {
-		this.num_reference = num_reference;
-	}
-	public String getDesign_march() {
-		return design_march;
-	}
-	public void setDesign_march(String design_march) {
-		this.design_march = design_march;
-	}
-	public String getLieu_chgt() {
-		return lieu_chgt;
-	}
-	public void setLieu_chgt(String lieu_chgt) {
-		this.lieu_chgt = lieu_chgt;
-	}
-	public int getNbr_colism() {
-		return nbr_colism;
-	}
-	public void setNbr_colism(int nbr_colism) {
-		this.nbr_colism = nbr_colism;
-	}
-	public int getNbr_colise() {
-		return nbr_colise;
-	}
-	public void setNbr_colise(int nbr_colise) {
-		this.nbr_colise = nbr_colise;
-	}
-	public int getNbr_coliss() {
-		return nbr_coliss;
-	}
-	public void setNbr_coliss(int nbr_coliss) {
-		this.nbr_coliss = nbr_coliss;
-	}
-	public int getNbr_colisd() {
-		return nbr_colisd;
-	}
-	public void setNbr_colisd(int nbr_colisd) {
-		this.nbr_colisd = nbr_colisd;
-	}
-	public float getPoidsb_m() {
-		return poidsb_m;
-	}
-	public void setPoidsb_m(float poidsb_m) {
-		this.poidsb_m = poidsb_m;
-	}
-	public float getPoidsb_r() {
-		return poidsb_r;
-	}
-	public void setPoidsb_r(float poidsb_r) {
-		this.poidsb_r = poidsb_r;
-	}
-	public int getNum_quitt() {
-		return num_quitt;
-	}
-	public void setNum_quitt(int num_quitt) {
-		this.num_quitt = num_quitt;
-	}
-	public int getNum_extrait() {
-		return num_extrait;
-	}
-	public void setNum_extrait(int num_extrait) {
-		this.num_extrait = num_extrait;
-	}
-	public Date getDate_transf() {
-		return Date_transf;
-	}
-	public void setDate_transf(Date date_transf) {
-		Date_transf = date_transf;
-	}
-	public int getNum_situation() {
-		return num_situation;
-	}
-	public void setNum_situation(int num_situation) {
-		this.num_situation = num_situation;
-	}
+
 	public String getMotif() {
-		return motif;
+		return this.motif;
 	}
+
 	public void setMotif(String motif) {
 		this.motif = motif;
 	}
-	public int getNum_magasin() {
-		return num_magasin;
-	}
-	public void setNum_magasin(int num_magasin) {
-		this.num_magasin = num_magasin;
-	}
+
 	public String getNature() {
-		return nature;
+		return this.nature;
 	}
+
 	public void setNature(String nature) {
 		this.nature = nature;
 	}
-	public String getType_manif() {
-		return type_manif;
+
+	public int getNbrColisd() {
+		return this.nbrColisd;
 	}
-	public void setType_manif(String type_manif) {
-		this.type_manif = type_manif;
+
+	public void setNbrColisd(int nbrColisd) {
+		this.nbrColisd = nbrColisd;
 	}
+
+	public int getNbrColise() {
+		return this.nbrColise;
+	}
+
+	public void setNbrColise(int nbrColise) {
+		this.nbrColise = nbrColise;
+	}
+
+	public int getNbrColism() {
+		return this.nbrColism;
+	}
+
+	public void setNbrColism(int nbrColism) {
+		this.nbrColism = nbrColism;
+	}
+
+	public int getNbrColisr() {
+		return this.nbrColisr;
+	}
+
+	public void setNbrColisr(int nbrColisr) {
+		this.nbrColisr = nbrColisr;
+	}
+
+	public int getNbrColiss() {
+		return this.nbrColiss;
+	}
+
+	public void setNbrColiss(int nbrColiss) {
+		this.nbrColiss = nbrColiss;
+	}
+
+	public int getNumExtrait() {
+		return this.numExtrait;
+	}
+
+	public void setNumExtrait(int numExtrait) {
+		this.numExtrait = numExtrait;
+	}
+
+	public short getNumGroup() {
+		return this.numGroup;
+	}
+
+	public void setNumGroup(short numGroup) {
+		this.numGroup = numGroup;
+	}
+
+	public short getNumLigne() {
+		return this.numLigne;
+	}
+
+	public void setNumLigne(short numLigne) {
+		this.numLigne = numLigne;
+	}
+
+	public short getNumMagasin() {
+		return this.numMagasin;
+	}
+
+	public void setNumMagasin(short numMagasin) {
+		this.numMagasin = numMagasin;
+	}
+
+	public int getNumManif() {
+		return this.numManif;
+	}
+
+	public void setNumManif(int numManif) {
+		this.numManif = numManif;
+	}
+
+	public int getNumQuitt() {
+		return this.numQuitt;
+	}
+
+	public void setNumQuitt(int numQuitt) {
+		this.numQuitt = numQuitt;
+	}
+
+	public String getNumReference() {
+		return this.numReference;
+	}
+
+	public void setNumReference(String numReference) {
+		this.numReference = numReference;
+	}
+
+	public int getNumSituation() {
+		return this.numSituation;
+	}
+
+	public void setNumSituation(int numSituation) {
+		this.numSituation = numSituation;
+	}
+
+	public BigDecimal getPoidsbM() {
+		return this.poidsbM;
+	}
+
+	public void setPoidsbM(BigDecimal poidsbM) {
+		this.poidsbM = poidsbM;
+	}
+
+	public BigDecimal getPoidsbR() {
+		return this.poidsbR;
+	}
+
+	public void setPoidsbR(BigDecimal poidsbR) {
+		this.poidsbR = poidsbR;
+	}
+
+	public BigDecimal getPoidsnM() {
+		return this.poidsnM;
+	}
+
+	public void setPoidsnM(BigDecimal poidsnM) {
+		this.poidsnM = poidsnM;
+	}
+
+	public BigDecimal getPoidsnR() {
+		return this.poidsnR;
+	}
+
+	public void setPoidsnR(BigDecimal poidsnR) {
+		this.poidsnR = poidsnR;
+	}
+
+	public String getTypeManif() {
+		return this.typeManif;
+	}
+
+	public void setTypeManif(String typeManif) {
+		this.typeManif = typeManif;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public boolean isFlag() {
 		return flag;
 	}
+
 	public void setFlag(boolean flag) {
 		this.flag = flag;
 	}
-	public Date getDate_mark() {
-		return date_mark;
+
+	public Date getDateMarkage() {
+		return dateMarkage;
 	}
-	public void setDate_mark(Date date_mark) {
-		this.date_mark = date_mark;
-	} 
-	
-	
-	
-	
-	
+
+	public void setDateMarkage(Date dateMarkage) {
+		this.dateMarkage = dateMarkage;
+	}
 	
 	
 	

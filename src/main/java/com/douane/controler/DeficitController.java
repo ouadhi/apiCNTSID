@@ -1,5 +1,6 @@
 package com.douane.controler;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.Deficit;
-import com.douane.entities.TodoItems;
 import com.douane.repository.DeficitRepository;
 
 @RestController
@@ -56,13 +56,16 @@ public class DeficitController {
 	}
 	
 	
-	@PostMapping(path = "/market", produces = "application/json")
-	public void marketData(@RequestBody Deficit data) {
-		if (deficitRepository.existsById(data.getId())) {
+	@PostMapping(path = "/market/{id}", produces = "application/json")
+	public void marketData(@PathVariable(name = "id")  Long id ) {
+		if (deficitRepository.existsById(id)) {
+			Deficit  data  =  deficitRepository.findById(id).get() ; 
+			data.setFlag(true);
+			data.setDateMarkage(new Date());
 			deficitRepository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
 		} else {
-			System.out.println("Record not exists with the Id: " + data.getId());
+			System.out.println("Record not exists with the Id: " + id);
 		}
 	}
 	

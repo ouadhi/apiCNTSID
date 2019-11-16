@@ -1,75 +1,273 @@
 package com.douane.entities;
-
 import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+/**
+ * The persistent class for the transfer database table.
+ * 
+ */
 @Entity
-@Table(name="transfer")
-public class Transfer implements Serializable{
-	
+@NamedQuery(name="Transfer.findAll", query="SELECT t FROM Transfer t")
+public class Transfer implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue
-	private  Long id; 
-	@Temporal(TemporalType.DATE)
-	private Date an_trans  ; 
-	private int  num_trans ; 
-	private Date  date_trans ; 
-	private int code_bur ; 
-	private Date an_manif ;  
-	private int num_manif ;
-	private int num_ligne ;
-	private int num_group  ; 
-	private String num_depot  ;  
-	private String chassis ; 
-	private String desing_march  ; 
-	private int nbr_colist ; 
-	private int nbr_colisd ;  
-	private Date date_depot ;  
-	private String lieu_trans  ;  
-	private String nom_oper ;  
-	private String adr_oper ; 
-	private String provenance ; 
-	private String lieu_stock ; 
-	private Date date_apur ;
-	private boolean  flag  ; 
-	@Temporal(TemporalType.DATE)
-	private Date date_mark  ; 
 	
-	public Transfer(Date an_trans, int num_trans, Date date_trans, int code_bur, Date an_manif, int num_manif,
-			int num_ligne, int num_group, String num_depot, String chassis, String desing_march, int nbr_colist,
-			int nbr_colisd, Date date_depot, String lieu_trans, String nom_oper, String adr_oper, String provenance,
-			String lieu_stock, Date date_apur) {
-		this.an_trans = an_trans;
-		this.num_trans = num_trans;
-		this.date_trans = date_trans;
-		this.code_bur = code_bur;
-		this.an_manif = an_manif;
-		this.num_manif = num_manif;
-		this.num_ligne = num_ligne;
-		this.num_group = num_group;
-		this.num_depot = num_depot;
-		this.chassis = chassis;
-		this.desing_march = desing_march;
-		this.nbr_colist = nbr_colist;
-		this.nbr_colisd = nbr_colisd;
-		this.date_depot = date_depot;
-		this.lieu_trans = lieu_trans;
-		this.nom_oper = nom_oper;
-		this.adr_oper = adr_oper;
-		this.provenance = provenance;
-		this.lieu_stock = lieu_stock;
-		this.date_apur = date_apur;
-	}
+	@Id 
+	private  Long  id ; 
+
+	@Column(name="adr_oper")
+	private String adrOper;
+
+	@Column(name="an_manif")
+	private Timestamp anManif;
+
+	@Column(name="an_trans")
+	private Timestamp anTrans;
+
+	private String chassis;
+
+	@Column(name="code_bur")
+	private short codeBur;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_apur")
+	private Date dateApur;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_depot")
+	private Date dateDepot;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_trans")
+	private Date dateTrans;
+
+	@Column(name="design_march")
+	private String designMarch;
+
+	@Column(name="lieu_stock")
+	private String lieuStock;
+
+	@Column(name="lieu_trans")
+	private String lieuTrans;
+
+	@Column(name="nbr_colisd")
+	private int nbrColisd;
+
+	@Column(name="nbr_colist")
+	private int nbrColist;
+
+	@Column(name="nom_oper")
+	private String nomOper;
+
+	@Column(name="num_apur")
+	private int numApur;
+
+	@Column(name="num_depot")
+	private String numDepot;
+
+	@Column(name="num_group")
+	private short numGroup;
+
+	@Column(name="num_ligne")
+	private short numLigne;
+
+	@Column(name="num_manif")
+	private int numManif;
+
+	@Column(name="num_trans")
+	private int numTrans;
+
+	@Column(name="poidsb_d")
+	private BigDecimal poidsbD;
+
+	private String provenance;
+	
+	private boolean flag ;
+	
+	@Column(name = "date_markage")
+	@Temporal(TemporalType.DATE)
+	private Date dateMarkage ; 
 
 	public Transfer() {
+	}
+
+	public String getAdrOper() {
+		return this.adrOper;
+	}
+
+	public void setAdrOper(String adrOper) {
+		this.adrOper = adrOper;
+	}
+
+	public Timestamp getAnManif() {
+		return this.anManif;
+	}
+
+	public void setAnManif(Timestamp anManif) {
+		this.anManif = anManif;
+	}
+
+	public Timestamp getAnTrans() {
+		return this.anTrans;
+	}
+
+	public void setAnTrans(Timestamp anTrans) {
+		this.anTrans = anTrans;
+	}
+
+	public String getChassis() {
+		return this.chassis;
+	}
+
+	public void setChassis(String chassis) {
+		this.chassis = chassis;
+	}
+
+	public short getCodeBur() {
+		return this.codeBur;
+	}
+
+	public void setCodeBur(short codeBur) {
+		this.codeBur = codeBur;
+	}
+
+	public Date getDateApur() {
+		return this.dateApur;
+	}
+
+	public void setDateApur(Date dateApur) {
+		this.dateApur = dateApur;
+	}
+
+	public Date getDateDepot() {
+		return this.dateDepot;
+	}
+
+	public void setDateDepot(Date dateDepot) {
+		this.dateDepot = dateDepot;
+	}
+
+	public Date getDateTrans() {
+		return this.dateTrans;
+	}
+
+	public void setDateTrans(Date dateTrans) {
+		this.dateTrans = dateTrans;
+	}
+
+	public String getDesignMarch() {
+		return this.designMarch;
+	}
+
+	public void setDesignMarch(String designMarch) {
+		this.designMarch = designMarch;
+	}
+
+	public String getLieuStock() {
+		return this.lieuStock;
+	}
+
+	public void setLieuStock(String lieuStock) {
+		this.lieuStock = lieuStock;
+	}
+
+	public String getLieuTrans() {
+		return this.lieuTrans;
+	}
+
+	public void setLieuTrans(String lieuTrans) {
+		this.lieuTrans = lieuTrans;
+	}
+
+	public int getNbrColisd() {
+		return this.nbrColisd;
+	}
+
+	public void setNbrColisd(int nbrColisd) {
+		this.nbrColisd = nbrColisd;
+	}
+
+	public int getNbrColist() {
+		return this.nbrColist;
+	}
+
+	public void setNbrColist(int nbrColist) {
+		this.nbrColist = nbrColist;
+	}
+
+	public String getNomOper() {
+		return this.nomOper;
+	}
+
+	public void setNomOper(String nomOper) {
+		this.nomOper = nomOper;
+	}
+
+	public int getNumApur() {
+		return this.numApur;
+	}
+
+	public void setNumApur(int numApur) {
+		this.numApur = numApur;
+	}
+
+	public String getNumDepot() {
+		return this.numDepot;
+	}
+
+	public void setNumDepot(String numDepot) {
+		this.numDepot = numDepot;
+	}
+
+	public short getNumGroup() {
+		return this.numGroup;
+	}
+
+	public void setNumGroup(short numGroup) {
+		this.numGroup = numGroup;
+	}
+
+	public short getNumLigne() {
+		return this.numLigne;
+	}
+
+	public void setNumLigne(short numLigne) {
+		this.numLigne = numLigne;
+	}
+
+	public int getNumManif() {
+		return this.numManif;
+	}
+
+	public void setNumManif(int numManif) {
+		this.numManif = numManif;
+	}
+
+	public int getNumTrans() {
+		return this.numTrans;
+	}
+
+	public void setNumTrans(int numTrans) {
+		this.numTrans = numTrans;
+	}
+
+	public BigDecimal getPoidsbD() {
+		return this.poidsbD;
+	}
+
+	public void setPoidsbD(BigDecimal poidsbD) {
+		this.poidsbD = poidsbD;
+	}
+
+	public String getProvenance() {
+		return this.provenance;
+	}
+
+	public void setProvenance(String provenance) {
+		this.provenance = provenance;
 	}
 
 	public Long getId() {
@@ -80,166 +278,6 @@ public class Transfer implements Serializable{
 		this.id = id;
 	}
 
-	public Date getAn_trans() {
-		return an_trans;
-	}
-
-	public void setAn_trans(Date an_trans) {
-		this.an_trans = an_trans;
-	}
-
-	public int getNum_trans() {
-		return num_trans;
-	}
-
-	public void setNum_trans(int num_trans) {
-		this.num_trans = num_trans;
-	}
-
-	public Date getDate_trans() {
-		return date_trans;
-	}
-
-	public void setDate_trans(Date date_trans) {
-		this.date_trans = date_trans;
-	}
-
-	public int getCode_bur() {
-		return code_bur;
-	}
-
-	public void setCode_bur(int code_bur) {
-		this.code_bur = code_bur;
-	}
-
-	public Date getAn_manif() {
-		return an_manif;
-	}
-
-	public void setAn_manif(Date an_manif) {
-		this.an_manif = an_manif;
-	}
-
-	public int getNum_manif() {
-		return num_manif;
-	}
-
-	public void setNum_manif(int num_manif) {
-		this.num_manif = num_manif;
-	}
-
-	public int getNum_ligne() {
-		return num_ligne;
-	}
-
-	public void setNum_ligne(int num_ligne) {
-		this.num_ligne = num_ligne;
-	}
-
-	public int getNum_group() {
-		return num_group;
-	}
-
-	public void setNum_group(int num_group) {
-		this.num_group = num_group;
-	}
-
-	public String getNum_depot() {
-		return num_depot;
-	}
-
-	public void setNum_depot(String num_depot) {
-		this.num_depot = num_depot;
-	}
-
-	public String getChassis() {
-		return chassis;
-	}
-
-	public void setChassis(String chassis) {
-		this.chassis = chassis;
-	}
-
-	public String getDesing_march() {
-		return desing_march;
-	}
-
-	public void setDesing_march(String desing_march) {
-		this.desing_march = desing_march;
-	}
-
-	public int getNbr_colist() {
-		return nbr_colist;
-	}
-
-	public void setNbr_colist(int nbr_colist) {
-		this.nbr_colist = nbr_colist;
-	}
-
-	public int getNbr_colisd() {
-		return nbr_colisd;
-	}
-
-	public void setNbr_colisd(int nbr_colisd) {
-		this.nbr_colisd = nbr_colisd;
-	}
-
-	public Date getDate_depot() {
-		return date_depot;
-	}
-
-	public void setDate_depot(Date date_depot) {
-		this.date_depot = date_depot;
-	}
-
-	public String getLieu_trans() {
-		return lieu_trans;
-	}
-
-	public void setLieu_trans(String lieu_trans) {
-		this.lieu_trans = lieu_trans;
-	}
-
-	public String getNom_oper() {
-		return nom_oper;
-	}
-
-	public void setNom_oper(String nom_oper) {
-		this.nom_oper = nom_oper;
-	}
-
-	public String getAdr_oper() {
-		return adr_oper;
-	}
-
-	public void setAdr_oper(String adr_oper) {
-		this.adr_oper = adr_oper;
-	}
-
-	public String getProvenance() {
-		return provenance;
-	}
-
-	public void setProvenance(String provenance) {
-		this.provenance = provenance;
-	}
-
-	public String getLieu_stock() {
-		return lieu_stock;
-	}
-
-	public void setLieu_stock(String lieu_stock) {
-		this.lieu_stock = lieu_stock;
-	}
-
-	public Date getDate_apur() {
-		return date_apur;
-	}
-
-	public void setDate_apur(Date date_apur) {
-		this.date_apur = date_apur;
-	}
-
 	public boolean isFlag() {
 		return flag;
 	}
@@ -248,16 +286,13 @@ public class Transfer implements Serializable{
 		this.flag = flag;
 	}
 
-	public Date getDate_mark() {
-		return date_mark;
+	public Date getDateMarkage() {
+		return dateMarkage;
 	}
 
-	public void setDate_mark(Date date_mark) {
-		this.date_mark = date_mark;
+	public void setDateMarkage(Date dateMarkage) {
+		this.dateMarkage = dateMarkage;
 	}
-
-	
-	
 	
 	
 	

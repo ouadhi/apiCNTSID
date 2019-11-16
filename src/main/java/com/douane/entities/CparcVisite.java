@@ -1,74 +1,96 @@
 package com.douane.entities;
-
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-
+/**
+ * The persistent class for the cparcvisite database table.
+ * 
+ */
 @Entity
-@Table(name="cparcvisite")
-public class CparcVisite implements Serializable   {
-
+@NamedQuery(name="Cparcvisite.findAll", query="SELECT c FROM Cparcvisite c")
+public class Cparcvisite implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue
-	private Long  id;  
-	private String  numero_vi ; 
-	private String num_bl ; 
-	private String num_cts ;  
-	private Date  date_transfert ;
-	private boolean  flag  ;   
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="date_transfert")
+	private Date dateTransfert;
 	
-	public CparcVisite(String numero_vi, String num_bl, String num_cts, Date date_transfert) {
-		this.numero_vi = numero_vi;
-		this.num_bl = num_bl;
-		this.num_cts = num_cts;
-		this.date_transfert = date_transfert;
+	@Id
+	private Long id;
+
+	@Column(name="num_bl")
+	private String numBl;
+
+	@Column(name="num_cts")
+	private String numCts;
+
+	@Column(name="numero_vi")
+	private String numeroVi;
+	
+	@Column(name = "date_markage")
+	private Date DateMarkage ; 
+	private boolean flage ; 
+
+	public Cparcvisite() {
 	}
-	public CparcVisite() {
+
+	public Date getDateTransfert() {
+		return this.dateTransfert;
 	}
+
+	public void setDateTransfert(Date dateTransfert) {
+		this.dateTransfert = dateTransfert;
+	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNumero_vi() {
-		return numero_vi;
+
+	public String getNumBl() {
+		return this.numBl;
 	}
-	public void setNumero_vi(String numero_vi) {
-		this.numero_vi = numero_vi;
+
+	public void setNumBl(String numBl) {
+		this.numBl = numBl;
 	}
-	public String getNum_bl() {
-		return num_bl;
+
+	public String getNumCts() {
+		return this.numCts;
 	}
-	public void setNum_bl(String num_bl) {
-		this.num_bl = num_bl;
+
+	public void setNumCts(String numCts) {
+		this.numCts = numCts;
 	}
-	public String getNum_cts() {
-		return num_cts;
+
+	public String getNumeroVi() {
+		return this.numeroVi;
 	}
-	public void setNum_cts(String num_cts) {
-		this.num_cts = num_cts;
+
+	public void setNumeroVi(String numeroVi) {
+		this.numeroVi = numeroVi;
 	}
-	public Date getDate_transfert() {
-		return date_transfert;
+
+	public Date getDateMarkage() {
+		return DateMarkage;
 	}
-	public void setDate_transfert(Date date_transfert) {
-		this.date_transfert = date_transfert;
-	}  
-	public boolean isFlag() {
-		return flag;
+
+	public void setDateMarkage(Date dateMarkage) {
+		DateMarkage = dateMarkage;
 	}
-	public void setFlag(boolean flag) {
-		this.flag = flag;
+
+	public boolean isFlage() {
+		return flage;
 	}
-	
-	
+
+	public void setFlage(boolean flage) {
+		this.flage = flage;
+	}
 	
 	
 
