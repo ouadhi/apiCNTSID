@@ -54,7 +54,7 @@ public class CparcVisiteController {
 
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Cparcvisite data) {
-		data.setFlage(false);
+		data.setFlag(false);
 		cparcVisiteRepository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
@@ -81,7 +81,7 @@ public class CparcVisiteController {
 		if (cparcVisiteRepository.existsById(id))  {
 		   Optional<Cparcvisite> optional =   cparcVisiteRepository.findById(id) ; 
 		   Cparcvisite  CparcVisite = optional.get() ; 
-		   CparcVisite.setFlage(true);
+		   CparcVisite.setFlag(true);
 		   CparcVisite.setDateMarkage(new Date());
 		   cparcVisiteRepository.save(CparcVisite)  ; 
 			System.out.println("Data has been marked successfully :" + CparcVisite.getId());

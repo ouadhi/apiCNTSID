@@ -10,7 +10,7 @@ import com.douane.entities.Cparcvisite;
 
 public interface  CparcVisiteRepository extends  JpaRepository<Cparcvisite, Long>{
 	
-	@Query("SELECT  c FROM  CparcVisite  c WHERE c.flag =  false ")
-	public List<Cparcvisite>  getDataNotMarked () ; ; 
+	@Query("SELECT  c FROM  Cparcvisite  c WHERE c.flag =  false ")
+	public List<Cparcvisite>  getDataNotMarked (); 
 
 }

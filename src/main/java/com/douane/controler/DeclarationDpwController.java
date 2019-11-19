@@ -29,7 +29,7 @@ public class DeclarationDpwController {
 	}
 	
 	@GetMapping(path = "/getalldata")
-	public List<DeclarationDpw> findAll ()  {
+	public List<DeclarationDpw> getAll ()  {
 		return repository.findAll() ; 
 	}
 	@GetMapping(path = "/getdata/{id}")

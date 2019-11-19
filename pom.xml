@@ -35,8 +35,8 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.ibm.informix</groupId> <artifactId>jdbc</artifactId> 
-			<version>4.10.8.1</version> </dependency> -->
+		<dependency> <groupId>com.ibm.informix</groupId> <artifactId>jdbc</artifactId> 
+			<version>4.10.8.1</version> </dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>

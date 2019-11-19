@@ -9,7 +9,7 @@ import com.douane.entities.Dstr;
 
 public interface DstrRepository extends JpaRepository<Dstr, Long>{
 	
-	@Query("SELECT d FROM Dstr d WEHERE d.flag = false  ")
+	@Query("SELECT d FROM Dstr d WHERE d.flag = false  ")
 	public List<Dstr>  getDataNotMarked() ; 
 
 }

@@ -9,7 +9,7 @@ import com.douane.entities.LigneManif;
 
 public interface LigneManifRepository extends JpaRepository<LigneManif, Long> {
 	
-	@Query("SEELCT l FROM LigneManif l  WHERE l.flag = false  ")
+	@Query("SELECT lign FROM LigneManif lign  WHERE lign.flag = false  ")
 	public List<LigneManif> getDataNotMarked() ;  
 
 }

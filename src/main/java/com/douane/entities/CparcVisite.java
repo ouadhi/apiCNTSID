@@ -18,6 +18,7 @@ public class Cparcvisite implements Serializable {
 	private Date dateTransfert;
 	
 	@Id
+	@GeneratedValue
 	private Long id;
 
 	@Column(name="num_bl")
@@ -30,8 +31,9 @@ public class Cparcvisite implements Serializable {
 	private String numeroVi;
 	
 	@Column(name = "date_markage")
+	@Temporal(TemporalType.DATE)
 	private Date DateMarkage ; 
-	private boolean flage ; 
+	private boolean flag ; 
 
 	public Cparcvisite() {
 	}
@@ -84,12 +86,12 @@ public class Cparcvisite implements Serializable {
 		DateMarkage = dateMarkage;
 	}
 
-	public boolean isFlage() {
-		return flage;
+	public boolean isFlag() {
+		return flag;
 	}
 
-	public void setFlage(boolean flage) {
-		this.flage = flage;
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 	
 	

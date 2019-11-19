@@ -9,6 +9,6 @@ import com.douane.entities.VoyageGro;
 
 public interface VoyageGrosRepository  extends  JpaRepository<VoyageGro,Long>{
 	
-	@Query("SELECT v  FROM  VoyageGros v  WHERE v.flag  =  false   ")
+	@Query("SELECT v  FROM  VoyageGro v  WHERE v.flag  =  false   ")
 	public  List<VoyageGro> getDataNotMarked (); 
 }

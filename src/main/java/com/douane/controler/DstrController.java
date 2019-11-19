@@ -19,7 +19,7 @@ import com.douane.repository.DstrRepository;
 import com.douane.repository.DstrRepository;
 
 @RestController
-@RequestMapping("/api/decl-dpw")
+@RequestMapping("/api/dstr")
 public class DstrController {
 	
 	@Autowired  
