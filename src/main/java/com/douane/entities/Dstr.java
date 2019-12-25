@@ -11,7 +11,7 @@ public class Dstr implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private  Long  id ; 
 
 	@Column(name="adr_frs")
