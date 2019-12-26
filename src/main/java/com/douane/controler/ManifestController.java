@@ -45,7 +45,7 @@ public class ManifestController {
 
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Manifest data) {
-		data.setFlag(true);
+		data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
@@ -73,6 +73,21 @@ public class ManifestController {
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}
+	}
+	
+	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
+	public void markedlist(@PathVariable(name="start") int start   ,@PathVariable(name="end") int end    ) {
+		try {
+			
+			System.out.println(start +" "+ end);
+			repository.setMareked(start, end);
+			System.out.println("Data has been marked successfully :");
+		} catch (Exception e) {
+			System.out.println("Record not exists");
+			System.err.println(e.getMessage());
+		}
+			
+		
 	}
 
 }
