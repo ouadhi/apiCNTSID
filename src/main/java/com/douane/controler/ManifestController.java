@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.Manifest;
+import com.douane.entities.Message;
 import com.douane.repository.ManifestRepository;
 
 
@@ -23,9 +24,23 @@ public class ManifestController {
 	@Autowired  
 	private ManifestRepository  repository  ;  
 	
+	private Message message = new  Message() ;
+	
+	private String title =  "MANIFEST" ; 
+
+	
 	@GetMapping(path = "/getdata")
-	public List<Manifest> findNotMarkedt ()  {
-		return repository.getDataNoMarked() ;
+	public Message findNotMarkedt ()  {
+		
+		int start  =(int) repository.findStartEndId().get(0).get("start") ;  
+		int end = (int) repository.findStartEndId().get(0).get("end") ;  
+	    message.setId(this.title+"-"+start+"-"+end) ; 
+		message.setCount(repository.getCount());
+		message.setStart_id(start);
+		message.setEnd_id(end);
+		message.setDescription("manifest liste ");
+		message.setContant( repository.getDataNoMarked());
+		return message;
 	}
 	
 	@GetMapping(path = "/getalldata")
@@ -86,8 +101,13 @@ public class ManifestController {
 			System.out.println("Record not exists");
 			System.err.println(e.getMessage());
 		}
-			
-		
 	}
+	
+	@GetMapping(path = "/getcount")
+	public int  getcount ()  {
+		return repository.getCount()  ; 
+	}
+	
+	
 
 }

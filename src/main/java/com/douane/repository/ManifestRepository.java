@@ -1,6 +1,7 @@
 package com.douane.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,5 +21,13 @@ public interface ManifestRepository extends JpaRepository<Manifest, Integer>{
 	@Transactional
 	@Query(value = "update Manifest  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") int start ,@Param("end") int end  ) ; 
+	
+	@Query("Select Count(*) from Manifest WHERE  flag  = false ")
+	public int getCount () ; 
+	
+	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Manifest where flag='f' ")
+	public List<Map<String, Object>> findStartEndId() ; 
+	
+	
 
 }
