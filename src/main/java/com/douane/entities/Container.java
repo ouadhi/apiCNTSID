@@ -5,11 +5,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
-
-/**
- * The persistent class for the containers database table.
- * 
- */
 @Entity
 @Table(name="containers")
 @NamedQuery(name="Container.findAll", query="SELECT c FROM Container c")
