@@ -5,11 +5,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
-
-/**
- * The persistent class for the debarquement_manifeste database table.
- * 
- */
 @Entity
 @Table(name="debarquement_manifeste")
 @NamedQuery(name="DebarquementManifeste.findAll", query="SELECT d FROM DebarquementManifeste d")
