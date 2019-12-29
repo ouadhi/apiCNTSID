@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.BaeDpw;
+import com.douane.entities.Message;
 import com.douane.repository.BaeDpwRepository;
 
 @RestController
@@ -23,9 +24,22 @@ public class BaeDpwController {
 	@Autowired  
 	private BaeDpwRepository  baeDpwRepository  ;  
 	
+	private Message<BaeDpw> message  =  new Message<BaeDpw>() ;  
+	private String title ="Bae DpWorld" ; 
+	
 	@GetMapping(path = "/getdata")
-	public List<BaeDpw> findNotMarkedt ()  {
-		return baeDpwRepository.getDataNotMarked();  
+	public Message<BaeDpw>findNotMarkedt ()  {
+		
+
+		long start  =(long) baeDpwRepository.findStartEndId().get(0).get("start") ;  
+		long end = (long) baeDpwRepository.findStartEndId().get(0).get("end") ;  
+	    message.setId(this.title+"-"+start+"-"+end) ; 
+		message.setCount(baeDpwRepository.getCount());
+		message.setStart_id(start);
+		message.setEnd_id(end);
+		message.setDescription("manifest liste ");
+		message.setContant( baeDpwRepository.getDataNotMarked());	
+		return message ; 
 	}
 	
 	@GetMapping(path = "/getalldata")
@@ -60,7 +74,7 @@ public class BaeDpwController {
 		}
 	}
 	
-	@PostMapping(path = "/market/{id}", produces = "application/json")
+	@PostMapping(path = "/marked/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (baeDpwRepository.existsById(id))  {
 		   Optional<BaeDpw> optional =   baeDpwRepository.findById(id) ; 
@@ -72,6 +86,17 @@ public class BaeDpwController {
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}
+	}
+	
+	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
+	public void marketData(@PathVariable(name="start") int start , @PathVariable(name="end") int end ) {
+		try {
+			System.out.println("Data has been marked successfully ");
+			baeDpwRepository.setMareked(start, end);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+			
 	}
 
 }

@@ -24,16 +24,16 @@ public class ManifestController {
 	@Autowired  
 	private ManifestRepository  repository  ;  
 	
-	private Message message = new  Message() ;
+	private Message<Manifest> message = new Message<Manifest>() ; 
 	
 	private String title =  "MANIFEST" ; 
 
 	
 	@GetMapping(path = "/getdata")
-	public Message findNotMarkedt ()  {
+	public Message<Manifest> findNotMarkedt ()  {
 		
-		int start  =(int) repository.findStartEndId().get(0).get("start") ;  
-		int end = (int) repository.findStartEndId().get(0).get("end") ;  
+		Long start  =(Long) repository.findStartEndId().get(0).get("start") ;  
+		Long end = (Long)  repository.findStartEndId().get(0).get("end") ;  
 	    message.setId(this.title+"-"+start+"-"+end) ; 
 		message.setCount(repository.getCount());
 		message.setStart_id(start);
@@ -48,12 +48,12 @@ public class ManifestController {
 		return repository.findAll() ; 
 	}
 	@GetMapping(path = "/getdata/{id}")
-	public Optional<Manifest> getDataById(@PathVariable(name = "id") int  id) {
+	public Optional<Manifest> getDataById(@PathVariable(name = "id") Long  id) {
 		return repository.findById(id)  ; 
 	}
 
 	@DeleteMapping(path = "/deletebyid/{id}")
-	public void removebyId(@PathVariable(name = "id") int id) {
+	public void removebyId(@PathVariable(name = "id") Long id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
@@ -76,7 +76,7 @@ public class ManifestController {
 	}
 	
 	@PostMapping(path = "/market/{id}", produces = "application/json")
-	public void marketData(@PathVariable(name="id") int id ) {
+	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
 		   Optional<Manifest> optional =   repository.findById(id) ; 
 		   Manifest  Manifest = optional.get() ; 
@@ -91,7 +91,7 @@ public class ManifestController {
 	}
 	
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") int start   ,@PathVariable(name="end") int end    ) {
+	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {
 			
 			System.out.println(start +" "+ end);

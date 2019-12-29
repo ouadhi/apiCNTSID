@@ -10,13 +10,15 @@ import com.douane.entities.ToDoItem;
 import com.douane.repository.TodoItemRepository;
 
 @SpringBootApplication
-public class DouaneServiceProjectApplication implements  CommandLineRunner {
+public class DouaneServiceProjectApplication {
 	 
 	@Autowired  
 	private  TodoItemRepository  itemRepository ; 
 	public static void main(String[] args) {
 		SpringApplication.run(DouaneServiceProjectApplication.class, args);
 	}
+	
+	/*
   
 	@Override
 	public void run(String... args) throws Exception {
@@ -30,6 +32,8 @@ public class DouaneServiceProjectApplication implements  CommandLineRunner {
 		System.out.println("lancement"); 
 		
 	}
+	
+	*/
 	
 
 	

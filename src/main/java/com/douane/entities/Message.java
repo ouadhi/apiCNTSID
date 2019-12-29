@@ -9,21 +9,22 @@ import javax.persistence.Id;
 import javax.ws.rs.core.Link;
 
 
-public class Message {
+
+public class Message<T> {
 	
 	private String id ; 
 	
 	private int  count  ; 
 	
-	private int start_id ; 
+	private Long start_id ; 
 	
-	private int end_id ; 
+	private Long end_id ; 
 	
 	private  String description ;  
 	
 	private Link  marked_link ;
 	
-	private List<Manifest> contant ; 
+	private List<T>  contant ; 
 	
 	private Date marekedDate  ; 
 	
@@ -47,21 +48,7 @@ public class Message {
 		this.count = count;
 	}
 
-	public int getStart_id() {
-		return start_id;
-	}
-
-	public void setStart_id(int start_id) {
-		this.start_id = start_id;
-	}
-
-	public int getEnd_id() {
-		return end_id;
-	}
-
-	public void setEnd_id(int end_id) {
-		this.end_id = end_id;
-	}
+	
 
 	public String getDescription() {
 		return description;
@@ -75,15 +62,31 @@ public class Message {
 		return marked_link;
 	}
 
+	public Long getStart_id() {
+		return start_id;
+	}
+
+	public void setStart_id(Long start_id) {
+		this.start_id = start_id;
+	}
+
+	public Long getEnd_id() {
+		return end_id;
+	}
+
+	public void setEnd_id(Long end_id) {
+		this.end_id = end_id;
+	}
+
 	public void setMarked_link(Link marked_link) {
 		this.marked_link = marked_link;
 	}
 
-	public List<Manifest> getContant() {
+	public List<T> getContant() {
 		return contant;
 	}
 
-	public void setContant(List<Manifest> contant) {
+	public void setContant(List<T> contant) {
 		this.contant = contant;
 	}
 
