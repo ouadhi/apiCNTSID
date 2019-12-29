@@ -37,7 +37,7 @@ public class BaeDpwController {
 		message.setCount(baeDpwRepository.getCount());
 		message.setStart_id(start);
 		message.setEnd_id(end);
-		message.setDescription("manifest liste ");
+		message.setDescription("bae  liste ");
 		message.setContant( baeDpwRepository.getDataNotMarked());	
 		return message ; 
 	}
@@ -89,7 +89,7 @@ public class BaeDpwController {
 	}
 	
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void marketData(@PathVariable(name="start") int start , @PathVariable(name="end") int end ) {
+	public void marketData(@PathVariable(name="start") long start , @PathVariable(name="end") long end ) {
 		try {
 			System.out.println("Data has been marked successfully ");
 			baeDpwRepository.setMareked(start, end);

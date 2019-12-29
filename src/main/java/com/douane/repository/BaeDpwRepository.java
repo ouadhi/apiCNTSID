@@ -18,8 +18,8 @@ public interface BaeDpwRepository extends JpaRepository<BaeDpw, Long> {
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update BaeDpw  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
-	public void setMareked(@Param("start") int start ,@Param("end") int end  ) ; 
+	@Query(value = "update bae_dpw  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
+	public void setMareked(@Param("start") long start ,@Param("end") long end  ) ; 
 	
 	@Query("Select Count(*) from BaeDpw WHERE  flag  = false ")
 	public int getCount () ; 
