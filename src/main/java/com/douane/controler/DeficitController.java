@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.Deficit;
+import com.douane.entities.Message;
 import com.douane.repository.DeficitRepository;
 
 @RestController
@@ -23,9 +24,26 @@ public class DeficitController {
 	@Autowired
 	private  DeficitRepository deficitRepository  ;  
 	
+	private String title  = "Deficit" ;  
+	private Message<Deficit>  message  = new Message<Deficit>() ; 
+	
 	@GetMapping(path = "/getdata")
-	public List<Deficit> findAll ()  {
-		return  deficitRepository.findAll() ;  
+	public Message<Deficit> findNomatkedData ()  {
+		Long start  =(Long) deficitRepository.findStartEndId().get(0).get("start") ;  
+		Long end = (Long)  deficitRepository.findStartEndId().get(0).get("end") ;  
+	    message.setId(this.title+"-"+start+"-"+end) ; 
+		message.setCount(deficitRepository.getCount());
+		message.setStart_id(start);
+		message.setEnd_id(end);
+		message.setDescription("manifest liste ");
+		message.setContant( deficitRepository.getDataNoMarked());
+		return message;
+	} 
+    
+	
+	@GetMapping(path = "/getalldata")
+	public List<Deficit> findAllData(){
+		return   deficitRepository.findAll() ; 
 	}
 	
 	@GetMapping(path = "/getdata/{id}")
@@ -69,6 +87,24 @@ public class DeficitController {
 		}
 	}
 	
+	
+	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
+	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+		try {
+			
+			System.out.println(start +" "+ end);
+			deficitRepository.setMareked(start, end);
+			System.out.println("Data has been marked successfully :");
+		} catch (Exception e) {
+			System.out.println("Record not exists");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	@GetMapping(path = "/getcount")
+	public int  getcount ()  {
+		return deficitRepository.getCount()  ; 
+	}
 	
 
 }
