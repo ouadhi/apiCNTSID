@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.DeclarationPort;
+import com.douane.entities.Message;
 import com.douane.repository.DeclarationPortRepository;
 
 @RestController
@@ -21,11 +22,21 @@ import com.douane.repository.DeclarationPortRepository;
 public class DeclarationPortController {
 	
 	@Autowired
-	private  DeclarationPortRepository repository  ;  
+	private  DeclarationPortRepository repository  ; 
+	private Message<DeclarationPort> message  = new Message<DeclarationPort>()  ; 
+	private String title =  "DeclarationPort" ; 
 	
 	@GetMapping(path = "/getdata")
-	public List<DeclarationPort> findAll ()  {
-		return  repository.findAll() ;  
+	public Message<DeclarationPort>findAll ()  {
+		Long start  =(Long) repository.findStartEndId().get(0).get("start") ;  
+		Long end = (Long)  repository.findStartEndId().get(0).get("end") ;  
+	    message.setId(this.title+"-"+start+"-"+end) ; 
+		message.setCount(repository.getCount());
+		message.setStart_id(start);
+		message.setEnd_id(end);
+		message.setDescription("manifest liste ");
+		message.setContant( repository.getNotMarked());
+		return message;
 	}
 	
 	@GetMapping(path = "/getdata/{id}")
@@ -69,6 +80,23 @@ public class DeclarationPortController {
 		}
 	}
 	
+	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
+	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+		try {
+			
+			System.out.println(start +" "+ end);
+			repository.setMareked(start, end);
+			System.out.println("Data has been marked successfully :");
+		} catch (Exception e) {
+			System.out.println("Record not exists");
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	@GetMapping(path = "/getcount")
+	public int  getcount ()  {
+		return repository.getCount()  ; 
+	}
 	
 
 }
