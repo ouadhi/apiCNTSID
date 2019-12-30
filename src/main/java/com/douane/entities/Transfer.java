@@ -5,11 +5,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.sql.Timestamp;
 
-
-/**
- * The persistent class for the transfer database table.
- * 
- */
 @Entity
 @NamedQuery(name="Transfer.findAll", query="SELECT t FROM Transfer t")
 public class Transfer implements Serializable {
