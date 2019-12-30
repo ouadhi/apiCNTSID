@@ -4,11 +4,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
-
-/**
- * The persistent class for the voyage_gros database table.
- * 
- */
 @Entity
 @Table(name="voyage_gros")
 @NamedQuery(name="VoyageGro.findAll", query="SELECT v FROM VoyageGro v")
