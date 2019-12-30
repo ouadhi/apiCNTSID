@@ -6,11 +6,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 
-
-/**
- * The persistent class for the ligne_manif database table.
- * 
- */
 @Entity
 @Table(name="ligne_manif")
 @NamedQuery(name="LigneManif.findAll", query="SELECT l FROM LigneManif l")
