@@ -73,7 +73,7 @@ public class DeclarationDpwController {
 		}
 	}
 	
-	@PostMapping(path = "/market/{id}", produces = "application/json")
+	@PostMapping(path ="/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
 		   Optional<DeclarationDpw> optional =   repository.findById(id) ; 

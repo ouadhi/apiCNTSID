@@ -5,11 +5,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
-
-/**
- * The persistent class for the manifest database table.
- * 
- */
 @Entity
 @NamedQuery(name="Manifest.findAll", query="SELECT m FROM Manifest m")
 public class Manifest implements Serializable {

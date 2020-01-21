@@ -29,16 +29,17 @@ public class BaeDpwController {
 	
 	@GetMapping(path = "/getdata")
 	public Message<BaeDpw>findNotMarkedt ()  {
+		Long start  =(Long) baeDpwRepository.findStartEndId().get(0).get("start") ;  
+		Long end = (Long) baeDpwRepository.findStartEndId().get(0).get("end") ;  
 		
-
-		long start  =(long) baeDpwRepository.findStartEndId().get(0).get("start") ;  
-		long end = (long) baeDpwRepository.findStartEndId().get(0).get("end") ;  
 	    message.setId(this.title+"-"+start+"-"+end) ; 
 		message.setCount(baeDpwRepository.getCount());
 		message.setStart_id(start);
 		message.setEnd_id(end);
 		message.setDescription("bae  liste ");
+		
 		message.setContant( baeDpwRepository.getDataNotMarked());	
+	
 		return message ; 
 	}
 	

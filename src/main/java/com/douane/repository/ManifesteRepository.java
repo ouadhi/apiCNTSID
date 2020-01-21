@@ -9,22 +9,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.douane.entities.BaeDpw;
+import com.douane.entities.Manifeste;
 
-public interface BaeDpwRepository extends JpaRepository<BaeDpw, Long> {
+
+public interface ManifesteRepository extends JpaRepository<Manifeste, Long>{
 	
-	@Query("SELECT  b FROM  BaeDpw b WHERE b.flag=false")
-	public List<BaeDpw> getDataNotMarked(); 
+	@Query("SELECT  b FROM  Manifeste b WHERE b.flag=false")
+	public List<Manifeste> getDataNotMarked(); 
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update bae_dpw  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
+	@Query(value = "update Manifeste  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") long start ,@Param("end") long end  ) ; 
 	
-	@Query("Select Count(*) from BaeDpw WHERE  flag  = false ")
+	@Query("Select Count(*) from Manifeste WHERE  flag  = false ")
 	public int getCount () ; 
 	
-	@Query("select new map(min(id) as start ,  max(id) as end ) from  BaeDpw where flag='f' ")
+	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Manifeste where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
 
 }
