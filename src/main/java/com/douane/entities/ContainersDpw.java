@@ -1,4 +1,4 @@
-package com.douane.entities;
+  package com.douane.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;

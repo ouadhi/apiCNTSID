@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,13 @@ public class BaeDpwController {
 	private Message<BaeDpw> message  =  new Message<BaeDpw>() ;  
 	private String title ="Bae DpWorld" ; 
 	
+	@PreAuthorize("hasRole('Dpworld') or hasRole('Dpworld')" )
 	@GetMapping(path = "/getdata")
 	public Message<BaeDpw>findNotMarkedt ()  {
 		Long start  =(Long) baeDpwRepository.findStartEndId().get(0).get("start") ;  
 		Long end = (Long) baeDpwRepository.findStartEndId().get(0).get("end") ;  
 		
-	    message.setId(this.title+"-"+start+"-"+end) ; 
+	    message.setId(this.title+"-"+start+"-"+end) ;  
 		message.setCount(baeDpwRepository.getCount());
 		message.setStart_id(start);
 		message.setEnd_id(end);
