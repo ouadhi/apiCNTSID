@@ -18,8 +18,14 @@ import com.douane.entities.BaeDpw;
 import com.douane.entities.Message;
 import com.douane.repository.BaeDpwRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
-@RequestMapping("/api/bae")
+@Api(value="Bae endpoint ", description="Operations pertaining to Bae Dpworld ")
+@RequestMapping("/api/v1/bae")
 public class BaeDpwController {
 	
 	@Autowired  
@@ -28,7 +34,15 @@ public class BaeDpwController {
 	private Message<BaeDpw> message  =  new Message<BaeDpw>() ;  
 	private String title ="Bae DpWorld" ; 
 	
-	@PreAuthorize("hasRole('Dpworld') or hasRole('Dpworld')" )
+	@PreAuthorize("hasRole('admin') or hasRole('Dpworld')" )
+	@ApiOperation(value = "View a list of available BAE ", response = BaeDpw.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@GetMapping(path = "/getdata")
 	public Message<BaeDpw>findNotMarkedt ()  {
 		Long start  =(Long) baeDpwRepository.findStartEndId().get(0).get("start") ;  
