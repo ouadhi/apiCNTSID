@@ -19,12 +19,14 @@ import com.douane.entities.Message;
 import com.douane.repository.BaeDpwRepository;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value="Bae endpoint ", description="Operations pertaining to Bae Dpworld ")
+@Api(value="Bae endpoint" )
+@ApiModel("BAE")
 @RequestMapping("/api/v1/bae")
 public class BaeDpwController {
 	
@@ -34,7 +36,7 @@ public class BaeDpwController {
 	private Message<BaeDpw> message  =  new Message<BaeDpw>() ;  
 	private String title ="Bae DpWorld" ; 
 	
-	@PreAuthorize("hasRole('admin') or hasRole('Dpworld')" )
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
 	@ApiOperation(value = "View a list of available BAE ", response = BaeDpw.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
@@ -59,28 +61,53 @@ public class BaeDpwController {
 		return message ; 
 	}
 	
+	
+	@PreAuthorize("hasRole('admin')" )
+	@ApiOperation(value = "View a list of All BAE in DataBase ", response = BaeDpw.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@GetMapping(path = "/getalldata")
 	public List<BaeDpw> findAll ()  {
 		return baeDpwRepository.getDataNotMarked();  
 	}
+	
+	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)" )
+	@ApiOperation(value = "View an item of BAE defined by ID  ", response = BaeDpw.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved item"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@GetMapping(path = "/getdata/{id}")
 	public Optional<BaeDpw> getDataById(@PathVariable(name = "id") long  id) {
 		return baeDpwRepository.findById(id)  ; 
 	}
-
+	
+	@PreAuthorize("hasRole('admin') " )
+	@ApiOperation(value = "remove a  BAE item defined by ID ")
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		baeDpwRepository.deleteById(id);
-		System.out.println("Record has been deleted with the id: " + id);
 	}
-
+	
+	@PreAuthorize("hasRole('admin') " )
+	@ApiOperation(value = "Save a  BAE item  ")
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody BaeDpw data) {
 		data.setFlag(false);
 		baeDpwRepository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
-
+	
+	@PreAuthorize("hasRole('admin') " )
+	@ApiOperation(value = "update a  BAE item ")
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody BaeDpw data) {
 		if (baeDpwRepository.existsById(data.getId())) {
@@ -91,6 +118,8 @@ public class BaeDpwController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)" )
+	@ApiOperation(value = "Mark an item specified by its ID")
 	@PostMapping(path = "/marked/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (baeDpwRepository.existsById(id))  {
@@ -105,6 +134,8 @@ public class BaeDpwController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)" )
+	@ApiOperation(value = "Mark an collection item specified by start  ID and End ID")
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void marketData(@PathVariable(name="start") long start , @PathVariable(name="end") long end ) {
 		try {
