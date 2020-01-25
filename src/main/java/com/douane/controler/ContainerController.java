@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,15 @@ import com.douane.entities.Container;
 import com.douane.entities.Message;
 import com.douane.repository.ContainersRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+
 
 //  end  point annotation 
 @RestController
-@RequestMapping("/api/container")
+@RequestMapping("/api/v1/container")
+@Api(value="Bae end-point" , description = "Operations pertaining to Containers" )
+@ApiModel("BAE")
 
 public class ContainerController {
 	
@@ -36,6 +42,7 @@ public class ContainerController {
 	 *   data  not  consumed
 	 */
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@GetMapping(path = "/getdata")
 	public Message<Container> findNotMarkedt ()  {
 		
@@ -51,29 +58,35 @@ public class ContainerController {
 		return message;  
 	}
 	
+	
+	@PreAuthorize("hasRole('admin)")
 	@GetMapping(path = "/getalldata")
 	public List<Container> findAll ()  {
 		return containersRepository.findAll();  
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@GetMapping(path = "/getdata/{id}")
 	public Optional<Container> getDataById(@PathVariable(name = "id") long  id) {
 		return containersRepository.findById(id) ; 
 	}
-
+	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		containersRepository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
-
+	
+	@PreAuthorize("hasRole('admin')")
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Container data) {
 		data.setFlag(false);
 		containersRepository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
-
+	
+	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody Container data) {
 		if (containersRepository.existsById(data.getId())) {
@@ -91,6 +104,7 @@ public class ContainerController {
 	 *  save object 
 	 */
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (containersRepository.existsById(id))  {
@@ -106,6 +120,7 @@ public class ContainerController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {

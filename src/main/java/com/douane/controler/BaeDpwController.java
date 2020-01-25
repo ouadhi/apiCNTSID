@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value="Bae endpoint" )
+@Api(value="Bae end-point" , description = "Operations pertaining to BAE" )
 @ApiModel("BAE")
 @RequestMapping("/api/v1/bae")
 public class BaeDpwController {
