@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +14,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.Deficit;
 import com.douane.entities.Message;
 import com.douane.repository.DeficitRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
-@RequestMapping("/api/deficit")
+@RequestMapping("/api/v1/deficit")
+@Api(value="Deficit  end-point" , description = "Operations pertaining to BAE" )
 public class DeficitController {
 	
 	@Autowired
@@ -27,6 +35,15 @@ public class DeficitController {
 	private String title  = "Deficit" ;  
 	private Message<Deficit>  message  = new Message<Deficit>() ; 
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') and  hasRole('epal')" )
+	@ApiOperation(value = "View a list of available BAE ", response = BaeDpw.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    }
+    )
 	@GetMapping(path = "/getdata")
 	public Message<Deficit> findNomatkedData ()  {
 		Long start  =(Long) deficitRepository.findStartEndId().get(0).get("start") ;  
@@ -40,7 +57,7 @@ public class DeficitController {
 		return message;
 	} 
     
-	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') and  hasRole('epal')" )
 	@GetMapping(path = "/getalldata")
 	public List<Deficit> findAllData(){
 		return   deficitRepository.findAll() ; 
@@ -73,7 +90,7 @@ public class DeficitController {
 		}
 	}
 	
-	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') and  hasRole('epal')" )
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name = "id")  Long id ) {
 		if (deficitRepository.existsById(id)) {
@@ -88,6 +105,7 @@ public class DeficitController {
 	}
 	
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') and  hasRole('epal')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {

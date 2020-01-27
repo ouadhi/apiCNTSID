@@ -42,7 +42,7 @@ public class ContainerController {
 	 *   data  not  consumed
 	 */
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
+	@PreAuthorize("hasRole('admin')" )
 	@GetMapping(path = "/getdata")
 	public Message<Container> findNotMarkedt ()  {
 		
@@ -59,19 +59,19 @@ public class ContainerController {
 	}
 	
 	
-	@PreAuthorize("hasRole('admin)")
+	@PreAuthorize("hasRole('admin')")
 	@GetMapping(path = "/getalldata")
 	public List<Container> findAll ()  {
 		return containersRepository.findAll();  
 	}
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
+	@PreAuthorize("hasRole('admin') " )
 	@GetMapping(path = "/getdata/{id}")
 	public Optional<Container> getDataById(@PathVariable(name = "id") long  id) {
 		return containersRepository.findById(id) ; 
 	}
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
+	@PreAuthorize("hasRole('admin') " )
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		containersRepository.deleteById(id);
@@ -104,7 +104,7 @@ public class ContainerController {
 	 *  save object 
 	 */
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
+	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (containersRepository.existsById(id))  {
@@ -120,7 +120,7 @@ public class ContainerController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
+	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {

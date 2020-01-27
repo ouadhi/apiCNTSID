@@ -62,8 +62,8 @@ public class BaeDpwController {
 	}
 	
 	
-	@PreAuthorize("hasRole('admin')" )
-	@ApiOperation(value = "View a list of All BAE in DataBase ", response = BaeDpw.class)
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
+	@ApiOperation(value = "View a list of All manifeste in DataBase ", response = BaeDpw.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

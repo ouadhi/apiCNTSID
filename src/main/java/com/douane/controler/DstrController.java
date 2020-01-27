@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,15 +14,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.Dstr;
 import com.douane.entities.Manifest;
 import com.douane.entities.Message;
 import com.douane.entities.Dstr;
 import com.douane.repository.DstrRepository;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import com.douane.repository.DstrRepository;
 
-@RestController
-@RequestMapping("api/dstr")
+@Api(value="Dstr end-point" , description = "Operations pertaining to Dstr" )
+@ApiModel("BAE")
+@RequestMapping("api/v1/dstr")
 public class DstrController {
 	
 	@Autowired  
@@ -29,6 +39,15 @@ public class DstrController {
 	private String  title = "Dstr"  ; 
 	private Message<Dstr> message = new  Message<Dstr>()  ;
 	
+	@ApiOperation(value = "View a list of All dstr in DataBase ", response = BaeDpw.class)
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "Successfully retrieved list"),
+	        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	}
+	)
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@GetMapping(path = "/getdata")
 	public Message<Dstr> findNotMarkedt ()  {
 		
@@ -43,28 +62,35 @@ public class DstrController {
 		return message;
 	}
 	
+	@PreAuthorize("hasRole('admin')" )
 	@GetMapping(path = "/getalldata")
 	public List<Dstr> findAll ()  {
 		return repository.findAll() ; 
 	}
+	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@GetMapping(path = "/getdata/{id}")
 	public Optional<Dstr> getDataById(@PathVariable(name = "id") long  id) {
 		return repository.findById(id)  ; 
 	}
 
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
-
+	
+	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Dstr data) {
 		data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
-
+	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody Dstr data) {
 		if (repository.existsById(data.getId())) {
@@ -75,6 +101,7 @@ public class DstrController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
@@ -90,6 +117,7 @@ public class DstrController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {
@@ -103,6 +131,7 @@ public class DstrController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@GetMapping(path = "/getcount")
 	public int  getcount ()  {
 		return repository.getCount()  ; 

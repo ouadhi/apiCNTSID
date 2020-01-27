@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.douane.entities.Contrevisite;
 import com.douane.entities.Message;
 import com.douane.repository.ConterVisiteRepository;
+
+import io.swagger.annotations.Api;
 //end  point annotation 
 @RestController
 @RequestMapping("/api/container-visite")
+@Api(value="Containers-Visiteld end-point" , description = "Operations pertaining to Containers-Visite" )
+
 public class ConterVisiteContrioller {
 
 	//  inject  Repository  
@@ -32,7 +37,7 @@ public class ConterVisiteContrioller {
 	/*  find all data  when flag  = true 
 	 *   data  not  consumed
 	 */
-	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')")
 	@GetMapping(path = "/getdata")
 	public Message<Contrevisite> findNotMarkedt ()  {
 		Long start  =(Long) repository.findStartEndId().get(0).get("start") ;  
@@ -46,22 +51,27 @@ public class ConterVisiteContrioller {
 		return message;
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@GetMapping(path = "/getalldata")
 	public List<Contrevisite> findAll ()  {
 		return repository.findAll(); 
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@GetMapping(path = "/getdata/{id}")
 	public Optional<Contrevisite> getDataById(@PathVariable(name = "id") long  id) {
 		return repository.findById(id) ; 
 	}
-
+    
+	@PreAuthorize("hasRole('admin')" )
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
-
+	
+	
+	@PreAuthorize("hasRole('admin')")
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Contrevisite data) {
 		data.setFlag(false);
@@ -69,6 +79,7 @@ public class ConterVisiteContrioller {
 		System.out.println(" data has been saved successfully: " + data);
 	}
 
+	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody Contrevisite data) {
 		if (repository.existsById(data.getId())) {
@@ -86,6 +97,7 @@ public class ConterVisiteContrioller {
 	 *  save object 
 	 */
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
@@ -101,6 +113,7 @@ public class ConterVisiteContrioller {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {
@@ -114,6 +127,7 @@ public class ConterVisiteContrioller {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@GetMapping(path = "/getcount")
 	public int  getcount ()  {
 		return repository.getCount()  ; 

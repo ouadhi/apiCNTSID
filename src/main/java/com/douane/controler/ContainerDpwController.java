@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +19,13 @@ import com.douane.entities.ContainersDpw;
 import com.douane.entities.Message;
 import com.douane.repository.ContainersDpwRepository;
 
-@RestController
-@RequestMapping("/api/containerDpw")
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 
+@RestController
+@RequestMapping("/api/v1/containerDpw")
+@Api(value="Containers-DPworld end-point" , description = "Operations pertaining to Containers-DPworld" )
+@ApiModel("Containers-DPworld")
 public class ContainerDpwController {
 	
 //  inject  Repository  
@@ -34,7 +39,7 @@ public class ContainerDpwController {
 	/*  find all data  when flag  = true 
 	 *   data  not  consumed
 	 */
-	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
 	@GetMapping(path = "/getdata")
 	public Message<ContainersDpw> findNotMarkedt ()  {
 		
@@ -50,22 +55,26 @@ public class ContainerDpwController {
 		return message;  
 	}
 	
+	@PreAuthorize("hasRole('admin')" )
 	@GetMapping(path = "/getalldata")
 	public List<ContainersDpw> findAll ()  {
 		return repository.findAll();  
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
 	@GetMapping(path = "/getdata/{id}")
 	public Optional<ContainersDpw> getDataById(@PathVariable(name = "id") long  id) {
 		return repository.findById(id) ; 
 	}
-
+	
+	@PreAuthorize("hasRole('admin') " )
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
-
+	
+	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody ContainersDpw data) {
 		data.setFlag(false);
@@ -73,6 +82,7 @@ public class ContainerDpwController {
 		System.out.println(" data has been saved successfully: " + data);
 	}
 
+	@PreAuthorize("hasRole('admin')")
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody ContainersDpw data) {
 		if (repository.existsById(data.getId())) {
@@ -89,7 +99,7 @@ public class ContainerDpwController {
 	 *  update  object set  flag =  true 
 	 *  save object 
 	 */
-	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
@@ -105,6 +115,7 @@ public class ContainerDpwController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {
