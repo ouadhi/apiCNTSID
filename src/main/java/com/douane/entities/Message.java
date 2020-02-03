@@ -1,12 +1,17 @@
 package com.douane.entities;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.ws.rs.core.Link;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 
@@ -26,7 +31,9 @@ public class Message<T> {
 	
 	private List<T>  contant ; 
 	
-	private Date marekedDate  ; 
+	private Date marekedDate  ;
+	
+	private URI  link  ;
 	
 	public Message() {
 		super();
@@ -97,6 +104,17 @@ public class Message<T> {
 	public void setMarekedDate(Date marekedDate) {
 		this.marekedDate = marekedDate;
 	} 
+	
+	public URI getLink() throws URISyntaxException {
+		return new URI(
+			      "somescheme", "theuser:thepassword", "someuthority", 80,
+			      "/some/path", "thequery", "somefragment");
+			 
+	}
+	
+	public void setLink(URI link) {
+		this.link = link;
+	}
 	
 	
 	

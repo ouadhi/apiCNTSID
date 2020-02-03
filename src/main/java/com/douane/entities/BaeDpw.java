@@ -1,7 +1,13 @@
 package com.douane.entities;
 
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -58,6 +64,13 @@ public class BaeDpw implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_markage")
 	private Date dateMarkage;
+	
+	//  ingnore attribute mapping and  in  the same  time  we innclude in  Json  Response  .  
+	//  we  use  transient annotation  to  ingnore  mapping  
+	// and   seconde  annotation  to  include it  in  the  Json  reponse .   
+	@Transient
+	@JsonInclude
+	private URI  link  ; //  or  String   linke  
 
 	public BaeDpw() {
 	}
@@ -172,6 +185,17 @@ public class BaeDpw implements Serializable {
 
 	public void setDateMarkage(Date dateMarkage) {
 		this.dateMarkage = dateMarkage;
+	}
+	
+	public URI getLink() throws URISyntaxException {
+		return new URI(
+			      "somescheme", "theuser:thepassword", "someuthority", 80,
+			      "/some/path", "thequery", "somefragment");
+			 
+	}
+	
+	public void setLink(URI link) {
+		this.link = link;
 	}
 	
 	

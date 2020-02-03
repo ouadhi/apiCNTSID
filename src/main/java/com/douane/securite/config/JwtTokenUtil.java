@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.douane.securite.model.JwtValidResquest;
+import com.douane.securite.model.JwtValideResponse;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -44,7 +47,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	//check if the token has expired
-	private Boolean isTokenExpired(String token) {
+	public Boolean isTokenExpired(String token) {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(new Date());
 	}
@@ -71,5 +74,15 @@ public class JwtTokenUtil implements Serializable {
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
+	
+	
+	public JwtValideResponse tokenValid  (String  token ) {
+		JwtValideResponse  response  = new JwtValideResponse()  ; 
+		response.setToken(token);
+		response.setValide(isTokenExpired(token));
+		response.setDateExpiration(getExpirationDateFromToken(token));
+		
+		return response  ; 
 	}
 }

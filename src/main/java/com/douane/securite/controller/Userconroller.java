@@ -23,12 +23,6 @@ public class Userconroller {
 	@Autowired  
 	private  UserDao  dao   ;  
 	
-    @RequestMapping(value="/hellofrom", method = RequestMethod.GET)
-    public String sayhello(){
-    	return "hello" ; 
-    }
-
-	
 	//@Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value="/users", method = RequestMethod.GET)

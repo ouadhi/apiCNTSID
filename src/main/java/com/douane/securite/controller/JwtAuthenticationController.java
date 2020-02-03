@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.douane.securite.config.JwtTokenUtil;
 import com.douane.securite.model.JwtRequest;
 import com.douane.securite.model.JwtResponse;
+import com.douane.securite.model.JwtValidResquest;
+import com.douane.securite.model.JwtValideResponse;
 import com.douane.securite.model.UserDTO;
 import com.douane.securite.service.JwtUserDetailsService;
 
@@ -59,5 +61,11 @@ public class JwtAuthenticationController {
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
+	}
+	
+	
+	@RequestMapping(value = "/token-info"  , method = RequestMethod.POST )
+	private JwtValideResponse tokeninformation(@RequestBody JwtValidResquest resquest)  {
+		return  jwtTokenUtil.tokenValid(resquest.getToken()) ; 
 	}
 }

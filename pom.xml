@@ -18,6 +18,8 @@
 	<name>douane-service-project</name>
 	<description>Demo project for java web service project</description>
 
+	<packaging>jar</packaging>
+
 
 	<dependencies>
 		<dependency>
@@ -48,6 +50,7 @@
 			<optional>true</optional>
 		</dependency>
 
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -77,6 +80,14 @@
 			<version>2.7.0</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.ibm.informix/jdbc -->
+		<dependency>
+			<groupId>com.ibm.informix</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>4.50.2.fix-1</version>
+		</dependency>
+
+
 	</dependencies>
 
 
@@ -85,6 +96,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.douane.DouaneServiceProjectApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
