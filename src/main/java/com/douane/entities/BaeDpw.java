@@ -6,6 +6,9 @@ import java.net.URISyntaxException;
 
 import javax.persistence.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.douane.config.Properties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
@@ -18,7 +21,6 @@ import java.sql.Timestamp;
 @NamedQuery(name="BaeDpw.findAll", query="SELECT b FROM BaeDpw b")
 public class BaeDpw implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,13 +67,19 @@ public class BaeDpw implements Serializable {
 	@Column(name="date_markage")
 	private Date dateMarkage;
 	
+	
 	//  ingnore attribute mapping and  in  the same  time  we innclude in  Json  Response  .  
 	//  we  use  transient annotation  to  ingnore  mapping  
-	// and   seconde  annotation  to  include it  in  the  Json  reponse .   
+	// and   seconde  annotation  to  include it  in  the  Json  response .   
+	/*
 	@Transient
 	@JsonInclude
-	private URI  link  ; //  or  String   linke  
-
+	private URI  linkGetById  ; //  or  String   link
+	
+	*/
+	
+	
+	
 	public BaeDpw() {
 	}
 	
@@ -187,20 +195,7 @@ public class BaeDpw implements Serializable {
 		this.dateMarkage = dateMarkage;
 	}
 	
-	public URI getLink() throws URISyntaxException {
-		return new URI(
-			      "somescheme", "theuser:thepassword", "someuthority", 80,
-			      "/some/path", "thequery", "somefragment");
-			 
-	}
-	
-	public void setLink(URI link) {
-		this.link = link;
-	}
-	
-	
-	
-	
+
 	
 
 }

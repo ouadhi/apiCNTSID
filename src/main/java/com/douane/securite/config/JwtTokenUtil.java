@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -85,4 +87,13 @@ public class JwtTokenUtil implements Serializable {
 		
 		return response  ; 
 	}
+	
+	public  String getUsernameFromHttpRequest(HttpServletRequest request) {
+		String requestTokenHeader = request.getHeader("Authorization");
+		String jwtToken = requestTokenHeader.substring(7);
+		String username  = getUsernameFromToken(jwtToken) ;  
+		return  username ;  
+		
+	}
+
 }

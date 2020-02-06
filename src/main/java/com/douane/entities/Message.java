@@ -27,13 +27,11 @@ public class Message<T> {
 	
 	private  String description ;  
 	
-	private Link  marked_link ;
-	
 	private List<T>  contant ; 
 	
 	private Date marekedDate  ;
 	
-	private URI  link  ;
+	private URI  linkMarke;
 	
 	public Message() {
 		super();
@@ -65,10 +63,6 @@ public class Message<T> {
 		this.description = description;
 	}
 
-	public Link getMarked_link() {
-		return marked_link;
-	}
-
 	public Long getStart_id() {
 		return start_id;
 	}
@@ -83,10 +77,6 @@ public class Message<T> {
 
 	public void setEnd_id(Long end_id) {
 		this.end_id = end_id;
-	}
-
-	public void setMarked_link(Link marked_link) {
-		this.marked_link = marked_link;
 	}
 
 	public List<T> getContant() {
@@ -105,17 +95,13 @@ public class Message<T> {
 		this.marekedDate = marekedDate;
 	} 
 	
-	public URI getLink() throws URISyntaxException {
-		return new URI(
-			      "somescheme", "theuser:thepassword", "someuthority", 80,
-			      "/some/path", "thequery", "somefragment");
-			 
+	public URI getLinkMarke() {
+		return linkMarke;
 	}
 	
-	public void setLink(URI link) {
-		this.link = link;
+	public void setLinkMarke(URI linkMarke) {
+		this.linkMarke = linkMarke;
 	}
-	
 	
 	
 	

@@ -18,7 +18,7 @@ public interface BaeDpwRepository extends JpaRepository<BaeDpw, Long> {
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update bae_dpw  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
+	@Query(value = "update bae_dpw  set  flag='t'  ,   where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") long start ,@Param("end") long end  ) ; 
 	
 	@Query("Select Count(*) from BaeDpw WHERE  flag  = false ")
@@ -26,5 +26,8 @@ public interface BaeDpwRepository extends JpaRepository<BaeDpw, Long> {
 	
 	@Query("select new map(min(id) as start ,  max(id) as end ) from  BaeDpw where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("SELECT  b FROM  BaeDpw b WHERE b.id between :start and  :end  ")
+	public List<BaeDpw> getDataBetweenIs(@Param("start") long start ,@Param("end") long end ); 
 
 }
