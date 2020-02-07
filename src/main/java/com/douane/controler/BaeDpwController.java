@@ -164,7 +164,7 @@ public class BaeDpwController {
 	
 	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)")
 	@ApiOperation(value = "get a collection items whene id between two ids ")
-	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
+	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
 	public List<BaeDpw> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
 		try {
 			return baeDpwRepository.getDataBetweenIs(start, end) ; 
