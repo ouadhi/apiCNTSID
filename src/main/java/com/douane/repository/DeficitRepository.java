@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.Deficit;
 
 public interface DeficitRepository extends  JpaRepository<Deficit, Long> {
@@ -25,5 +26,9 @@ public interface DeficitRepository extends  JpaRepository<Deficit, Long> {
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Deficit where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("SELECT  b FROM  Deficit b WHERE b.id between :start and  :end  ")
+	public List<Deficit> getDataBetweenIs(@Param("start") long start ,@Param("end") long end ); 
+
 
 }

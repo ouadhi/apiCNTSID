@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +20,11 @@ import com.douane.entities.BaeDpw;
 import com.douane.entities.Deficit;
 import com.douane.entities.Manifeste;
 import com.douane.entities.Message;
+import com.douane.entities.MessageDAO;
 import com.douane.repository.DeficitRepository;
 import com.douane.repository.ManifesteRepository;
+import com.douane.repository.MessageRepository;
+import com.douane.securite.config.JwtTokenUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -35,6 +40,10 @@ public class ManifesteController {
 
 	@Autowired
 	private ManifesteRepository repository;
+	@Autowired
+	private MessageRepository messageRepository;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
 	private String title = "Manifeste";
 	private Message<Manifeste> message = new Message<Manifeste>();
@@ -118,14 +127,36 @@ public class ManifesteController {
 	
 	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void marketData(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end) {
+	public void marketData(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
 		try {
 			System.out.println("Data has been marked successfully ");
 			repository.setMareked(start, end);
+			MessageDAO messageDAO = new MessageDAO();
+			messageDAO.setMessageName(this.title);
+			messageDAO.setStart(start);
+			messageDAO.setEnd(end);
+			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			messageDAO.setSaveDate(new Date());
+			messageRepository.save(messageDAO);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 	}
+	
+	@PreAuthorize("hasRole('admin')")
+	@ApiOperation(value = "get a collection items whene id between two ids ")
+	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
+	public List<Manifeste> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+		try {
+			return repository.getDataBetweenId(start, end) ; 
+		} catch (Exception e) {
+			System.out.println(e);
+			return  null ; 
+		}
+
+	}
+	
+	
 
 }

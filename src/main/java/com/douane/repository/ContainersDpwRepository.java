@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.ContainersDpw;
 
 public interface ContainersDpwRepository  extends  JpaRepository<ContainersDpw, Long>{
@@ -26,5 +27,8 @@ public interface ContainersDpwRepository  extends  JpaRepository<ContainersDpw, 
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  ContainersDpw where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("SELECT  b FROM ContainersDpw  b WHERE b.id between :start and  :end  ")
+	public List<ContainersDpw> getDataBetweenId(@Param("start") long start ,@Param("end") long end );  
 
 }

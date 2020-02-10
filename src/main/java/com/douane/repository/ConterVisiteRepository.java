@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.Contrevisite;
+import com.douane.entities.Cparcvisite;
 
 
 public interface ConterVisiteRepository  extends  JpaRepository<Contrevisite, Long>{
@@ -26,5 +28,9 @@ public interface ConterVisiteRepository  extends  JpaRepository<Contrevisite, Lo
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Contrevisite where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("SELECT  b FROM  Contrevisite b WHERE b.id between :start and  :end  ")
+	public List<Contrevisite> getDataBetweenIs(@Param("start") long start ,@Param("end") long end ); 
+
 
 }

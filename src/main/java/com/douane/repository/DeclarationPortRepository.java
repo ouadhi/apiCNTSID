@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.DeclarationPort;
 
 public interface DeclarationPortRepository extends  JpaRepository<DeclarationPort, Long> {
@@ -26,4 +27,8 @@ public interface DeclarationPortRepository extends  JpaRepository<DeclarationPor
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DeclarationPort where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("SELECT  b FROM  DeclarationPort b WHERE b.id between :start and  :end  ")
+	public List<DeclarationPort> getDataBetweenIs(@Param("start") long start ,@Param("end") long end ); 
+
 }

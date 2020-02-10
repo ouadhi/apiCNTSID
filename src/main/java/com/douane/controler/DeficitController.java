@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,8 @@ import com.douane.entities.BaeDpw;
 import com.douane.entities.Deficit;
 import com.douane.entities.Message;
 import com.douane.repository.DeficitRepository;
+import com.douane.repository.MessageRepository;
+import com.douane.securite.config.JwtTokenUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,9 +35,15 @@ public class DeficitController {
 	
 	@Autowired
 	private  DeficitRepository deficitRepository  ;  
+	@Autowired
+	private MessageRepository messageRepository;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 	
 	private String title  = "Deficit" ;  
 	private Message<Deficit>  message  = new Message<Deficit>() ; 
+	
+	
 	
 	@PreAuthorize("hasRole('admin') or hasRole('dpworld') and  hasRole('epal')" )
 	@ApiOperation(value = "View a list of available BAE ", response = BaeDpw.class)
@@ -123,6 +133,21 @@ public class DeficitController {
 	public int  getcount ()  {
 		return deficitRepository.getCount()  ; 
 	}
+	
+	@PreAuthorize("hasRole('admin')")
+	@ApiOperation(value = "get a collection items whene id between two ids ")
+	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
+	public List<Deficit> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+		try {
+			return deficitRepository.getDataBetweenIs(start, end) ; 
+		} catch (Exception e) {
+			System.out.println(e);
+			return  null ; 
+		}
+
+	}
+	
+	
 	
 
 }

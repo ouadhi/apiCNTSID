@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,12 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.Message;
+import com.douane.entities.MessageDAO;
 import com.douane.entities.Transfer;
+import com.douane.repository.MessageRepository;
 import com.douane.repository.TransferRepository;
+import com.douane.securite.config.JwtTokenUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/v1/transfer")
@@ -28,7 +35,12 @@ import io.swagger.annotations.ApiModel;
 public class TransferController {
 
 	@Autowired  
-	private TransferRepository  repository  ;  
+	private TransferRepository  repository  ; 
+	@Autowired
+	private MessageRepository messageRepository;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	private String  title = "Transfert" ;  
 	private Message<Transfer> message =  new Message<Transfer>()  ; 
 	
@@ -104,11 +116,17 @@ public class TransferController {
 	
 	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end , HttpServletRequest request    ) {
 		try {
 			
-			System.out.println(start +" "+ end);
 			repository.setMareked(start, end);
+			MessageDAO messageDAO = new MessageDAO();
+			messageDAO.setMessageName(this.title);
+			messageDAO.setStart(start);
+			messageDAO.setEnd(end);
+			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			messageDAO.setSaveDate(new Date());
+			messageRepository.save(messageDAO);
 			System.out.println("Data has been marked successfully :");
 		} catch (Exception e) {
 			System.out.println("Record not exists");
@@ -122,7 +140,18 @@ public class TransferController {
 		return repository.getCount()  ; 
 	}
 	
-	
+	@PreAuthorize("hasRole('admin')")
+	@ApiOperation(value = "get a collection items whene id between two ids ")
+	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
+	public List<Transfer> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+		try {
+			return repository.getDataBetweenIs(start, end) ; 
+		} catch (Exception e) {
+			System.out.println(e);
+			return  null ; 
+		}
+
+	}
 	
 
 }

@@ -1,7 +1,10 @@
 package com.douane.controler;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +20,8 @@ import com.douane.entities.BaeDpw;
 import com.douane.entities.DeclarationPort;
 import com.douane.entities.Message;
 import com.douane.repository.DeclarationPortRepository;
+import com.douane.repository.MessageRepository;
+import com.douane.securite.config.JwtTokenUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +37,11 @@ public class DeclarationPortController {
 	private  DeclarationPortRepository repository  ; 
 	private Message<DeclarationPort> message  = new Message<DeclarationPort>()  ; 
 	private String title =  "DeclarationPort" ; 
+	
+	@Autowired
+	private MessageRepository messageRepository;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 	
 	
 	@PreAuthorize("hasRole('admin') or hasRole('epal')" )
@@ -120,6 +130,19 @@ public class DeclarationPortController {
 	@GetMapping(path = "/getcount")
 	public int  getcount ()  {
 		return repository.getCount()  ; 
+	}
+	
+	@PreAuthorize("hasRole('admin')")
+	@ApiOperation(value = "get a collection items whene id between two ids ")
+	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
+	public List<DeclarationPort> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+		try {
+			return repository.getDataBetweenIs(start, end) ; 
+		} catch (Exception e) {
+			System.out.println(e);
+			return  null ; 
+		}
+
 	}
 	
 

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.douane.entities.BaeDpw;
 import com.douane.entities.Cparcvisite;
 
 
@@ -27,5 +28,9 @@ public interface  CparcVisiteRepository extends  JpaRepository<Cparcvisite, Long
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Cparcvisite where flag='f' ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("SELECT  b FROM Cparcvisite  b WHERE b.id between :start and  :end  ")
+	public List<Cparcvisite> getDataBetweenIs(@Param("start") long start ,@Param("end") long end ); 
+
 
 }

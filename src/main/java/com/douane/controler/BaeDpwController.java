@@ -146,13 +146,13 @@ public class BaeDpwController {
 		try {
 
 			baeDpwRepository.setMareked(start, end);
+			
 			MessageDAO messageDAO = new MessageDAO();
 			messageDAO.setMessageName(this.title);
 			messageDAO.setStart(start);
 			messageDAO.setEnd(end);
 			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
 			messageDAO.setSaveDate(new Date());
-
 			messageRepository.save(messageDAO);
 			System.out.println("Data has been marked successfully ");
 		} catch (Exception e) {
@@ -162,7 +162,7 @@ public class BaeDpwController {
 	}
 	
 	
-	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)")
+	@PreAuthorize("hasRole('admin')")
 	@ApiOperation(value = "get a collection items whene id between two ids ")
 	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
 	public List<BaeDpw> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {

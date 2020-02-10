@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +20,11 @@ import com.douane.entities.BaeDpw;
 import com.douane.entities.Dstr;
 import com.douane.entities.Manifest;
 import com.douane.entities.Message;
+import com.douane.entities.MessageDAO;
 import com.douane.entities.Dstr;
 import com.douane.repository.DstrRepository;
+import com.douane.repository.MessageRepository;
+import com.douane.securite.config.JwtTokenUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -35,9 +40,15 @@ import com.douane.repository.DstrRepository;
 public class DstrController {
 	
 	@Autowired  
-	private DstrRepository  repository  ;  
+	private DstrRepository  repository  ;  	
+	@Autowired
+	private MessageRepository messageRepository;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+
 	private String  title = "Dstr"  ; 
 	private Message<Dstr> message = new  Message<Dstr>()  ;
+	
 	
 	@ApiOperation(value = "View a list of All dstr in DataBase ", response = BaeDpw.class)
 	@ApiResponses(value = {
@@ -119,11 +130,17 @@ public class DstrController {
 	
 	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end  , HttpServletRequest   request    ) {
 		try {
 			
-			System.out.println(start +" "+ end);
+			
 			repository.setMareked(start, end);
+			MessageDAO messageDAO = new MessageDAO();
+			messageDAO.setMessageName(this.title);
+			messageDAO.setStart(start);
+			messageDAO.setEnd(end);
+			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			messageDAO.setSaveDate(new Date());
 			System.out.println("Data has been marked successfully :");
 		} catch (Exception e) {
 			System.out.println("Record not exists");
@@ -136,6 +153,20 @@ public class DstrController {
 	public int  getcount ()  {
 		return repository.getCount()  ; 
 	}
+	
+	@PreAuthorize("hasRole('admin')")
+	@ApiOperation(value = "get a collection items whene id between two ids ")
+	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
+	public List<Dstr> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+		try {
+			return repository.getDataBetweenIs(start, end) ; 
+		} catch (Exception e) {
+			System.out.println(e);
+			return  null ; 
+		}
+
+	}
+	
 	
 	
 
