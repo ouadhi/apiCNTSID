@@ -13,4 +13,5 @@ public interface UserDao extends JpaRepository<DAOUser, Long> {
 	
 	DAOUser findByUsername(String username);
 	
+	
 }

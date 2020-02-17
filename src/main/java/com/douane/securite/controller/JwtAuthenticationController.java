@@ -21,6 +21,8 @@ import com.douane.securite.model.JwtValideResponse;
 import com.douane.securite.model.UserDTO;
 import com.douane.securite.service.JwtUserDetailsService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 
 @RestController
 @CrossOrigin
@@ -48,6 +50,7 @@ public class JwtAuthenticationController {
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
+	@ApiIgnore
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
 		return ResponseEntity.ok(userDetailsService.save(user));

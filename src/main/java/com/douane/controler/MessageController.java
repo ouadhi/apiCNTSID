@@ -22,10 +22,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @Api(value = "Messages end-point", description = "Operations pertaining to messages")
 @RequestMapping("/api/v1/message")
+@ApiIgnore
 public class MessageController {
 	
 	

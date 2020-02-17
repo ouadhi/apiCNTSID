@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.douane.entities.ToDoItem;
 import com.douane.repository.TodoItemRepository;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("/api/todo")
+@ApiIgnore
 
 public class ToDoItemController {
 	

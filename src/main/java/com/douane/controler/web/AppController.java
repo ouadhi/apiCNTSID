@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.config.Properties;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("app")
+@ApiIgnore
 public class AppController {
 	
 	

@@ -24,7 +24,7 @@ public class Userconroller {
 	private  UserDao  dao   ;  
 	
 	//@Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('admin')")
     @RequestMapping(value="/users", method = RequestMethod.GET)
     public List<DAOUser> listUser(){
     	List<DAOUser> list = new ArrayList<>(); 
