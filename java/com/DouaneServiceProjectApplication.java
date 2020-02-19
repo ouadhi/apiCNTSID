@@ -1,4 +1,4 @@
-package com.douane;
+package com;
 
 
 
@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,10 +16,13 @@ import com.douane.config.Properties;
 import com.douane.securite.config.JwtTokenUtil;
 import com.douane.securite.service.JwtUserDetailsService;
 
+import com.dpworld.*;
+import com.dpworld.entities.SortiePhysique;
 
 
 @SpringBootApplication
 @EnableScheduling
+//@ComponentScan(basePackages = "com")
 public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 	 
 	@Autowired  
@@ -42,13 +47,15 @@ public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 		detailsService.initRole();
 		
 		
-		final String uri = "http://localhost:8085/api/pulout/getdata";
-	     
-	    RestTemplate restTemplate = new RestTemplate();
-	    String result = restTemplate.getForObject(uri, String.class);
-	     
-	    System.out.println(result);
+		final String uri = "http://localhost:8085/api/pulout/getdata"; 
+		ResponseEntity<SortiePhysique[]> resppnse =  template.getForEntity(uri, SortiePhysique[].class)  ; 
 		
+		SortiePhysique[] liste  =  resppnse.getBody()  ;  
+		
+		for (SortiePhysique sortiePhysique : liste) {
+			System.out.println(sortiePhysique.getId());
+		}
+	     		
 	}
 	
 

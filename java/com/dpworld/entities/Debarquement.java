@@ -3,141 +3,140 @@ package com.dpworld.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Debarquement implements Serializable{
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+public class Debarquement implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String containerNumber;
-    private String blNumber;
-    private String internationalVoyageNumber;
-    private String escalNumber;
-    private Date vesselArrivalDate;
-    private Date vesselBerthDate;
-    private Date dischargeDate;
-    private String containerType;
-    private String position;
-    private int id;
-    private Date jobExecDate;
+	private String blNumber;
+	private String internationalVoyageNumber;
+	private String escalNumber;
+	@Temporal(TemporalType.DATE)
+	private Date vesselArrivalDate;
+	@Temporal(TemporalType.DATE)
+	private Date vesselBerthDate;
+	@Temporal(TemporalType.DATE)
+	private Date dischargeDate;
+	private String containerType;
+	private String position;
+	@Id
+	private int id;
+	@Temporal(TemporalType.DATE)
+	private Date jobExecDate;
+	@Temporal(TemporalType.DATE)
+	private Date ajoute;
 
-    private Date ajoute;
+	public Debarquement() {
+	}
 
-    public Debarquement() {
-    }
+	public String getContainerNumber() {
+		return containerNumber;
+	}
 
-    public Debarquement(String containerNumber, String blNumber, String internationalVoyageNumber, String escalNumber, Date vesselArrivalDate, Date vesselBerthDate, Date dischargeDate, String containerType, String position, int id, Date jobExecDate, Date ajoute) {
-        this.containerNumber = containerNumber;
-        this.blNumber = blNumber;
-        this.internationalVoyageNumber = internationalVoyageNumber;
-        this.escalNumber = escalNumber;
-        this.vesselArrivalDate = vesselArrivalDate;
-        this.vesselBerthDate = vesselBerthDate;
-        this.dischargeDate = dischargeDate;
-        this.containerType = containerType;
-        this.position = position;
-        this.id = id;
-        this.jobExecDate = jobExecDate;
-        this.ajoute = ajoute;
-    }
+	public void setContainerNumber(String containerNumber) {
+		this.containerNumber = containerNumber;
+	}
 
-    public String getContainerNumber() {
-        return containerNumber;
-    }
+	public String getBlNumber() {
+		return blNumber;
+	}
 
-    public void setContainerNumber(String containerNumber) {
-        this.containerNumber = containerNumber;
-    }
+	public void setBlNumber(String blNumber) {
+		this.blNumber = blNumber;
+	}
 
-    public String getBlNumber() {
-        return blNumber;
-    }
+	public String getInternationalVoyageNumber() {
+		return internationalVoyageNumber;
+	}
 
-    public void setBlNumber(String blNumber) {
-        this.blNumber = blNumber;
-    }
+	public void setInternationalVoyageNumber(String internationalVoyageNumber) {
+		this.internationalVoyageNumber = internationalVoyageNumber;
+	}
 
-    public String getInternationalVoyageNumber() {
-        return internationalVoyageNumber;
-    }
+	public String getEscalNumber() {
+		return escalNumber;
+	}
 
-    public void setInternationalVoyageNumber(String internationalVoyageNumber) {
-        this.internationalVoyageNumber = internationalVoyageNumber;
-    }
+	public void setEscalNumber(String escalNumber) {
+		this.escalNumber = escalNumber;
+	}
 
-    public String getEscalNumber() {
-        return escalNumber;
-    }
+	public Date getVesselArrivalDate() {
+		return vesselArrivalDate;
+	}
 
-    public void setEscalNumber(String escalNumber) {
-        this.escalNumber = escalNumber;
-    }
+	public void setVesselArrivalDate(Date vesselArrivalDate) {
+		this.vesselArrivalDate = vesselArrivalDate;
+	}
 
-    public Date getVesselArrivalDate() {
-        return vesselArrivalDate;
-    }
+	public Date getVesselBerthDate() {
+		return vesselBerthDate;
+	}
 
-    public void setVesselArrivalDate(Date vesselArrivalDate) {
-        this.vesselArrivalDate = vesselArrivalDate;
-    }
+	public void setVesselBerthDate(Date vesselBerthDate) {
+		this.vesselBerthDate = vesselBerthDate;
+	}
 
-    public Date getVesselBerthDate() {
-        return vesselBerthDate;
-    }
+	public Date getDischargeDate() {
+		return dischargeDate;
+	}
 
-    public void setVesselBerthDate(Date vesselBerthDate) {
-        this.vesselBerthDate = vesselBerthDate;
-    }
+	public void setDischargeDate(Date dischargeDate) {
+		this.dischargeDate = dischargeDate;
+	}
 
-    public Date getDischargeDate() {
-        return dischargeDate;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setDischargeDate(Date dischargeDate) {
-        this.dischargeDate = dischargeDate;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public Date getJobExecDate() {
+		return jobExecDate;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setJobExecDate(Date jobExecDate) {
+		this.jobExecDate = jobExecDate;
+	}
 
-    public Date getJobExecDate() {
-        return jobExecDate;
-    }
+	public void setAjoute(Date ajoute) {
+		this.ajoute = ajoute;
+	}
 
-    public void setJobExecDate(Date jobExecDate) {
-        this.jobExecDate = jobExecDate;
-    }
+	public Date getAjoute() {
+		return ajoute;
+	}
 
-    public void setAjoute(Date ajoute) {
-        this.ajoute = ajoute;
-    }
+	public String getContainerType() {
+		return containerType;
+	}
 
-    public Date getAjoute() {
-        return ajoute;
-    }
+	public void setContainerType(String containerType) {
+		this.containerType = containerType;
+	}
 
-    public String getContainerType() {
-        return containerType;
-    }
+	public String getPosition() {
+		return position;
+	}
 
-    public void setContainerType(String containerType) {
-        this.containerType = containerType;
-    }
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    @Override
-    public String toString() {
-        return "Debarquement{" + "containerNumber=" + containerNumber + ", blNumber=" + blNumber + ", internationalVoyageNumber=" + internationalVoyageNumber + ", escalNumber=" + escalNumber + ", vesselArrivalDate=" + vesselArrivalDate + ", vesselBerthDate=" + vesselBerthDate + ", dischargeDate=" + dischargeDate + ", id=" + id + ", jobExecDate=" + jobExecDate + '}';
-    }
+	@Override
+	public String toString() {
+		return "Debarquement{" + "containerNumber=" + containerNumber + ", blNumber=" + blNumber
+				+ ", internationalVoyageNumber=" + internationalVoyageNumber + ", escalNumber=" + escalNumber
+				+ ", vesselArrivalDate=" + vesselArrivalDate + ", vesselBerthDate=" + vesselBerthDate
+				+ ", dischargeDate=" + dischargeDate + ", id=" + id + ", jobExecDate=" + jobExecDate + '}';
+	}
 
 }
