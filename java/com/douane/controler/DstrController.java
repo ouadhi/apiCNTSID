@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.BaeDpw;
-import com.douane.entities.DeclarationDpw;
+import com.douane.entities.Dstr;
+import com.douane.entities.Manifest;
 import com.douane.entities.Message;
-import com.douane.repository.DeclarationDpwRepository;
+import com.douane.entities.MessageDAO;
+import com.douane.entities.Dstr;
+import com.douane.repository.DstrRepository;
 import com.douane.repository.MessageRepository;
 import com.douane.securite.config.JwtTokenUtil;
 
@@ -29,31 +32,37 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RestController
-@RequestMapping("/api/v1/decl-dpw")
-@Api(value="DpWorld-Declaration" , description = "Operations pertaining to Dpworld-Declaration" )
-@ApiModel("BAE")
-public class DeclarationDpwController {
+import com.douane.repository.DstrRepository;
 
+
+
+@RestController
+@RequestMapping("api/v1/dstr")
+@Api(value="Dstr end-point" , description = "Operations pertaining to Dstr" )
+public class DstrController {
+	
 	@Autowired  
-	private DeclarationDpwRepository  repository  ;  
+	private DstrRepository  repository  ;  	
+	@Autowired
 	private MessageRepository messageRepository;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+
+	private String  title = "Dstr"  ; 
+	private Message<Dstr> message = new  Message<Dstr>()  ;
 	
-	private String title = "DeclarationDpw"   ; 
-	private Message<DeclarationDpw>  message = new Message<DeclarationDpw>()  ; 
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
-	@ApiOperation(value = "View a list of available DpWorld-Declaration ", response = DeclarationDpw.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved list"),
-            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
+	@ApiOperation(value = "View a list of All dstr in DataBase ")
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "Successfully retrieved list"),
+	        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	}
+	)
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@GetMapping(path = "/getdata")
-	public Message<DeclarationDpw>findNotMarkedt ()  {
+	public Message<Dstr> findNotMarkedt ()  {
 		
 		Long start  =(Long) repository.findStartEndId().get(0).get("start") ;  
 		Long end = (Long)  repository.findStartEndId().get(0).get("end") ;  
@@ -68,33 +77,35 @@ public class DeclarationDpwController {
 	
 	@PreAuthorize("hasRole('admin')" )
 	@GetMapping(path = "/getalldata")
-	public List<DeclarationDpw> getAll ()  {
+	public List<Dstr> findAll ()  {
 		return repository.findAll() ; 
 	}
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
+	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@GetMapping(path = "/getdata/{id}")
-	public Optional<DeclarationDpw> getDataById(@PathVariable(name = "id") long  id) {
+	public Optional<Dstr> getDataById(@PathVariable(name = "id") long  id) {
 		return repository.findById(id)  ; 
 	}
 
-	@PreAuthorize("hasRole('admin')" )
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@DeleteMapping(path = "/deletebyid/{id}")
 	public void removebyId(@PathVariable(name = "id") long id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
 	
-	@PreAuthorize("hasRole('admin')" )
+	
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/save", produces = "application/json")
-	public void createData(@RequestBody DeclarationDpw data) {
+	public void createData(@RequestBody Dstr data) {
 		data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
 	
-	@PreAuthorize("hasRole('admin')" )
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/update", produces = "application/json")
-	public void updateData(@RequestBody DeclarationDpw data) {
+	public void updateData(@RequestBody Dstr data) {
 		if (repository.existsById(data.getId())) {
 			repository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
@@ -103,29 +114,35 @@ public class DeclarationDpwController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
-	@PostMapping(path ="/market/{id}", produces = "application/json")
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
+	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
-		   Optional<DeclarationDpw> optional =   repository.findById(id) ; 
-		   DeclarationDpw  declarationDpw = optional.get() ; 
-		   declarationDpw.setFlag(true);
-		   declarationDpw.setDateMarkage(new Date());
+		   Optional<Dstr> optional =   repository.findById(id) ; 
+		   Dstr  Dstr = optional.get() ; 
+		   Dstr.setFlag(true);
+		   Dstr.setDateMarkage(new Date());
 		   
-		   repository.save(declarationDpw)  ; 
-			System.out.println("Data has been marked successfully :" + declarationDpw.getId());
+		   repository.save(Dstr)  ; 
+			System.out.println("Data has been marked successfully :" + Dstr.getId());
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}
 	}
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end  , HttpServletRequest   request    ) {
 		try {
 			
-			System.out.println(start +" "+ end);
+			
 			repository.setMareked(start, end);
+			MessageDAO messageDAO = new MessageDAO();
+			messageDAO.setMessageName(this.title);
+			messageDAO.setStart(start);
+			messageDAO.setEnd(end);
+			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			messageDAO.setSaveDate(new Date());
 			System.out.println("Data has been marked successfully :");
 		} catch (Exception e) {
 			System.out.println("Record not exists");
@@ -133,19 +150,18 @@ public class DeclarationDpwController {
 		}
 	}
 	
-	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
+	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')" )
 	@GetMapping(path = "/getcount")
 	public int  getcount ()  {
 		return repository.getCount()  ; 
 	}
 	
-	
 	@PreAuthorize("hasRole('admin')")
 	@ApiOperation(value = "get a collection items whene id between two ids ")
 	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
-	public List<DeclarationDpw> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+	public List<Dstr> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
 		try {
-			return repository.getDataBetweenIs(start, end) ;  
+			return repository.getDataBetweenIs(start, end) ; 
 		} catch (Exception e) {
 			System.out.println(e);
 			return  null ; 
@@ -153,4 +169,7 @@ public class DeclarationDpwController {
 
 	}
 	
+	
+	
+
 }

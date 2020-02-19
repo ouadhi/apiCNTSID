@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.hibernate.validator.internal.IgnoreForbiddenApisErrors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +29,7 @@ import com.douane.securite.config.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 
 //  end  point annotation 
@@ -35,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/v1/container")
 @Api(value="Bae end-point" , description = "Operations pertaining to Containers" )
 @ApiModel("BAE")
-
+@ApiIgnore
 public class ContainerController {
 	
 	//  inject  Repository  

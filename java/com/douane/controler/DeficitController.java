@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v1/deficit")
-@Api(value="Deficit  end-point" , description = "Operations pertaining to BAE" )
+@Api(value="Deficit  end-point" , description = "Operations pertaining to deficit" )
 public class DeficitController {
 	
 	@Autowired

@@ -1,0 +1,1 @@
+jdbc:informix-sqli://154.1.4.207:2000/base_zodiac:INFORMIXSERVER=ids_statis1;DELIMIDENT=y

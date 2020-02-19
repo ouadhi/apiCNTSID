@@ -26,10 +26,12 @@ import com.douane.repository.MessageRepository;
 import com.douane.securite.config.JwtTokenUtil;
 
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 //end  point annotation 
 @RestController
 @RequestMapping("/api/parcvisit")
+@ApiIgnore
 
 public class CparcVisiteController {
 

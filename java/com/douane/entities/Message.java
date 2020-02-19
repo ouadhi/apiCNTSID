@@ -95,9 +95,6 @@ public class Message<T> {
 		this.marekedDate = marekedDate;
 	} 
 	
-	public URI getLinkMarke() {
-		return linkMarke;
-	}
 	
 	public void setLinkMarke(URI linkMarke) {
 		this.linkMarke = linkMarke;

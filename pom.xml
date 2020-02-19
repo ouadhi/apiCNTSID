@@ -80,13 +80,24 @@
 			<version>2.7.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.ibm.informix/jdbc -->
+		<!-- https://mvnrepository.com/artifact/com.ibm.informix/jdbc
 		<dependency>
 			<groupId>com.ibm.informix</groupId>
 			<artifactId>jdbc</artifactId>
 			<version>4.50.2.fix-1</version>
 		</dependency>
+		 -->
 
+		<dependency>
+			<groupId>com.ibm.informix</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>4.50.3</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client 
+			<dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> 
+			<version>2.2.1.RELEASE</version> </dependency> -->
 
 	</dependencies>
 

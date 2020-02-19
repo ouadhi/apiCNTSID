@@ -50,7 +50,7 @@ public class ManifesteController {
 
 	@GetMapping(path = "/getdata")
 	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld') or hasRole('epal')" )
-	@ApiOperation(value = "View a list of All BAE in DataBase ", response = Manifeste.class)
+	@ApiOperation(value = "View a list of All BAE in DataBase ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

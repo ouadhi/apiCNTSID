@@ -13,23 +13,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.douane.entities.LigneManif;
+import com.douane.entities.Manifest;
 import com.douane.entities.Message;
-import com.douane.repository.LigneManifRepository;
+import com.douane.repository.ManifestRepository;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 
 @RestController
-@RequestMapping("/api/ligne-manif")
-public class LigneManifeController {
-	
+@RequestMapping("/api/manifest")
+@ApiIgnore
+public class ManifestController {
 	@Autowired  
-	private LigneManifRepository  repository  ;  
+	private ManifestRepository  repository  ;  
 	
-	private  String title ="lignManifest"; 
-	private Message<LigneManif> message  = new Message<LigneManif>() ; 
+	private Message<Manifest> message = new Message<Manifest>() ; 
+	
+	private String title =  "MANIFEST" ; 
+
 	
 	@GetMapping(path = "/getdata")
-	public Message<LigneManif> findNotMarkedt ()  {
+	public Message<Manifest> findNotMarkedt ()  {
 		
 		Long start  =(Long) repository.findStartEndId().get(0).get("start") ;  
 		Long end = (Long)  repository.findStartEndId().get(0).get("end") ;  
@@ -38,34 +42,34 @@ public class LigneManifeController {
 		message.setStart_id(start);
 		message.setEnd_id(end);
 		message.setDescription("manifest liste ");
-		message.setContant( repository.getDataNotMarked());
+		message.setContant( repository.getDataNoMarked());
 		return message;
 	}
 	
 	@GetMapping(path = "/getalldata")
-	public List<LigneManif> findAll ()  {
+	public List<Manifest> findAll ()  {
 		return repository.findAll() ; 
 	}
 	@GetMapping(path = "/getdata/{id}")
-	public Optional<LigneManif> getDataById(@PathVariable(name = "id") long  id) {
+	public Optional<Manifest> getDataById(@PathVariable(name = "id") Long  id) {
 		return repository.findById(id)  ; 
 	}
 
 	@DeleteMapping(path = "/deletebyid/{id}")
-	public void removebyId(@PathVariable(name = "id") long id) {
+	public void removebyId(@PathVariable(name = "id") Long id) {
 		repository.deleteById(id);
 		System.out.println("Record has been deleted with the id: " + id);
 	}
 
 	@PostMapping(path = "/save", produces = "application/json")
-	public void createData(@RequestBody LigneManif data) {
+	public void createData(@RequestBody Manifest data) {
 		data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
 
 	@PostMapping(path = "/update", produces = "application/json")
-	public void updateData(@RequestBody LigneManif data) {
+	public void updateData(@RequestBody Manifest data) {
 		if (repository.existsById(data.getId())) {
 			repository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
@@ -77,13 +81,13 @@ public class LigneManifeController {
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
-		   Optional<LigneManif> optional =   repository.findById(id) ; 
-		   LigneManif  LigneManif = optional.get() ; 
-		   LigneManif.setFlag(true);
-		   LigneManif.setDateMarkage(new Date());
+		   Optional<Manifest> optional =   repository.findById(id) ; 
+		   Manifest  Manifest = optional.get() ; 
+		   Manifest.setFlag(true);
+		   Manifest.setDateMarquage(new Date());
 		   
-		   repository.save(LigneManif)  ; 
-			System.out.println("Data has been marked successfully :" + LigneManif.getId());
+		   repository.save(Manifest)  ; 
+			System.out.println("Data has been marked successfully :" + Manifest.getId());
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}
@@ -106,6 +110,7 @@ public class LigneManifeController {
 	public int  getcount ()  {
 		return repository.getCount()  ; 
 	}
-
+	
+	
 
 }

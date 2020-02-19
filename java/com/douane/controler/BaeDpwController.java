@@ -47,9 +47,11 @@ public class BaeDpwController {
 
 	private Message<BaeDpw> message = new Message<BaeDpw>();
 	private String title = "Bae-DpWorld";
+	
+	
 
 	@PreAuthorize("hasRole('admin') or hasRole('dpworld')")
-	@ApiOperation(value = "View a list of available BAE ", response = BaeDpw.class)
+	@ApiOperation(value = "View a list of available BAE ")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
@@ -71,8 +73,9 @@ public class BaeDpwController {
 		return message;
 	}
 
+	
 	@PreAuthorize("hasRole('admin') or  hasRole('Dpworld')")
-	@ApiOperation(value = "View a list of All manifeste in DataBase ", response = BaeDpw.class)
+	@ApiOperation(value = "View a list of All manifeste in DataBase ")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
@@ -85,7 +88,7 @@ public class BaeDpwController {
 	}
 
 	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)")
-	@ApiOperation(value = "View an item of BAE defined by ID  ", response = BaeDpw.class)
+	@ApiOperation(value = "View an item of BAE defined by ID  ")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved item"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),

@@ -12,27 +12,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.Gone;
 
+import com.douane.entities.LigneManif;
 import com.douane.entities.Message;
-import com.douane.entities.VoyageGro;
-import com.douane.repository.VoyageGrosRepository;
-import com.douane.entities.VoyageGro;
-import com.douane.entities.VoyageGro;
+import com.douane.repository.LigneManifRepository;
+
+import springfox.documentation.annotations.ApiIgnore;
 
 
 @RestController
-@RequestMapping("/api/voyage-gros")
-public class VoyageGrosController {
+@RequestMapping("/api/ligne-manif")
+@ApiIgnore
+public class LigneManifeController {
 	
 	@Autowired  
-	private VoyageGrosRepository repository  ;  
+	private LigneManifRepository  repository  ;  
 	
-	private String title ="VoyageGros" ;  
-	private Message<VoyageGro>  message = new Message<VoyageGro>() ; 
+	private  String title ="lignManifest"; 
+	private Message<LigneManif> message  = new Message<LigneManif>() ; 
 	
 	@GetMapping(path = "/getdata")
-	public Message<VoyageGro> findNotMarkedt ()  {
+	public Message<LigneManif> findNotMarkedt ()  {
+		
 		Long start  =(Long) repository.findStartEndId().get(0).get("start") ;  
 		Long end = (Long)  repository.findStartEndId().get(0).get("end") ;  
 	    message.setId(this.title+"-"+start+"-"+end) ; 
@@ -45,11 +46,11 @@ public class VoyageGrosController {
 	}
 	
 	@GetMapping(path = "/getalldata")
-	public List<VoyageGro> findAll ()  {
+	public List<LigneManif> findAll ()  {
 		return repository.findAll() ; 
 	}
 	@GetMapping(path = "/getdata/{id}")
-	public Optional<VoyageGro> getDataById(@PathVariable(name = "id") long  id) {
+	public Optional<LigneManif> getDataById(@PathVariable(name = "id") long  id) {
 		return repository.findById(id)  ; 
 	}
 
@@ -60,14 +61,14 @@ public class VoyageGrosController {
 	}
 
 	@PostMapping(path = "/save", produces = "application/json")
-	public void createData(@RequestBody VoyageGro data) {
+	public void createData(@RequestBody LigneManif data) {
 		data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
 
 	@PostMapping(path = "/update", produces = "application/json")
-	public void updateData(@RequestBody VoyageGro data) {
+	public void updateData(@RequestBody LigneManif data) {
 		if (repository.existsById(data.getId())) {
 			repository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
@@ -79,18 +80,17 @@ public class VoyageGrosController {
 	@PostMapping(path = "/market/{id}", produces = "application/json")
 	public void marketData(@PathVariable(name="id") Long id ) {
 		if (repository.existsById(id))  {
-		   Optional<VoyageGro> optional =   repository.findById(id) ; 
-		   VoyageGro  VoyageGro = optional.get() ; 
-		   VoyageGro.setFlag(true);
-		   VoyageGro.setDateMarkage(new Date());
+		   Optional<LigneManif> optional =   repository.findById(id) ; 
+		   LigneManif  LigneManif = optional.get() ; 
+		   LigneManif.setFlag(true);
+		   LigneManif.setDateMarkage(new Date());
 		   
-		   repository.save(VoyageGro)  ; 
-			System.out.println("Data has been marked successfully :" + VoyageGro.getId());
+		   repository.save(LigneManif)  ; 
+			System.out.println("Data has been marked successfully :" + LigneManif.getId());
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}
 	}
-	
 	
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
 	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
@@ -109,6 +109,6 @@ public class VoyageGrosController {
 	public int  getcount ()  {
 		return repository.getCount()  ; 
 	}
-	
+
 
 }
