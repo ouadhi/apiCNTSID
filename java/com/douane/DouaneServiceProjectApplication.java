@@ -1,4 +1,4 @@
-package com;
+package com.douane;
 
 
 
@@ -16,13 +16,11 @@ import com.douane.config.Properties;
 import com.douane.securite.config.JwtTokenUtil;
 import com.douane.securite.service.JwtUserDetailsService;
 
-import com.dpworld.*;
-import com.dpworld.entities.SortiePhysique;
+
 
 
 @SpringBootApplication
 @EnableScheduling
-//@ComponentScan(basePackages = "com")
 public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 	 
 	@Autowired  
@@ -46,15 +44,6 @@ public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 		
 		detailsService.initRole();
 		
-		
-		final String uri = "http://localhost:8085/api/pulout/getdata"; 
-		ResponseEntity<SortiePhysique[]> resppnse =  template.getForEntity(uri, SortiePhysique[].class)  ; 
-		
-		SortiePhysique[] liste  =  resppnse.getBody()  ;  
-		
-		for (SortiePhysique sortiePhysique : liste) {
-			System.out.println(sortiePhysique.getId());
-		}
 	     		
 	}
 	

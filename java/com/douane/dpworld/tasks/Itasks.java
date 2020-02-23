@@ -1,4 +1,4 @@
-package com.dpworld.tasks;
+package com.douane.dpworld.tasks;
 
 public interface Itasks {
 		

@@ -1,4 +1,4 @@
-package com.dpworld.entities;
+package com.douane.dpworld.entities;
 
 import java.io.Serializable;
 import java.util.Date;

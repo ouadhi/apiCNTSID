@@ -1,8 +1,11 @@
-package com.dpworld.repository;
+package com.douane.dpworld.repository;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.dpworld.entities.Debarquement;
+import com.douane.dpworld.entities.Debarquement;
+
+
 
 public interface DebarquementRepository extends  JpaRepository<Debarquement, Integer> {
 

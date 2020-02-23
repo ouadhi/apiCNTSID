@@ -1,8 +1,9 @@
-package com.dpworld.repository;
+package com.douane.dpworld.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.dpworld.entities.ConteneurParcVisite;
+import com.douane.dpworld.entities.ConteneurParcVisite;
+
 
 public interface ContneurParcVisiteRepository  extends  JpaRepository<ConteneurParcVisite, Integer>{
 }
