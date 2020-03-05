@@ -117,7 +117,7 @@ public class ManifesteController {
 			Optional<Manifeste> optional = repository.findById(id);
 			Manifeste Manifeste = optional.get();
 			Manifeste.setFlag(true);
-			Manifeste.setDateMarkage(new Date());
+			Manifeste.setDate_markage(new Date());
 			repository.save(Manifeste);
 			System.out.println("Data has been marked successfully :" + Manifeste.getId());
 		} else {

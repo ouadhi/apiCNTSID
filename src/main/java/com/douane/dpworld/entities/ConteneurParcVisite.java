@@ -24,11 +24,14 @@ public class ConteneurParcVisite implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date transferDate;
 	private int jobExecId;
-	private String jobExec;
 	@Id
 	private int id;
 	@Temporal(TemporalType.TIME)
 	private Date ajoute;
+	
+	public ConteneurParcVisite() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getContainerNumber() {
 		return containerNumber;
@@ -110,14 +113,7 @@ public class ConteneurParcVisite implements Serializable {
 		this.jobExecId = jobExecId;
 	}
 
-	public String getJobExec() {
-		return jobExec;
-	}
-
-	public void setJobExec(String jobExec) {
-		this.jobExec = jobExec;
-	}
-
+	
 	public int getId() {
 		return id;
 	}

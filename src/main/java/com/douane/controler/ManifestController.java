@@ -84,7 +84,8 @@ public class ManifestController {
 		   Optional<Manifest> optional =   repository.findById(id) ; 
 		   Manifest  Manifest = optional.get() ; 
 		   Manifest.setFlag(true);
-		   Manifest.setDateMarquage(new Date());
+		   Manifest.setDate_marquage
+		   (new Date());
 		   
 		   repository.save(Manifest)  ; 
 			System.out.println("Data has been marked successfully :" + Manifest.getId());

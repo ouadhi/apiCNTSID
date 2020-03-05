@@ -134,7 +134,7 @@ public class BaeDpwController {
 			Optional<BaeDpw> optional = baeDpwRepository.findById(id);
 			BaeDpw baeDpw = optional.get();
 			baeDpw.setFlag(true);
-			baeDpw.setDateMarkage(new Date());
+			baeDpw.setDate_markage(new Date());
 			baeDpwRepository.save(baeDpw);
 			System.out.println("Data has been marked successfully :" + baeDpw.getId());
 		} else {
