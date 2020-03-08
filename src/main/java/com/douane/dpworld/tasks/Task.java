@@ -35,7 +35,7 @@ public class Task implements Itasks {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	@Override
-	@Scheduled(fixedRate = 10000)
+	//@Scheduled(fixedRate = 10000)
 	public void fetchPullOut() {
 
 		ResponseEntity<SortiePhysique[]> resppnse = template.getForEntity(ConstVar.URL_Sortie, SortiePhysique[].class);
@@ -55,7 +55,7 @@ public class Task implements Itasks {
 	}
 
 	@Override
-	@Scheduled(fixedRate = 10000)
+	//@Scheduled(fixedRate = 10000)
 	public void fetchDebarquement() {
 
 		ResponseEntity<Debarquement[]> response = template.getForEntity(ConstVar.URL_debarquement,
