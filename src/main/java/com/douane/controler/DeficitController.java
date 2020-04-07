@@ -27,10 +27,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/deficit")
 @Api(value="Deficit  end-point" , description = "Operations pertaining to deficit" )
+@ApiIgnore
 public class DeficitController {
 	
 	@Autowired

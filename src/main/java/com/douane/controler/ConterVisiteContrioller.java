@@ -28,7 +28,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 //end  point annotation 
 @RestController
-@RequestMapping("/api/container-visite")
+@RequestMapping("/api/v1/container-visite")
 @Api(value="Containers-Visiteld end-point" , description = "Operations pertaining to Containers-Visite" )
 
 public class ConterVisiteContrioller {
@@ -86,7 +86,7 @@ public class ConterVisiteContrioller {
 	@PreAuthorize("hasRole('admin')")
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Contrevisite data) {
-		data.setFlag(false);
+		//data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
@@ -115,8 +115,8 @@ public class ConterVisiteContrioller {
 		if (repository.existsById(id))  {
 		   Optional<Contrevisite> optional =   repository.findById(id) ; 
 		   Contrevisite  Contrevisite = optional.get() ; 
-		   Contrevisite.setDateMarkage(new Date());
-		   Contrevisite.setFlag(true);
+		  // Contrevisite.setDateMarkage(new Date());
+		  // Contrevisite.setFlag(true);
 		  
 		   repository.save(Contrevisite)  ; 
 			System.out.println("Data has been marked successfully :" + Contrevisite.getId());

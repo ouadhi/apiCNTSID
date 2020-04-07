@@ -50,6 +50,13 @@ public class JwtAuthenticationController {
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 	
+	@RequestMapping(value = "/refresh", method = RequestMethod.POST)
+	public ResponseEntity<?> refreshToken(@RequestBody String token ) throws Exception {
+
+		String newToken =  jwtTokenUtil.refreshToken(token)  ;  
+		return ResponseEntity.ok(new JwtResponse(newToken));
+	}
+	
 	@ApiIgnore
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {

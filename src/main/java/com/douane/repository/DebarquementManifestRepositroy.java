@@ -13,18 +13,18 @@ import com.douane.entities.DebarquementManifeste;
 
 public interface DebarquementManifestRepositroy extends JpaRepository<DebarquementManifeste, Long >{
 	
-	@Query("SELECT d FROM DebarquementManifeste d WHERE d.flag=false ")
+	@Query("SELECT d FROM DebarquementManifeste d WHERE d.flag= 0  ")
 	public  List<DebarquementManifeste>  getDataNotMarked();   
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update debarquement_manifeste  set  flag='t' where id between :start and  :end  ", nativeQuery = true)
+	@Query(value = "update debarquement_manifeste  set  flag= 1 where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") Long start ,@Param("end") Long end  ) ; 
 	
 	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = false ")
 	public int getCount () ; 
 	
-	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DebarquementManifeste where flag='f' ")
+	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DebarquementManifeste where flag= 0 ")
 	public List<Map<String, Object>> findStartEndId() ; 
 
 }

@@ -31,6 +31,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 import com.douane.repository.DstrRepository;
 
@@ -39,6 +40,8 @@ import com.douane.repository.DstrRepository;
 @RestController
 @RequestMapping("api/v1/dstr")
 @Api(value="Dstr end-point" , description = "Operations pertaining to Dstr" )
+@ApiIgnore
+
 public class DstrController {
 	
 	@Autowired  

@@ -33,7 +33,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/api/v1/decl-dpw")
 @Api(value="DpWorld-Declaration" , description = "Operations pertaining to Dpworld-Declaration" )
-@ApiModel("BAE")
+@ApiModel("Dpw Declrartion")
 public class DeclarationDpwController {
 
 	@Autowired  
@@ -88,7 +88,7 @@ public class DeclarationDpwController {
 	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody DeclarationDpw data) {
-		data.setFlag(false);
+	//	data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
@@ -96,12 +96,13 @@ public class DeclarationDpwController {
 	@PreAuthorize("hasRole('admin')" )
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody DeclarationDpw data) {
+		/*
 		if (repository.existsById(data.getId())) {
 			repository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
 		} else {
 			System.out.println("Record not exists with the Id: " + data.getId());
-		}
+		}*/
 	}
 	
 	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
@@ -111,10 +112,10 @@ public class DeclarationDpwController {
 		   Optional<DeclarationDpw> optional =   repository.findById(id) ; 
 		   DeclarationDpw  declarationDpw = optional.get() ; 
 		   declarationDpw.setFlag(true);
-		   declarationDpw.setDate_markage(new Date());
+		 //  declarationDpw.setDate_markage(new Date());
 		   
 		   repository.save(declarationDpw)  ; 
-			System.out.println("Data has been marked successfully :" + declarationDpw.getId());
+			System.out.println("Data has been marked successfully ");
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}

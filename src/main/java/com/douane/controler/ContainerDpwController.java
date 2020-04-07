@@ -28,11 +28,13 @@ import com.douane.securite.config.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/containerDpw")
 @Api(value="Containers-DPworld end-point" , description = "Operations pertaining to Containers-DPworld" )
 @ApiModel("Containers-DPworld")
+@ApiIgnore
 public class ContainerDpwController {
 	
 //  inject  Repository  

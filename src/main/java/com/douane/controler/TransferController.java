@@ -27,11 +27,14 @@ import com.douane.securite.config.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/transfer")
 @Api(value="Trandfert end-pointt" , description = "Operations pertaining to Transfert" )
 @ApiModel("Transfert")
+@ApiIgnore
+
 public class TransferController {
 
 	@Autowired  

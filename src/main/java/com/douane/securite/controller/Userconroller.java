@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.douane.securite.dao.UserDao;
 import com.douane.securite.model.DAOUser;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@ApiIgnore
+
 public class Userconroller {
 	
 	@Autowired  

@@ -6,6 +6,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -33,9 +34,10 @@ public class Task implements Itasks {
 
 	private static final Logger log = LoggerFactory.getLogger(Task.class);
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	private static final String  marekUrl =   "http://192.168.9.10:8088/api/markSaved/" ; 
 
 	@Override
-	//@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 10000)
 	public void fetchPullOut() {
 
 		ResponseEntity<SortiePhysique[]> resppnse = template.getForEntity(ConstVar.URL_Sortie, SortiePhysique[].class);
@@ -45,9 +47,7 @@ public class Task implements Itasks {
 		for (SortiePhysique sortiePhysique : liste) {
 			sortiePhysique.setAjoute(new Date());
 			outRepository.save(sortiePhysique);
-			// ResponseEntity<String> responseEntity =
-			// template.postForEntity("http://localhost:8085/api/pulout/marked/"+sortiePhysique.getId(),
-			// null, null) ;
+			this.markMessage(sortiePhysique.getId());
 		
 		}
 		log.info("save and marked  pull out items" +liste.length);
@@ -55,7 +55,7 @@ public class Task implements Itasks {
 	}
 
 	@Override
-	//@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 10000)
 	public void fetchDebarquement() {
 
 		ResponseEntity<Debarquement[]> response = template.getForEntity(ConstVar.URL_debarquement,
@@ -67,9 +67,7 @@ public class Task implements Itasks {
 
 			debarquement.setAjoute(new Date());
 			debarquementRepository.save(debarquement);
-			// ResponseEntity<String> responseEntity =
-			// template.postForEntity("http://localhost:8085/api/debarquement/mark/"+debarquement.getId(),
-			// null, null) ;
+			this.markMessage(debarquement.getId());
 		
 
 		}
@@ -89,14 +87,25 @@ public class Task implements Itasks {
 		for (ConteneurParcVisite conteneurParcVisite : liste) {
 			conteneurParcVisite.setAjoute(new Date());
 			contneurParcVisiteRepository.save(conteneurParcVisite);
-			// ResponseEntity<String> responseEntity =
-			// template.postForEntity("http://localhost:8085/api/debarquement/mark/"+conteneurParcVisite.getId(),
-			// null, null) ;
+			this.markMessage(conteneurParcVisite.getId());
 			
 		}
 		log.info("save and marked  contneur parc  items"+liste.length)  ;
 	
-
+	}
+	
+	
+	
+	private void markMessage (int  id ) {
+		
+		ResponseEntity<String> responseEntity = 
+				template.postForEntity(this.marekUrl+id,
+						null, null) ;
+		
+		if (responseEntity.getStatusCode() ==  HttpStatus.ACCEPTED) {
+			System.out.println("marek message ");
+		}
+		
 	}
 
 }

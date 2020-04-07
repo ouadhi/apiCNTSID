@@ -31,11 +31,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/v1/manifeste")
 @Api(value="Manifest-Endpoint" , description = "Operations pertaining to Manifest" )
 @ApiModel("Manifest")
+@ApiIgnore
+
 public class ManifesteController {
 
 	@Autowired

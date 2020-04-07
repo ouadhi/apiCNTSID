@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletRequest;import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -59,6 +58,12 @@ public class JwtTokenUtil implements Serializable {
 		Map<String, Object> claims = new HashMap<>();
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
+	
+	//generate token for user
+		public String generateTokenFromUsername(String username) {
+			Map<String, Object> claims = new HashMap<>();
+			return doGenerateToken(claims,username);
+		}
 
 	//while creating the token -
 	//1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
@@ -93,6 +98,17 @@ public class JwtTokenUtil implements Serializable {
 		String jwtToken = requestTokenHeader.substring(7);
 		String username  = getUsernameFromToken(jwtToken) ;  
 		return  username ;  
+		
+	}
+	
+	
+	public String  refreshToken (String token)  {
+		if (!isTokenExpired(token)) {
+			String username  =  getUsernameFromToken(token)  ;  
+			String newtoken  =   generateTokenFromUsername(username)  ;  
+			return  newtoken ; 
+		}
+		return "isexpried"  ;  
 		
 	}
 

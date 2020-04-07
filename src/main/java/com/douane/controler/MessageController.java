@@ -27,7 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @Api(value = "Messages end-point", description = "Operations pertaining to messages")
 @RequestMapping("/api/v1/message")
-@ApiIgnore
+
 public class MessageController {
 	
 	

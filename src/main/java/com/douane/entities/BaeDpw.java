@@ -30,8 +30,10 @@ public class BaeDpw implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private  Long  id ; 
+	
+	@Column(name="flag")
+	private boolean  flag  ;
 
 	@Column(name="an_manif")
 	private Timestamp an_manif;
@@ -66,9 +68,6 @@ public class BaeDpw implements Serializable {
 
 	@Column(name="type_declaration")
 	private String type_declaration;
-	
-	@Column(name="flag")
-	private boolean  flag  ;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_markage")

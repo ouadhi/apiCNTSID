@@ -20,9 +20,15 @@ import com.douane.entities.Message;
 import com.douane.entities.DebarquementManifeste;
 import com.douane.repository.DebarquementManifestRepositroy;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+
 //end  point annotation 
 @RestController
-@RequestMapping("/api/debarquement")
+@RequestMapping("/api/v1/manif")
+@Api(value = "Manifeste end-point", description = "Operations pertaining to Manifeste")
+@ApiModel("Manifeste ")
+
 public class DebarquementManifestController {
 	
 //  inject  Repository  
@@ -68,19 +74,21 @@ public class DebarquementManifestController {
 
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody DebarquementManifeste data) {
-		data.setFlag(false);
+		//data.setFlag(false);
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
 
 	@PostMapping(path = "/update", produces = "application/json")
 	public void updateData(@RequestBody DebarquementManifeste data) {
+		/*
 		if (repository.existsById(data.getId())) {
 			repository.save(data);
 			System.out.println("Data has been updated successfully :" + data);
 		} else {
 			System.out.println("Record not exists with the Id: " + data.getId());
 		}
+		*/
 	}
 	
 	
@@ -96,9 +104,9 @@ public class DebarquementManifestController {
 		   Optional<DebarquementManifeste> optional =   repository.findById(id) ; 
 		   DebarquementManifeste  debarquementManifeste = optional.get() ; 
 		   debarquementManifeste.setFlag(true);
-		   debarquementManifeste.setDateMarkage(new Date())  ; 
+		   //debarquementManifeste.setDateMarkage(new Date())  ; 
 		   repository.save(debarquementManifeste)  ; 
-			System.out.println("Data has been marked successfully :" + debarquementManifeste.getId());
+			System.out.println("Data has been marked successfully ");
 		} else {
 			System.out.println("Record not exists with the Id: " + id);
 		}
