@@ -25,6 +25,7 @@ import com.douane.entities.MessageDAO;
 import com.douane.repository.ContainersRepository;
 import com.douane.repository.MessageRepository;
 import com.douane.securite.config.JwtTokenUtil;
+import com.douane.service.MessageType;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -141,6 +142,7 @@ public class ContainerController {
 			
 			MessageDAO messageDAO = new MessageDAO();
 			messageDAO.setMessageName(this.title);
+			messageDAO.setType(MessageType.Out);
 			messageDAO.setStart(start);
 			messageDAO.setEnd(end);
 			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));

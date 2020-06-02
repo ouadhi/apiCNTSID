@@ -36,7 +36,8 @@ public class BaeDpw implements Serializable {
 	private boolean  flag  ;
 
 	@Column(name="an_manif")
-	private Timestamp an_manif;
+	@Temporal(TemporalType.DATE)
+	private Date an_manif;
 
 	@Column(name="code_bur")
 	private short code_bur;

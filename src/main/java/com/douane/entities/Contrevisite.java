@@ -25,7 +25,8 @@ public class Contrevisite implements Serializable {
 	private String numReference;
 	
 	@Column(name="date_enr")
-	private Timestamp dateEnr;
+	@Temporal(TemporalType.DATE)
+	private Date dateEnr;
 	
 	@Column(name="num_cts")
 	private String numCts;
@@ -34,7 +35,8 @@ public class Contrevisite implements Serializable {
 	private short codeBur;
 	
 	@Column(name="an_manif")
-	private Timestamp anManif;
+	@Temporal(TemporalType.DATE)
+	private Date anManif;
 	
 	@Column(name="num_manif")
 	private int numManif;
@@ -49,7 +51,8 @@ public class Contrevisite implements Serializable {
 	private String typeControle;
 	
 	@Column(name="date_ajout")
-	private Timestamp dateAjout;
+	@Temporal(TemporalType.DATE)
+	private Date dateAjout;
 
 	@Column(name="wuser")
 	private String user;

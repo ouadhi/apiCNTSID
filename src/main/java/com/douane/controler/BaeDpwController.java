@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import com.douane.entities.MessageDAO;
 import com.douane.repository.BaeDpwRepository;
 import com.douane.repository.MessageRepository;
 import com.douane.securite.config.JwtTokenUtil;
+import com.douane.service.MessageType;
 
 import ch.qos.logback.core.db.dialect.MsSQLDialect;
 import io.swagger.annotations.Api;
@@ -145,21 +148,27 @@ public class BaeDpwController {
 	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)")
 	@ApiOperation(value = "Mark a collection item specified by start  ID and End ID")
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void marketData(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
+	public ResponseEntity<String>  marketData(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
 		try {
 
 			baeDpwRepository.setMareked(start, end);
 			
 			MessageDAO messageDAO = new MessageDAO();
 			messageDAO.setMessageName(this.title);
+			messageDAO.setType(MessageType.Out);
 			messageDAO.setStart(start);
 			messageDAO.setEnd(end);
-			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			//messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
 			messageDAO.setSaveDate(new Date());
 			messageRepository.save(messageDAO);
+			
 			System.out.println("Data has been marked successfully ");
+			return ResponseEntity.ok("marked Bae message "+start+"-"+end) ; 
 		} catch (Exception e) {
 			System.out.println(e);
+			return   new ResponseEntity<>(
+			          e.getMessage(), 
+			          HttpStatus.BAD_REQUEST);
 		}
 
 	}

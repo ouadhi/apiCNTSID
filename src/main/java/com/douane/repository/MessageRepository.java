@@ -10,6 +10,9 @@ import com.douane.entities.BaeDpw;
 import com.douane.entities.MessageDAO;
 
 public interface MessageRepository extends JpaRepository<MessageDAO, Long> {
+	
 	@Query("SELECT  m FROM  MessageDAO m WHERE m.messageName  like %:type%")
-	public List<MessageDAO> getMessagesByType( @Param("type")  String  type ) ;  
+	public List<MessageDAO> getMessagesByType( @Param("type")  String  type ) ; 
+	
+	
 }

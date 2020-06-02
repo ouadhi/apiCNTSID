@@ -19,8 +19,6 @@ import java.sql.Timestamp;
 @Table(name="declaration_dpw")
 @NamedQuery(name="DeclarationDpw.findAll", query="SELECT d FROM DeclarationDpw d")
 public class DeclarationDpw implements Serializable {
-	private static final long serialVersionUID = 1L;  
-
 
 	@Id 
 	private  Long id ; 
@@ -41,7 +39,8 @@ public class DeclarationDpw implements Serializable {
 	private short code_bur;
 	
 	@Column(name="an_manif")
-	private Timestamp anManif;
+	@Temporal(TemporalType.DATE)
+	private Date  anManif;
 	
 	@Column(name="num_manif")
 	private int num_manif;
@@ -53,7 +52,8 @@ public class DeclarationDpw implements Serializable {
 	private short num_group;
 	
 	@Column(name="an_decl")
-	private Timestamp anDecl;
+	@Temporal(TemporalType.DATE)
+	private Date anDecl;
 	
 	@Column(name="num_decl")
 	private int num_decl;
@@ -75,7 +75,8 @@ public class DeclarationDpw implements Serializable {
 	private Date date_av_ar;
 	
 	@Column(name="date_ajout")
-	private Timestamp dateAjout;
+	@Temporal(TemporalType.DATE)
+	private Date dateAjout;
 	
 	private String user;
 

@@ -60,7 +60,7 @@ public class SortiePhysique {
 	@Column(name="type_cts")
 	private String containerType;
 	
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date Ajoute;
 
 	

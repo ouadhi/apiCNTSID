@@ -19,6 +19,10 @@ import com.douane.dpworld.entities.SortiePhysique;
 import com.douane.dpworld.repository.ContneurParcVisiteRepository;
 import com.douane.dpworld.repository.DebarquementRepository;
 import com.douane.dpworld.repository.PullOutRepository;
+import com.douane.entities.Message;
+import com.douane.entities.MessageDAO;
+import com.douane.repository.MessageRepository;
+import com.douane.service.MessageType;
 
 @Component
 public class Task implements Itasks {
@@ -32,25 +36,33 @@ public class Task implements Itasks {
 	@Autowired
 	private ContneurParcVisiteRepository contneurParcVisiteRepository;
 
+	@Autowired
+	private MessageRepository messageRepository;
+
 	private static final Logger log = LoggerFactory.getLogger(Task.class);
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-	private static final String  marekUrl =   "http://192.168.9.10:8088/api/markSaved/" ; 
+	private static final String marekUrl = "http://192.168.9.10:8088/api/markSaved/";
 
 	@Override
 	@Scheduled(fixedRate = 10000)
 	public void fetchPullOut() {
 
-		ResponseEntity<SortiePhysique[]> resppnse = template.getForEntity(ConstVar.URL_Sortie, SortiePhysique[].class);
-
+		ResponseEntity<SortiePhysique[]> resppnse = template.getForEntity("http://localhost:8085/api/pulout", SortiePhysique[].class);
 		SortiePhysique[] liste = resppnse.getBody();
 
-		for (SortiePhysique sortiePhysique : liste) {
-			sortiePhysique.setAjoute(new Date());
-			outRepository.save(sortiePhysique);
-			this.markMessage(sortiePhysique.getId());
-		
+		if (liste.length > 0) {
+
+			for (SortiePhysique sortiePhysique : liste) {
+				if (!outRepository.existsById(sortiePhysique.getId())) {
+					sortiePhysique.setAjoute(new Date());
+					outRepository.save(sortiePhysique);
+				//	this.markMessage(sortiePhysique.getId());
+				}
+			}
+
+			this.saveMessage("PullOut", liste[0].getId(), liste[liste.length - 1].getId());
+			log.info("save and marked  pull out items" + liste.length);
 		}
-		log.info("save and marked  pull out items" +liste.length);
 
 	}
 
@@ -58,20 +70,20 @@ public class Task implements Itasks {
 	@Scheduled(fixedRate = 10000)
 	public void fetchDebarquement() {
 
-		ResponseEntity<Debarquement[]> response = template.getForEntity(ConstVar.URL_debarquement,
-				Debarquement[].class);
+		ResponseEntity<Debarquement[]> response = template.getForEntity("http://localhost:8085/api/debarquement",Debarquement[].class);
 
 		Debarquement[] liste = response.getBody();
-
-		for (Debarquement debarquement : liste) {
-
-			debarquement.setAjoute(new Date());
-			debarquementRepository.save(debarquement);
-			this.markMessage(debarquement.getId());
-		
-
+		if (liste.length > 0) {
+			for (Debarquement debarquement : liste) {
+				if (!debarquementRepository.existsById(debarquement.getId())) {
+					debarquement.setAjoute(new Date());
+					debarquementRepository.save(debarquement);
+					//this.markMessage(debarquement.getId());
+				}
+			}
+			this.saveMessage("Debarquement", liste[0].getId(), liste[liste.length - 1].getId());
+			log.info("save and marked  debarquement  items" + liste.length);
 		}
-		log.info("save and marked  debarquement  items" + liste.length);
 
 	}
 
@@ -79,33 +91,45 @@ public class Task implements Itasks {
 	@Scheduled(fixedRate = 10000)
 	public void fetchContainerVisit() {
 
-		ResponseEntity<ConteneurParcVisite[]> resppnse = template.getForEntity(ConstVar.URL_Container, ConteneurParcVisite[].class);
+		ResponseEntity<ConteneurParcVisite[]> resppnse = template.getForEntity("http://localhost:8085/api/cparc",ConteneurParcVisite[].class);
 
 		ConteneurParcVisite[] liste = resppnse.getBody();
-		log.info("size"+liste.length);
+		if (liste.length > 0) {
 
-		for (ConteneurParcVisite conteneurParcVisite : liste) {
-			conteneurParcVisite.setAjoute(new Date());
-			contneurParcVisiteRepository.save(conteneurParcVisite);
-			this.markMessage(conteneurParcVisite.getId());
-			
+			for (ConteneurParcVisite conteneurParcVisite : liste) {
+				if (!contneurParcVisiteRepository.existsById(conteneurParcVisite.getId())) {
+					conteneurParcVisite.setAjoute(new Date());
+					contneurParcVisiteRepository.save(conteneurParcVisite);
+					//this.markMessage(conteneurParcVisite.getId());
+				}
+
+			}
+
+			this.saveMessage("Visite parc", liste[0].getId(), liste[liste.length - 1].getId());
+			log.info("save and marked  contneur parc  items" + liste.length);
 		}
-		log.info("save and marked  contneur parc  items"+liste.length)  ;
-	
+
 	}
-	
-	
-	
-	private void markMessage (int  id ) {
-		
-		ResponseEntity<String> responseEntity = 
-				template.postForEntity(this.marekUrl+id,
-						null, null) ;
-		
-		if (responseEntity.getStatusCode() ==  HttpStatus.ACCEPTED) {
+
+	private void markMessage(int id) {
+
+		ResponseEntity<String> responseEntity = template.postForEntity(this.marekUrl + id, null, null);
+
+		if (responseEntity.getStatusCode() == HttpStatus.ACCEPTED) {
 			System.out.println("marek message ");
 		}
-		
+	}
+
+	private void saveMessage(String messageName, int start, int end) {
+		MessageDAO messageDAO = new MessageDAO();
+		messageDAO.setType(MessageType.In);
+		messageDAO.setMessageName(messageName);
+		messageDAO.setSaveDate(new Date());
+		messageDAO.setUser_name("App douane");
+		messageDAO.setStart(start);
+		messageDAO.setEnd(end);
+
+		messageRepository.save(messageDAO);
 	}
 
 }

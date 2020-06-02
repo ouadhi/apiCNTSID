@@ -59,7 +59,7 @@ public class Debarquement implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date jobExecDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date ajoute;
 
 	

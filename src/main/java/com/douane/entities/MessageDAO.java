@@ -8,14 +8,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.douane.service.MessageType;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MessageDAO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
+	
 	private String messageName;
+	
+	private MessageType type ; 
 
 	private long start;
 
@@ -24,54 +35,6 @@ public class MessageDAO {
 	private Date saveDate;
 
 	private String user_name;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getMessageName() {
-		return messageName;
-	}
-
-	public void setMessageName(String messageName) {
-		this.messageName = messageName;
-	}
-
-	public long getStart() {
-		return start;
-	}
-
-	public void setStart(long start) {
-		this.start = start;
-	}
-
-	public long getEnd() {
-		return end;
-	}
-
-	public void setEnd(long end) {
-		this.end = end;
-	}
-
-	public Date getSaveDate() {
-		return saveDate;
-	}
-
-	public void setSaveDate(Date saveDate) {
-		this.saveDate = saveDate;
-	}
-
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
 
 	
 	

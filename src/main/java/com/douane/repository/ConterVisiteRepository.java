@@ -20,7 +20,7 @@ public interface ConterVisiteRepository  extends  JpaRepository<Contrevisite, Lo
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update Contrevisite  set  id=1 where id between :start and  :end  ", nativeQuery = true)
+	@Query(value = "update Contrevisite  set  flag=1 where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") Long start ,@Param("end") Long end  ) ; 
 	
 	@Query("Select Count(*) from Manifest  ")

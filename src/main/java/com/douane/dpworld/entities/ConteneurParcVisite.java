@@ -1,4 +1,4 @@
-package com.douane.dpworld.entities;
+ package com.douane.dpworld.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -56,7 +56,7 @@ public class ConteneurParcVisite implements Serializable {
 	
 	private int jobExecId;
 	
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date ajoute;
 	
 	

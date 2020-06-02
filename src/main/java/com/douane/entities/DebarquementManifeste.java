@@ -44,19 +44,23 @@ public class DebarquementManifeste implements Serializable {
 	private String position;
 	
 	@Column(name="date_debarquement")
-	private Timestamp dateDebarquement;
+	@Temporal(TemporalType.DATE)
+	private Date dateDebarquement;
 	
 	@Column(name="date_arrivee")
-	private Timestamp dateArrivee;
+	@Temporal(TemporalType.DATE)
+	private Date dateArrivee;
 	
 	@Column(name="date_accostage")
-	private Timestamp dateAccostage;
+	@Temporal(TemporalType.DATE)
+	private Date dateAccostage;
 	
 	@Column(name="code_bur")
 	private short codeBur;
 	
 	@Column(name="an_manif")
-	private Timestamp anManif;
+	@Temporal(TemporalType.DATE)
+	private Date anManif;
 	
 	@Column(name="num_manif")
 	private int numManif;

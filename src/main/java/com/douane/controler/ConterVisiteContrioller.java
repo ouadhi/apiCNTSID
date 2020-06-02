@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import com.douane.entities.MessageDAO;
 import com.douane.repository.ConterVisiteRepository;
 import com.douane.repository.MessageRepository;
 import com.douane.securite.config.JwtTokenUtil;
+import com.douane.service.MessageType;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -127,21 +130,25 @@ public class ConterVisiteContrioller {
 	
 	@PreAuthorize("hasRole('admin') or hasRole('dpworld') or hasRole('epal')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end , HttpServletRequest  request    ) {
+	public  ResponseEntity<String>  markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end , HttpServletRequest  request    ) {
 		try {
 			
 			MessageDAO messageDAO = new MessageDAO();
 			messageDAO.setMessageName(this.title);
+			messageDAO.setType(MessageType.Out);
 			messageDAO.setStart(start);
 			messageDAO.setEnd(end);
-			messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			//messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
 			messageDAO.setSaveDate(new Date());
 
 			repository.setMareked(start, end);
 			System.out.println("Data has been marked successfully :");
+			return ResponseEntity.ok("marked  message "+start+"-"+end) ; 
 		} catch (Exception e) {
-			System.out.println("Record not exists");
 			System.err.println(e.getMessage());
+			return   new ResponseEntity<>(
+			          e.getMessage(), 
+			          HttpStatus.BAD_REQUEST);
 		}
 	}
 	

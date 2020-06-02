@@ -3,6 +3,8 @@ package com.douane.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.informix.util.dateUtil;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,19 +25,23 @@ public class Manifeste implements Serializable {
 	private Long id;
 
 	@Column(name="an_manif")
-	private Timestamp an_manif;
+	@Temporal(TemporalType.DATE)
+	private Date an_manif;
 
 	@Column(name="code_bur")
 	private short code_bur;
 
 	@Column(name="date_arrive")
-	private Timestamp date_arrive;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date_arrive;
 
 	@Column(name="date_enr")
-	private Timestamp date_enr;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date_enr;
 
 	@Column(name="date_entre")
-	private Timestamp date_entre;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date_entre;
 
 	private String entree;
 

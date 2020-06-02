@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.douane.entities.BaeDpw;
 import com.douane.entities.DeclarationDpw;
 import com.douane.entities.Message;
+import com.douane.entities.MessageDAO;
 import com.douane.repository.DeclarationDpwRepository;
 import com.douane.repository.MessageRepository;
 import com.douane.securite.config.JwtTokenUtil;
+import com.douane.service.MessageType;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -37,7 +41,8 @@ import springfox.documentation.annotations.ApiIgnore;
 public class DeclarationDpwController {
 
 	@Autowired  
-	private DeclarationDpwRepository  repository  ;  
+	private DeclarationDpwRepository  repository  ;
+	@Autowired
 	private MessageRepository messageRepository;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -46,7 +51,7 @@ public class DeclarationDpwController {
 	private Message<DeclarationDpw>  message = new Message<DeclarationDpw>()  ; 
 	
 	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
-	@ApiOperation(value = "View a list of available DpWorld-Declaration ", response = DeclarationDpw.class)
+	@ApiOperation(value = "View a list of available DpWorld-Declaration ")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -63,7 +68,7 @@ public class DeclarationDpwController {
 		message.setStart_id(start);
 		message.setEnd_id(end);
 		message.setDescription("manifest liste ");
-		message.setContant( repository.getDataNotMarked());
+		message.setContant(repository.getDataNotMarked());
 		return message;
 	}
 	
@@ -123,15 +128,26 @@ public class DeclarationDpwController {
 	
 	@PreAuthorize("hasRole('admin') or hasRole('dpworld')" )
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+	public ResponseEntity<String> markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {
 			
-			System.out.println(start +" "+ end);
 			repository.setMareked(start, end);
+			MessageDAO messageDAO = new MessageDAO();
+			messageDAO.setMessageName(this.title);
+			messageDAO.setType(MessageType.Out);
+			messageDAO.setStart(start);
+			messageDAO.setEnd(end);
+			//messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			messageDAO.setSaveDate(new Date());
+			messageRepository.save(messageDAO);
 			System.out.println("Data has been marked successfully :");
+			return ResponseEntity.ok("marked Bae message "+start+"-"+end) ; 
 		} catch (Exception e) {
 			System.out.println("Record not exists");
 			System.err.println(e.getMessage());
+			return   new ResponseEntity<>(
+			          "Bar Request", 
+			          HttpStatus.BAD_REQUEST);
 		}
 	}
 	

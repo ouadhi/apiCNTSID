@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.douane.entities.DebarquementManifeste;
 import com.douane.entities.Message;
+import com.douane.entities.MessageDAO;
 import com.douane.entities.DebarquementManifeste;
 import com.douane.repository.DebarquementManifestRepositroy;
+import com.douane.repository.MessageRepository;
+import com.douane.service.MessageType;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -34,6 +39,8 @@ public class DebarquementManifestController {
 //  inject  Repository  
 	@Autowired  
 	private  DebarquementManifestRepositroy repository   ;  
+	@Autowired
+	private MessageRepository messageRepository;
 	
      private String  title  =  "DebarquementManifest"  ; 
      
@@ -113,15 +120,26 @@ public class DebarquementManifestController {
 	}
 	
 	@PostMapping(path = "/marked/{start}/{end}", produces = "application/json")
-	public void markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
+	public ResponseEntity<String>  markedlist(@PathVariable(name="start") Long start   ,@PathVariable(name="end") Long end    ) {
 		try {
 			
-			System.out.println(start +" "+ end);
 			repository.setMareked(start, end);
-			System.out.println("Data has been marked successfully :");
+			
+			MessageDAO messageDAO = new MessageDAO();
+			messageDAO.setMessageName(this.title);
+			messageDAO.setType(MessageType.Out);
+			messageDAO.setStart(start);
+			messageDAO.setEnd(end);
+			//messageDAO.setUser_name(jwtTokenUtil.getUsernameFromHttpRequest(request));
+			messageDAO.setSaveDate(new Date());
+			messageRepository.save(messageDAO);
+			return ResponseEntity.ok("marked Bae message "+start+"-"+end) ; 
+			
 		} catch (Exception e) {
-			System.out.println("Record not exists");
 			System.err.println(e.getMessage());
+			return   new ResponseEntity<>(
+			          e.getMessage(), 
+			          HttpStatus.BAD_REQUEST);
 		}
 	}
 	

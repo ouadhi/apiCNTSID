@@ -21,10 +21,14 @@ public interface DebarquementManifestRepositroy extends JpaRepository<Debarqueme
 	@Query(value = "update debarquement_manifeste  set  flag= 1 where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") Long start ,@Param("end") Long end  ) ; 
 	
+	// not consumed  
 	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = false ")
 	public int getCount () ; 
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DebarquementManifeste where flag= 0 ")
 	public List<Map<String, Object>> findStartEndId() ; 
+	
+	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = true ")
+	public int getCountConsumed () ; 
 
 }

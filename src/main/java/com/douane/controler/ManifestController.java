@@ -63,7 +63,7 @@ public class ManifestController {
 
 	@PostMapping(path = "/save", produces = "application/json")
 	public void createData(@RequestBody Manifest data) {
-		data.setFlag(false);
+		data.setFlag(false);;
 		repository.save(data);
 		System.out.println(" data has been saved successfully: " + data);
 	}
@@ -83,9 +83,8 @@ public class ManifestController {
 		if (repository.existsById(id))  {
 		   Optional<Manifest> optional =   repository.findById(id) ; 
 		   Manifest  Manifest = optional.get() ; 
-		   Manifest.setFlag(true);
-		   Manifest.setDate_marquage
-		   (new Date());
+		   Manifest.setFlag(true) ;
+		   Manifest.setDate_marquage(new Date());
 		   
 		   repository.save(Manifest)  ; 
 			System.out.println("Data has been marked successfully :" + Manifest.getId());
