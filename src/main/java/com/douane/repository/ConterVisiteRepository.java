@@ -15,7 +15,7 @@ import com.douane.entities.Cparcvisite;
 
 
 public interface ConterVisiteRepository  extends  JpaRepository<Contrevisite, Long>{
-	@Query("SELECT  c FROM  Contrevisite  c  ")
+	@Query("SELECT  c FROM  Contrevisite  c where flag = 0 ")
 	public List<Contrevisite>  getDataNotMarked () ; 
 	
 	@Modifying
@@ -23,10 +23,13 @@ public interface ConterVisiteRepository  extends  JpaRepository<Contrevisite, Lo
 	@Query(value = "update Contrevisite  set  flag=1 where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") Long start ,@Param("end") Long end  ) ; 
 	
-	@Query("Select Count(*) from Manifest  ")
+	@Query("Select Count(*) from Contrevisite  where flag = 0")
 	public int getCount () ; 
 	
-	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Contrevisite  ")
+	@Query("Select Count(*) from Contrevisite WHERE  flag  = 1 ")
+	public int getCountConsumed () ; 
+	
+	@Query("select new  map(min(id) as start ,  max(id) as end ) from  Contrevisite where flag = 0   ")
 	public List<Map<String, Object>> findStartEndId() ; 
 	
 	@Query("SELECT  b FROM  Contrevisite b WHERE b.id between :start and  :end  ")

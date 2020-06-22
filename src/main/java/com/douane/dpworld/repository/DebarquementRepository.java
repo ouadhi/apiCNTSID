@@ -13,7 +13,7 @@ public interface DebarquementRepository extends  JpaRepository<Debarquement, Int
 	@Query("Select Count(*) from Debarquement  ")
 	public int count_all ();
 	
-	@Query("Select Count(*) from Debarquement c where date(c.ajoute)  = CURRENT_DATE ")
+	@Query("Select Count(*) from Debarquement c where date(c.ajoute)  = today ")
 	public int count_today ();
 
 }

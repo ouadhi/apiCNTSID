@@ -26,6 +26,11 @@ public class DeclarationDpw implements Serializable {
 	@Column(name="flag")
 	private boolean  flag  ;
 	
+	@Column(name="date_markage")
+	@Temporal(TemporalType.DATE)
+	@Null
+	private Date date_markage;
+	
 	@Column(name="numero_vi")
 	private String numero_vi;
 	
@@ -40,6 +45,7 @@ public class DeclarationDpw implements Serializable {
 	
 	@Column(name="an_manif")
 	@Temporal(TemporalType.DATE)
+	@Null
 	private Date  anManif;
 	
 	@Column(name="num_manif")
@@ -53,6 +59,7 @@ public class DeclarationDpw implements Serializable {
 	
 	@Column(name="an_decl")
 	@Temporal(TemporalType.DATE)
+	@Null
 	private Date anDecl;
 	
 	@Column(name="num_decl")
@@ -63,6 +70,7 @@ public class DeclarationDpw implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_declaration")
+	@Null
 	private Date date_declaration;
 	
 	private String fap;

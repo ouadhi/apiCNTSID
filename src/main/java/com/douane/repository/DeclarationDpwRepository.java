@@ -14,7 +14,7 @@ import com.douane.entities.DeclarationDpw;
 
 public interface DeclarationDpwRepository extends  JpaRepository<DeclarationDpw, Long> {
 	
-	@Query("SELECT d  FROM DeclarationDpw  d WHERE d.flag=  false ")
+	@Query("SELECT d  FROM DeclarationDpw  d WHERE d.flag=  0 ")
 	public List<DeclarationDpw>  getDataNotMarked();   
 	
 	@Modifying
@@ -23,17 +23,17 @@ public interface DeclarationDpwRepository extends  JpaRepository<DeclarationDpw,
 	 * informix  query   style we  use  in boolean type  t=  true  , and  f  =  flase  ,  
 	 * mysql we use  degit  items  0  true   and  1  = false  
 	 */
-	//@Query(value = "update declaration_dpw  set  flag='t' where id between :start and  :end  ", nativeQuery = true) informix 
 	@Query(value = "update declaration_dpw  set  flag= 1 where id between :start and  :end  ", nativeQuery = true) 
+	//@Query(value = "update declaration_dpw  set  flag= 1 where id between :start and  :end  ", nativeQuery = true) 
 	public void setMareked(@Param("start") Long start ,@Param("end") Long end  ) ; 
 	
-	@Query("Select Count(*) from DeclarationDpw WHERE  flag  = false ")
+	@Query("Select Count(*) from DeclarationDpw WHERE  flag  = '0' ")
 	public int getCount () ; 
 	
-	@Query("Select Count(*) from DeclarationDpw WHERE  flag  = true ")
+	@Query("Select Count(*) from DeclarationDpw WHERE  flag  = '1' ")
 	public int getCountConsumed () ; 
 	
-	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DeclarationDpw where flag='f' ")
+	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DeclarationDpw where flag='0' ")
 	public List<Map<String, Object>> findStartEndId() ; 
 	
 	@Query("SELECT  b FROM  DeclarationDpw b WHERE b.id between :start and  :end  ")

@@ -13,7 +13,7 @@ import com.douane.entities.BaeDpw;
 
 public interface BaeDpwRepository extends JpaRepository<BaeDpw, Long> {
 	
-	@Query("SELECT  b FROM  BaeDpw b WHERE b.flag=false")
+	@Query("SELECT  b FROM  BaeDpw b WHERE b.flag= 0 ")
 	public List<BaeDpw> getDataNotMarked(); 
 	
 	@Modifying
@@ -21,13 +21,13 @@ public interface BaeDpwRepository extends JpaRepository<BaeDpw, Long> {
 	@Query(value = "update bae_dpw  set  flag= 1   where id between :start and  :end  ", nativeQuery = true)
 	public void setMareked(@Param("start") long start ,@Param("end") long end  ) ; 
 	
-	@Query("Select Count(*) from BaeDpw WHERE  flag  = false ")
+	@Query("Select Count(*) from BaeDpw WHERE  flag  = 0 ")
 	public int getCount () ; 
 	
-	@Query("Select Count(*) from BaeDpw WHERE  flag  = true ")
+	@Query("Select Count(*) from BaeDpw WHERE  flag  = 1 ")
 	public int getCountConsumed () ; 
 	
-	@Query("select new map(min(id) as start ,  max(id) as end ) from  BaeDpw where flag='f' ")
+	@Query("select new map(min(id) as start ,  max(id) as end ) from  BaeDpw where flag= 0 ")
 	public List<Map<String, Object>> findStartEndId() ; 
 	
 	@Query("SELECT  b FROM  BaeDpw b WHERE b.id between :start and  :end  ")

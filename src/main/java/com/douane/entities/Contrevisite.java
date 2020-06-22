@@ -21,8 +21,11 @@ public class Contrevisite implements Serializable {
 	@Id
 	private Long   id ; 
 	
-	@Column(name="num_reference")
-	private String numReference;
+	@Column(name="flag")
+	private boolean  flag  ;
+	
+	@Column(name="num_bl")
+	private String numBl;
 	
 	@Column(name="date_enr")
 	@Temporal(TemporalType.DATE)
@@ -50,9 +53,6 @@ public class Contrevisite implements Serializable {
 	@Column(name="type_controle")
 	private String typeControle;
 	
-	@Column(name="date_ajout")
-	@Temporal(TemporalType.DATE)
-	private Date dateAjout;
 
 	@Column(name="wuser")
 	private String user;

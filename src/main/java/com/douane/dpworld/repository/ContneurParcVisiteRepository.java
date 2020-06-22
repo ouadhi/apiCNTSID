@@ -11,7 +11,7 @@ public interface ContneurParcVisiteRepository  extends  JpaRepository<ConteneurP
 	@Query("Select Count(*) from ConteneurParcVisite ")
 	public int count_all ();
 	
-	@Query("Select Count(*) from ConteneurParcVisite c where date(c.ajoute) = CURRENT_DATE ")
+	@Query("Select Count(*) from ConteneurParcVisite c where date(c.ajoute) = today ")
 	public int count_today ();
 	
 }

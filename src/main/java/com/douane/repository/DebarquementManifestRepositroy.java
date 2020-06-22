@@ -22,13 +22,13 @@ public interface DebarquementManifestRepositroy extends JpaRepository<Debarqueme
 	public void setMareked(@Param("start") Long start ,@Param("end") Long end  ) ; 
 	
 	// not consumed  
-	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = false ")
+	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = 0 ")
 	public int getCount () ; 
 	
 	@Query("select new  map(min(id) as start ,  max(id) as end ) from  DebarquementManifeste where flag= 0 ")
 	public List<Map<String, Object>> findStartEndId() ; 
 	
-	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = true ")
+	@Query("Select Count(*) from DebarquementManifeste WHERE  flag  = 1 ")
 	public int getCountConsumed () ; 
 
 }

@@ -14,23 +14,22 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 import com.douane.config.Properties;
+import com.douane.config.service.AppConfigService;
 import com.douane.dpworld.entities.ConteneurParcVisite;
 import com.douane.dpworld.repository.ContneurParcVisiteRepository;
 import com.douane.securite.config.JwtTokenUtil;
 import com.douane.securite.service.JwtUserDetailsService;
 
 
-
-
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 
 public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 	 
 	@Autowired  
 	private JwtUserDetailsService   detailsService  ; 
 	@Autowired
-	private ContneurParcVisiteRepository repo ;  
+	private AppConfigService  confService ; 
 	
 	
 	
@@ -39,8 +38,7 @@ public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 		return  new  RestTemplate()  ; 
 	}
 	
-	@Autowired
-	private RestTemplate  template ;  
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DouaneServiceProjectApplication.class, args);
 	}
@@ -49,8 +47,7 @@ public class DouaneServiceProjectApplication  implements   CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		detailsService.initRole();
-		
-		System.out.println(repo.count_today());
+		confService.intConfig();
 	     		
 	}
 	

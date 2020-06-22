@@ -13,7 +13,7 @@ public interface PullOutRepository extends   JpaRepository<SortiePhysique, Integ
 	@Query("Select Count(*) from SortiePhysique  ")
 	public int count_all ();
 	
-	@Query("Select Count(*) from SortiePhysique c where date(c.Ajoute) = CURRENT_DATE ")
+	@Query("Select Count(*) from SortiePhysique c where date(c.Ajoute) = today  ")
 	public int count_today ();
 
 }

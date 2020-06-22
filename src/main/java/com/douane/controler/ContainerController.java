@@ -35,7 +35,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 //  end  point annotation 
 @RestController
-@RequestMapping("/api/v1/container")
+ 
 @Api(value="Bae end-point" , description = "Operations pertaining to Containers" )
 @ApiModel("BAE")
 @ApiIgnore

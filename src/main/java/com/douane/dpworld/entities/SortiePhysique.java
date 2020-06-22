@@ -40,11 +40,11 @@ public class SortiePhysique {
 	@Column(name="numero_dp")
 	private String dpNumber;
 	
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_dp")
 	private Date dpDate;
 	
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_sortie")
 	private Date pulloutDate;
 	

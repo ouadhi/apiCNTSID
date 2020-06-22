@@ -2,6 +2,7 @@ package com.douane.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,9 @@ public class DebarquementManifeste implements Serializable {
 	@Id
 	private Long   id ;
 	
-	@Temporal(TemporalType.DATE)
 	@Column(name="date_markage")
+	@Temporal(TemporalType.DATE)
+	@Null
 	private Date date_markage;
 	
 	@Column(name="flag")
@@ -45,20 +47,25 @@ public class DebarquementManifeste implements Serializable {
 	
 	@Column(name="date_debarquement")
 	@Temporal(TemporalType.DATE)
+	@Null
 	private Date dateDebarquement;
 	
 	@Column(name="date_arrivee")
 	@Temporal(TemporalType.DATE)
+	@Null
 	private Date dateArrivee;
 	
 	@Column(name="date_accostage")
 	@Temporal(TemporalType.DATE)
+	@Null
 	private Date dateAccostage;
 	
 	@Column(name="code_bur")
-	private short codeBur;
+	@Null
+	private Short codeBur;
 	
 	@Column(name="an_manif")
+	@Null
 	@Temporal(TemporalType.DATE)
 	private Date anManif;
 	
@@ -76,7 +83,7 @@ public class DebarquementManifeste implements Serializable {
 
 
 	@Column(name="num_magasin")
-	private short numMagasin;
+	private Short numMagasin;
 	
 	
 	

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +20,9 @@ import com.douane.dpworld.entities.SortiePhysique;
 import com.douane.dpworld.repository.ContneurParcVisiteRepository;
 import com.douane.dpworld.repository.DebarquementRepository;
 import com.douane.dpworld.repository.PullOutRepository;
+import com.douane.dpworld.service.DebarquementService;
+import com.douane.dpworld.service.ParcVisteService;
+import com.douane.dpworld.service.PullOutService;
 import com.douane.entities.Message;
 import com.douane.entities.MessageDAO;
 import com.douane.repository.MessageRepository;
@@ -26,110 +30,47 @@ import com.douane.service.MessageType;
 
 @Component
 public class Task implements Itasks {
-
+	
 	@Autowired
-	private RestTemplate template;
+	private  DebarquementService   debarquementService ; 
 	@Autowired
-	private PullOutRepository outRepository;
+	private  ParcVisteService  parcService ; 
 	@Autowired
-	private DebarquementRepository debarquementRepository;
-	@Autowired
-	private ContneurParcVisiteRepository contneurParcVisiteRepository;
-
-	@Autowired
-	private MessageRepository messageRepository;
-
+	private  PullOutService outService  ; 
+	
 	private static final Logger log = LoggerFactory.getLogger(Task.class);
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-	private static final String marekUrl = "http://192.168.9.10:8088/api/markSaved/";
+
 
 	@Override
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 100000)
 	public void fetchPullOut() {
-
-		ResponseEntity<SortiePhysique[]> resppnse = template.getForEntity("http://localhost:8085/api/pulout", SortiePhysique[].class);
-		SortiePhysique[] liste = resppnse.getBody();
-
-		if (liste.length > 0) {
-
-			for (SortiePhysique sortiePhysique : liste) {
-				if (!outRepository.existsById(sortiePhysique.getId())) {
-					sortiePhysique.setAjoute(new Date());
-					outRepository.save(sortiePhysique);
-				//	this.markMessage(sortiePhysique.getId());
-				}
-			}
-
-			this.saveMessage("PullOut", liste[0].getId(), liste[liste.length - 1].getId());
-			log.info("save and marked  pull out items" + liste.length);
-		}
-
+		log.info("------------------------ start out  ");
+		this.outService.doFetch();
+		log.info("------------------------ end out  ");
+	
 	}
 
 	@Override
-	@Scheduled(fixedRate = 10000)
+	//@Scheduled(fixedRate = 100000)
 	public void fetchDebarquement() {
+		log.info("------------------------ debarquement out  ");
 
-		ResponseEntity<Debarquement[]> response = template.getForEntity("http://localhost:8085/api/debarquement",Debarquement[].class);
-
-		Debarquement[] liste = response.getBody();
-		if (liste.length > 0) {
-			for (Debarquement debarquement : liste) {
-				if (!debarquementRepository.existsById(debarquement.getId())) {
-					debarquement.setAjoute(new Date());
-					debarquementRepository.save(debarquement);
-					//this.markMessage(debarquement.getId());
-				}
-			}
-			this.saveMessage("Debarquement", liste[0].getId(), liste[liste.length - 1].getId());
-			log.info("save and marked  debarquement  items" + liste.length);
-		}
+		this.debarquementService.doFetch();
+		
+		log.info("------------------------ end debarquemtn  ");
 
 	}
 
 	@Override
-	@Scheduled(fixedRate = 10000)
+   // @Scheduled(fixedRate = 100000)
 	public void fetchContainerVisit() {
+		log.info("------------------------ start visit  ");
 
-		ResponseEntity<ConteneurParcVisite[]> resppnse = template.getForEntity("http://localhost:8085/api/cparc",ConteneurParcVisite[].class);
-
-		ConteneurParcVisite[] liste = resppnse.getBody();
-		if (liste.length > 0) {
-
-			for (ConteneurParcVisite conteneurParcVisite : liste) {
-				if (!contneurParcVisiteRepository.existsById(conteneurParcVisite.getId())) {
-					conteneurParcVisite.setAjoute(new Date());
-					contneurParcVisiteRepository.save(conteneurParcVisite);
-					//this.markMessage(conteneurParcVisite.getId());
-				}
-
-			}
-
-			this.saveMessage("Visite parc", liste[0].getId(), liste[liste.length - 1].getId());
-			log.info("save and marked  contneur parc  items" + liste.length);
-		}
+		this.parcService.doFetch();
+		
+		log.info("------------------------ end visit  ");
 
 	}
 
-	private void markMessage(int id) {
-
-		ResponseEntity<String> responseEntity = template.postForEntity(this.marekUrl + id, null, null);
-
-		if (responseEntity.getStatusCode() == HttpStatus.ACCEPTED) {
-			System.out.println("marek message ");
-		}
-	}
-
-	private void saveMessage(String messageName, int start, int end) {
-		MessageDAO messageDAO = new MessageDAO();
-		messageDAO.setType(MessageType.In);
-		messageDAO.setMessageName(messageName);
-		messageDAO.setSaveDate(new Date());
-		messageDAO.setUser_name("App douane");
-		messageDAO.setStart(start);
-		messageDAO.setEnd(end);
-
-		messageRepository.save(messageDAO);
-	}
-
+	
 }
