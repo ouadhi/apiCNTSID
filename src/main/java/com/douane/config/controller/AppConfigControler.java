@@ -16,7 +16,7 @@ import com.douane.config.Entities.ConfigItem;
 import com.douane.config.service.AppConfigService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/config")
 public class AppConfigControler {
 	
 	@Autowired  

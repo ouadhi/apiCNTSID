@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "config_item")
+@Table(name = "config")
 public class ConfigItem {
 	
 	@Id
