@@ -43,32 +43,25 @@ public class Task implements Itasks {
 
 	@Override
 	@Scheduled(fixedRate = 100000)
-	public void fetchPullOut() {
-		log.info("------------------------ start out  ");
-		this.outService.doFetch();
-		log.info("------------------------ end out  ");
 	
+	public void fetchPullOut() {
+		
+		this.outService.doFetch();
 	}
 
 	@Override
-	//@Scheduled(fixedRate = 100000)
+	@Scheduled(fixedRate = 100000)
+	
 	public void fetchDebarquement() {
-		log.info("------------------------ debarquement out  ");
-
 		this.debarquementService.doFetch();
-		
-		log.info("------------------------ end debarquemtn  ");
-
 	}
 
 	@Override
-   // @Scheduled(fixedRate = 100000)
-	public void fetchContainerVisit() {
-		log.info("------------------------ start visit  ");
+    @Scheduled(fixedRate = 100000)
 
-		this.parcService.doFetch();
+	public void fetchContainerVisit() {
 		
-		log.info("------------------------ end visit  ");
+		this.parcService.doFetch();
 
 	}
 
