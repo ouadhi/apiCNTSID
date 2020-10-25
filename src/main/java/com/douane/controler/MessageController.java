@@ -77,5 +77,9 @@ public class MessageController {
 		MessageType eType = MessageType.valueOf(type); 
 		return repository.getMessagesByType(eType) ; 
 	}
+	
+	
+	
+	
 
 }

@@ -1,7 +1,14 @@
 package com.douane.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +21,7 @@ import com.douane.repository.DebarquementManifestRepositroy;
 import com.douane.repository.DeclarationDpwRepository;
 import com.douane.repository.MessageRepository;
 
-import springfox.documentation.service.ApiInfo;
+import io.swagger.models.auth.In;
 
 @Service 
 public class MessageService {
@@ -35,7 +42,11 @@ public class MessageService {
 	@Autowired
 	private BaeDpwRepository bae;
 	
-	@Autowired MessageRepository  messageRepository ;  
+	@Autowired 
+	MessageRepository  messageRepository ; 
+	@Autowired
+	private Util util  ; 
+	
 	
 	public  MessgIn createIn() {
 		MessgIn messgIn = new MessgIn();
@@ -94,6 +105,123 @@ public class MessageService {
 	
 		return  map ; 
 	}
+	
+	
+	public  Map<?, ?> statstic_in (Date start  , Date  end ) {
+		Map<String, Object>  map  = new  HashMap<String, Object>() ;  
+		map.put("Debarquement", this.debarquementstatic(start, end))  ; 
+	    map.put("Parc Visite", this.parcvisitestatic(start, end)) ; 
+		map.put("pullout", this.pulloutstatic(start, end)) ; 
+		
+		
+		return  map ; 
+	}
+	
+	
+	public  List<?> pulloutstatic (Date start  , Date  end ) {
+ 		
+		List<Date> days = util.getDatesBetweenUsingJava7(end, start)  ; 
+		List<Map<String , String>> elements = new  ArrayList<>()  ; 
+		
+		for (Date date : days) {
+			int count  =  this.poreppsitory.countByDate(date) ; 
+			HashMap<String , String>  element =  new HashMap<String, String>() ; 
+			element.put("date", util.StringDateFormat(date))  ;  
+			element.put("count", Integer.toString(count)) ; 
+			
+			elements.add(element) ; 
+		}
+		
+		
+		return  elements ; 
+	}
+	
+	
+	private  List<?> debarquementstatic (Date start  , Date  end ) {
+		List<Date> days = util.getDatesBetweenUsingJava7(end, start)  ; 
+		List<Map<String , String>> elements = new  ArrayList<>()  ; 
+		
+		for (Date date : days) {
+			int count  =  this.drepository.countByDate(date) ; 
+			HashMap<String , String>  element =  new HashMap<String, String>() ; 
+			element.put("date", util.StringDateFormat(date))  ;  
+			element.put("count", Integer.toString(count)) ; 
+			
+			elements.add(element) ; 
+		}
+		
+		
+		return  elements ; 
+	}
+	
+	
+	private  List<?> parcvisitestatic (Date start  , Date  end ) {
+		List<Date> days = util.getDatesBetweenUsingJava7(end, start)  ; 
+		List<Map<String , String>> elements = new  ArrayList<>()  ; 
+		
+		for (Date date : days) {
+			int count  =  this.cpvrepository.countByDate(date) ; 
+			HashMap<String , String>  element =  new HashMap<String, String>() ; 
+			element.put("date", util.StringDateFormat(date))  ;  
+			element.put("count", Integer.toString(count)) ; 
+			
+			elements.add(element) ; 
+		}
+		
+		
+		return  elements ; 
+	}
+	
+	
+
+	public  Map<?, ?> statstic_in_v2 (Date start  , Date  end ) {
+		List<Date> days = util.getDatesBetweenUsingJava7(end, start)  ; 
+		
+		Map<String, Object>  map  = new  HashMap<String, Object>() ;  
+		map.put("date",util.listDateFormat(days))  ; 
+	    map.put("debarquement", this.countsdebar(days)) ; 
+	    map.put("parc", this.countsparc(days)) ; 
+		map.put("pullout", this.countsouts(days)) ; 
+		
+		
+		return  map ; 
+	}
+	
+	
+	private List<Integer> countsouts (List<Date> days ) {
+		List<Integer>  counts  = new  ArrayList<Integer>()   ;   
+		for (Date date : days) {
+			counts.add(poreppsitory.countByDate(date)); 
+			
+		}
+		
+			return counts  ; 
+	
+	}
+	
+	private List<Integer> countsparc(List<Date> days ) {
+		List<Integer>  counts  = new  ArrayList<Integer>()   ;   
+		for (Date date : days) {
+			counts.add(cpvrepository.countByDate(date)); 
+			
+		}
+		
+			return counts  ; 
+	
+	}
+	
+	private List<Integer> countsdebar (List<Date> days ) {
+		List<Integer>  counts  = new  ArrayList<Integer>()   ;   
+		for (Date date : days) {
+			counts.add(drepository.countByDate(date)); 
+			
+		}
+		
+			return counts  ; 
+	
+	}
+	
+	
 
 
 }

@@ -56,7 +56,7 @@ public class ConteneurParcVisite implements Serializable {
 	
 	private int jobExecId;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP )
 	private Date ajoute;
 	
 	

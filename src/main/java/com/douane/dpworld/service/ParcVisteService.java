@@ -1,6 +1,11 @@
 package com.douane.dpworld.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.douane.config.ConstVar;
 import com.douane.dpworld.entities.ConteneurParcVisite;
+import com.douane.dpworld.entities.SortiePhysique;
 import com.douane.dpworld.repository.ContneurParcVisiteRepository;
 import com.douane.dpworld.repository.DebarquementRepository;
 import com.douane.service.MessageDaoService;
@@ -25,29 +31,43 @@ public class ParcVisteService {
 	@Autowired
 	private RestTemplate template;
 
-	public void doFetch() {
+	public int  doFetch() {
+		System.out.println("parc");
+		// fetch API and save response
+		ResponseEntity<ConteneurParcVisite[]> response = template.getForEntity(ConstVar.URL_Sortie, ConteneurParcVisite[].class);
 
-		ResponseEntity<ConteneurParcVisite[]> resppnse = template.getForEntity(ConstVar.URL_Container,
-				ConteneurParcVisite[].class);
+		// get body response
+		ConteneurParcVisite[] body = response.getBody();
+		// convert body to List with same argumant
+		List<ConteneurParcVisite> apiList = new ArrayList<ConteneurParcVisite>();
+		apiList = Arrays.asList(body);
+		System.out.println(apiList.size());
 
-		ConteneurParcVisite[] liste = resppnse.getBody();
-		System.out.println(" size parc visite " + liste.length);
-		if (liste.length > 0) {
+		// getAll items saved in data base
+		ArrayList<ConteneurParcVisite> listDB = (ArrayList<ConteneurParcVisite>) contneurParcVisiteRepository.findAll();
+		
+		System.out.println(listDB);
 
-			for (ConteneurParcVisite conteneurParcVisite : liste) {
+		// get ids from DB list
+		Set<Integer> ids = listDB.stream().map(ConteneurParcVisite::getId).collect(Collectors.toSet());
 
-				if (!contneurParcVisiteRepository.existsById(conteneurParcVisite.getId())) {
-					conteneurParcVisite.setAjoute(new Date());
-					contneurParcVisiteRepository.save(conteneurParcVisite);
-					this.markedService.markMessage(conteneurParcVisite.getId());
-				} else {
-					this.markedService.markMessage(conteneurParcVisite.getId());
+		// deffirence between tow list
+		List<ConteneurParcVisite> parentlist = apiList.stream().filter(sortie -> !ids.contains(sortie.getId()))
+				.collect(Collectors.toList());
+		System.out.println(parentlist.size());
 
-				}
+		int count_save = parentlist.size();
+		parentlist.stream().forEach(item  -> item.setAjoute(new Date()));
+		// save deffirence in data base
+		contneurParcVisiteRepository.saveAll(parentlist);
+		// marked items
 
-			}
+		// logs details
+		if (count_save >0)
+			this.msgService.saveMessage("Visite parc", parentlist.get(0).getId(),
+					parentlist.get(count_save - 1).getId());
 
-			this.msgService.saveMessage("Visite parc", liste[0].getId(), liste[liste.length - 1].getId());
-		}
+		return count_save;
+		
 	}
 }
