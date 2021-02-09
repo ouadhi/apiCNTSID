@@ -60,7 +60,7 @@ public class BaeDpwController {
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
 	@GetMapping(path = "/getdata")
-	public Message<BaeDpw> findNotMarkedt() throws URISyntaxException {
+	public Message<BaeDpw> findNotMarked() throws URISyntaxException {
 		Long start = (Long) baeDpwRepository.findStartEndId().get(0).get("start");
 		Long end = (Long) baeDpwRepository.findStartEndId().get(0).get("end");
 

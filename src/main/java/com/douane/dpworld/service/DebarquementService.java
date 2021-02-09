@@ -61,10 +61,9 @@ public class DebarquementService {
 		
 		int count_save = parentlist.size();
 		parentlist.stream().forEach(item  -> item.setAjoute(new Date()));
-		// save deffirence  inn data base 
+		// save deffirence  in data base 
 		debarquementRepository.saveAll(parentlist)  ;    
 		// marked items 
-		
 		// logs details  
 		if(count_save>0)
 		this.msgService.saveMessage("Debarquement", parentlist.get(0).getId(),  parentlist.get(count_save-1).getId()); 

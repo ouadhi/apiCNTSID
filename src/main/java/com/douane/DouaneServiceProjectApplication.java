@@ -13,7 +13,7 @@ import com.douane.config.service.AppConfigService;
 import com.douane.securite.service.JwtUserDetailsService;
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 
 public class DouaneServiceProjectApplication implements CommandLineRunner {
 
@@ -33,7 +33,6 @@ public class DouaneServiceProjectApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
 		detailsService.initRole();
 		confService.intConfig();
 	}
