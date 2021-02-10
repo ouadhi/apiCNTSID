@@ -32,7 +32,11 @@ public class AppConfigService {
 	public void saveList(List<ConfigItem> liste) {
 		try {
 			for (ConfigItem item : liste) {
-				this.save(item);
+				ConfigItem config = repository.findById(item.getTitle()).get(); 
+				config.setCron(item.getCron());
+				config.setUrl(item.getUrl());
+				config.setEnable(item.isEnable());
+				this.save(config);
 			}
 
 		} catch (Exception e) {
@@ -66,7 +70,7 @@ public class AppConfigService {
 			ConfigItem item  = new ConfigItem() ; 
 			item.setUrl("http://192.168.9.10:8088/api/containers");
 			item.setEnable(true);
-			item.setTitle("debaquement");
+			item.setTitle("debarquement");
 			item.setCron(1);
 			repository.save(item)  ; 
 		}

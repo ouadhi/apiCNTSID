@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		*/
+		httpSecurity.headers().frameOptions().disable();
 		httpSecurity.cors().and().csrf().disable()
 		.authorizeRequests().antMatchers("/").permitAll()  ;  
 	}
@@ -83,6 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				 "/swagger-resources/**",
 				 "/configuration/**", 
 				 "/swagger-ui.html/**",
+				 "/h2-console/*",
 				 "/webjars/**");
 	}
 	

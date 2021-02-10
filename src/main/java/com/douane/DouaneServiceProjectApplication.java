@@ -13,8 +13,7 @@ import com.douane.config.service.AppConfigService;
 import com.douane.securite.service.JwtUserDetailsService;
 
 @SpringBootApplication
-//@EnableScheduling
-
+@EnableScheduling
 public class DouaneServiceProjectApplication implements CommandLineRunner {
 
 	@Autowired

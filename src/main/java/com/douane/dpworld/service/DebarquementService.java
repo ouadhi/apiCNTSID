@@ -34,8 +34,6 @@ public class DebarquementService {
 
 	public int doFetch() {
 		
-		System.out.println("debarquemnt");
-
 		// fetch API and save response  
 		ResponseEntity<Debarquement[]> response = template.getForEntity(ConstVar.URL_debarquement,Debarquement[].class);
 		
