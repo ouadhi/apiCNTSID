@@ -33,41 +33,46 @@ public class ParcVisteService {
 
 	public int  doFetch() {
 		System.out.println("parc");
-		// fetch API and save response
-		ResponseEntity<ConteneurParcVisite[]> response = template.getForEntity(ConstVar.URL_Sortie, ConteneurParcVisite[].class);
+		try {// fetch API and save response
+			ResponseEntity<ConteneurParcVisite[]> response = template.getForEntity(ConstVar.URL_Sortie, ConteneurParcVisite[].class);
 
-		// get body response
-		ConteneurParcVisite[] body = response.getBody();
-		// convert body to List with same argumant
-		List<ConteneurParcVisite> apiList = new ArrayList<ConteneurParcVisite>();
-		apiList = Arrays.asList(body);
-		System.out.println(apiList.size());
+			// get body response
+			ConteneurParcVisite[] body = response.getBody();
+			// convert body to List with same argumant
+			List<ConteneurParcVisite> apiList = new ArrayList<ConteneurParcVisite>();
+			apiList = Arrays.asList(body);
+			System.out.println(apiList.size());
 
-		// getAll items saved in data base
-		ArrayList<ConteneurParcVisite> listDB = (ArrayList<ConteneurParcVisite>) contneurParcVisiteRepository.findAll();
+			// getAll items saved in data base
+			ArrayList<ConteneurParcVisite> listDB = (ArrayList<ConteneurParcVisite>) contneurParcVisiteRepository.findAll();
+			
+			System.out.println(listDB);
+
+			// get ids from DB list
+			Set<Integer> ids = listDB.stream().map(ConteneurParcVisite::getId).collect(Collectors.toSet());
+
+			// deffirence between tow list
+			List<ConteneurParcVisite> parentlist = apiList.stream().filter(sortie -> !ids.contains(sortie.getId()))
+					.collect(Collectors.toList());
+			System.out.println(parentlist.size());
+
+			int count_save = parentlist.size();
+			parentlist.stream().forEach(item  -> item.setAjoute(new Date()));
+			// save deffirence in data base
+			contneurParcVisiteRepository.saveAll(parentlist);
+			// marked items
+
+			// logs details
+			if (count_save >0)
+				this.msgService.saveMessage("Visite parc", parentlist.get(0).getId(),
+						parentlist.get(count_save - 1).getId());
+
+			return count_save;
+			
+		} catch (Exception e) {
+			return 0 ; 
+		}
 		
-		System.out.println(listDB);
-
-		// get ids from DB list
-		Set<Integer> ids = listDB.stream().map(ConteneurParcVisite::getId).collect(Collectors.toSet());
-
-		// deffirence between tow list
-		List<ConteneurParcVisite> parentlist = apiList.stream().filter(sortie -> !ids.contains(sortie.getId()))
-				.collect(Collectors.toList());
-		System.out.println(parentlist.size());
-
-		int count_save = parentlist.size();
-		parentlist.stream().forEach(item  -> item.setAjoute(new Date()));
-		// save deffirence in data base
-		contneurParcVisiteRepository.saveAll(parentlist);
-		// marked items
-
-		// logs details
-		if (count_save >0)
-			this.msgService.saveMessage("Visite parc", parentlist.get(0).getId(),
-					parentlist.get(count_save - 1).getId());
-
-		return count_save;
 		
 	}
 }

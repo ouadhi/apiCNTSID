@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.douane.config.Entities.ConfigItem;
-import com.douane.config.repository.AppConfigRepository;
 import com.douane.config.service.AppConfigService;
 import com.douane.dpworld.service.DebarquementService;
 import com.douane.dpworld.service.ParcVisteService;
@@ -44,7 +43,6 @@ public class Task implements Itasks {
 
 	@Override
 	@Scheduled(fixedDelay = 5 * 1000)
-
 	public void fetchDebarquement() {
 		jobConfig = configService.getById(debarquement);
 

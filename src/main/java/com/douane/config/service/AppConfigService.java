@@ -21,7 +21,6 @@ public class AppConfigService {
 	public void save(ConfigItem item) {
 		try {
 			repository.save(item);
-
 		} catch (Exception e) {
 			log.error(e.getMessage());
 
@@ -49,9 +48,7 @@ public class AppConfigService {
 	
 	public  ConfigItem  getById  (  String  id ) {
 		try {
-			
 			return   repository.findById(id).get()  ; 
-			
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return  null ; 

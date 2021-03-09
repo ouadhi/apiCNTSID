@@ -72,17 +72,6 @@ public class BaeDpw implements Serializable {
 	@Column(name="date_bae")
 	private Date date_bae;
 
-	
-
-	
-
-	
-	
-
-	
-
-	
-
 	@Column(name="type_declaration")
 	private String type_declaration;
 	

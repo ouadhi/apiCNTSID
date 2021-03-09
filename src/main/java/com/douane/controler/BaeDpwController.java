@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.validator.internal.IgnoreForbiddenApisErrors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +35,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @Api(value = "Bae end-point", description = "Operations pertaining to BAE")
 @ApiModel("BAE")
 @RequestMapping("/api/v1/bae")
+
 public class BaeDpwController {
 
 	@Autowired
@@ -87,7 +90,7 @@ public class BaeDpwController {
 	)
 	@GetMapping(path = "/getalldata")
 	public List<BaeDpw> findAll() {
-		return baeDpwRepository.getDataNotMarked();
+		return baeDpwRepository.findAll();
 	}
 
 	@PreAuthorize("hasRole('admin') or hasRole(Dpworld)")
@@ -176,7 +179,7 @@ public class BaeDpwController {
 	
 	@PreAuthorize("hasRole('admin')")
 	@ApiOperation(value = "get a collection items whene id between two ids ")
-	@PostMapping(path = "/getdata/{start}/{end}", produces = "application/json")
+	@GetMapping(path = "/getdata/{start}/{end}", produces = "application/json")
 	public List<BaeDpw> getDatabetween(@PathVariable(name = "start") long start, @PathVariable(name = "end") long end , HttpServletRequest request) {
 		try {
 			return baeDpwRepository.getDataBetweenIs(start, end) ; 

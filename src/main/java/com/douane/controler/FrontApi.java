@@ -66,9 +66,7 @@ public class FrontApi {
 	public ResponseEntity<?> statistics() {
 		  Date date_start  =  new Date();  
 	      Date date_end  =  utilservice.addDaysToDate(date_start, -10) ; 
-	      
-	      
-		
+	     
 		return ResponseEntity.ok(messageService.statstic_in(date_start, date_end)) ;  
 	}
 	

@@ -33,6 +33,7 @@ public class DebarquementService {
 	private RestTemplate template;
 
 	public int doFetch() {
+		try {
 		
 		// fetch API and save response  
 		ResponseEntity<Debarquement[]> response = template.getForEntity(ConstVar.URL_debarquement,Debarquement[].class);
@@ -65,10 +66,11 @@ public class DebarquementService {
 		// logs details  
 		if(count_save>0)
 		this.msgService.saveMessage("Debarquement", parentlist.get(0).getId(),  parentlist.get(count_save-1).getId()); 
-
-	
 		
 		return count_save;
+		}catch (Exception e) {
+			return 0 ; 
+		}
 	}
 
 }

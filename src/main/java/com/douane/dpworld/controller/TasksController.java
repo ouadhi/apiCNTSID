@@ -29,9 +29,10 @@ public class TasksController {
 	@PostMapping("")
 	public ResponseEntity<?> runtask(@RequestParam(required = true, defaultValue = "debarquement") String task) {
 		try {
+			int count = this.doRun(task) ; 
 			HashMap<String, Object> respons = new HashMap<String, Object>();
 			respons.put("task", task);
-			respons.put("saved", this.doRun(task));
+			respons.put("items", count);
 			respons.put("Date", new Date());
 
 			return ResponseEntity.ok(respons);
